@@ -4,9 +4,9 @@
 
 # Material-Datatable - Datatable for Material-UI
 
-[![Build Status](https://travis-ci.org/diaver/material-datatable.svg?branch=master)](https://travis-ci.org/diaver/material-datatable)
-[![Coverage Status](https://coveralls.io/repos/github/diaver/material-datatable/badge.svg?branch=master)](https://coveralls.io/github/diaver/material-datatable?branch=master)
-[![dependencies Status](https://david-dm.org/diaver/material-datatable/status.svg)](https://david-dm.org/diaver/material-datatable)
+[![Build Status](https://travis-ci.org/Diaver/material-datatable.svg?branch=master)](https://travis-ci.org/diaver/material-datatable)
+[![Coverage Status](https://coveralls.io/repos/github/Diaver/material-datatable/badge.svg?branch=master)](https://coveralls.io/github/Diaver/material-datatable?branch=master)
+[![dependencies Status](https://david-dm.org/Diaver/material-datatable/status.svg)](https://david-dm.org/diaver/material-datatable)
 [![npm version](https://badge.fury.io/js/material-datatable.svg)](https://badge.fury.io/js/material-datatable)
 
 Material-Datatable is a data tables component built on [Material-UI V1](https://www.material-ui-next.com).  It comes with features like filtering, resizable + view/hide columns, search, export to CSV download, printing, selectable rows, pagination, and sorting. On top of the ability to customize styling on most views, there are two responsive modes "stacked" and "scroll" for mobile/tablet devices.
