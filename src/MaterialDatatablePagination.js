@@ -83,4 +83,6 @@ class MaterialDatatablePagination extends React.Component {
   }
 }
 
-export default withStyles(defaultPaginationStyles, { name: "MaterialDatatablePagination" })(MaterialDatatablePagination);
+export default withStyles(defaultPaginationStyles, { name: "MaterialDatatablePagination" })(
+  MaterialDatatablePagination,
+);

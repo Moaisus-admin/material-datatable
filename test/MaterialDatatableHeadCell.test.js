@@ -58,7 +58,12 @@ describe("<MaterialDatatableHeadCell />", function() {
     const toggleSort = spy();
 
     const shallowWrapper = shallow(
-      <MaterialDatatableHeadCell options={options} index={0} sortDirection={"asc"} toggleSort={toggleSort} classes={classes}>
+      <MaterialDatatableHeadCell
+        options={options}
+        index={0}
+        sortDirection={"asc"}
+        toggleSort={toggleSort}
+        classes={classes}>
         some content
       </MaterialDatatableHeadCell>,
     ).dive();

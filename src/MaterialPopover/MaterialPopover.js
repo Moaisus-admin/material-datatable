@@ -9,11 +9,11 @@ class MaterialPopover extends React.Component {
   static propTypes = {
     /** Show indicating arrow. default: true */
     arrow: PropTypes.bool,
-    /** Reference callback to handleRequestClose() to trigger manual close of MUIPopover */
+    /** Reference callback to handleRequestClose() to trigger manual close of MaterialPopover */
     refClose: PropTypes.func,
-    /** Reference callback to onExited() to trigger manual close of MUIPopover */
+    /** Reference callback to onExited() to trigger manual close of MaterialPopover */
     refExit: PropTypes.func,
-    /** MUIPopoverTarget and MUIPopoverContent are required children */
+    /** MaterialPopoverTarget and MaterialPopoverContent are required children */
     children: (props, propName, componentName) => {
       let childMatch = true;
       const expectedComponents = [MaterialPopoverContent, MaterialPopoverTarget];

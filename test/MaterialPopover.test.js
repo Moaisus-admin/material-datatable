@@ -2,51 +2,51 @@ import React from "react";
 import { spy, stub } from "sinon";
 import { mount, shallow } from "enzyme";
 import { assert, expect, should } from "chai";
-import { MaterialPopover, MaterialPopoverTarget, MaterialPopoverContent } from "../src/MUIPopover";
+import { MaterialPopover, MaterialPopoverTarget, MaterialPopoverContent } from "../src/MaterialPopover";
 import Popover from "@material-ui/core/Popover";
 
-describe("<MUIPopover />", function() {
+describe("<MaterialPopover />", function() {
   it("should render a popover", () => {
     const mountWrapper = mount(
-      <MUIPopover>
-        <MUIPopoverTarget>
+      <MaterialPopover>
+        <MaterialPopoverTarget>
           <a href="#">Simple Link!</a>
-        </MUIPopoverTarget>
-        <MUIPopoverContent>Some content</MUIPopoverContent>
-      </MUIPopover>,
+        </MaterialPopoverTarget>
+        <MaterialPopoverContent>Some content</MaterialPopoverContent>
+      </MaterialPopover>,
     );
 
     const actualResult = mountWrapper.find(Popover);
     assert.strictEqual(actualResult.length, 1);
   });
 
-  it("should not render a popover if children are not MUIPopoverContent or MUIPopoverTarget", () => {
+  it("should not render a popover if children are not MaterialPopoverContent or MaterialPopoverTarget", () => {
     stub(console, "error");
     const mountWrapper = mount(
-      <MUIPopover>
+      <MaterialPopover>
         <div>testing</div>
-      </MUIPopover>,
+      </MaterialPopover>,
     );
 
     assert(console.error.called);
     console.error.restore();
   });
 
-  it("should return children when calling MUIPopoverContent", () => {
-    const shallowWrapper = shallow(<MUIPopoverContent>Some content</MUIPopoverContent>);
+  it("should return children when calling MaterialPopoverContent", () => {
+    const shallowWrapper = shallow(<MaterialPopoverContent>Some content</MaterialPopoverContent>);
 
     assert.strictEqual(shallowWrapper.text(), "Some content");
   });
 
-  it("should call handleOnExit when unmounting MUIPopover", () => {
+  it("should call handleOnExit when unmounting MaterialPopover", () => {
     const exitFunc = spy();
     const shallowWrapper = shallow(
-      <MUIPopover refExit={exitFunc}>
-        <MUIPopoverTarget>
+      <MaterialPopover refExit={exitFunc}>
+        <MaterialPopoverTarget>
           <a href="#">Simple Link!</a>
-        </MUIPopoverTarget>
-        <MUIPopoverContent>Some content</MUIPopoverContent>
-      </MUIPopover>,
+        </MaterialPopoverTarget>
+        <MaterialPopoverContent>Some content</MaterialPopoverContent>
+      </MaterialPopover>,
     );
 
     const instance = shallowWrapper.instance();
@@ -57,12 +57,12 @@ describe("<MUIPopover />", function() {
   it("should close popover when calling method handleRequestClose", () => {
     const refClose = spy();
     const mountWrapper = mount(
-      <MUIPopover refClose={refClose}>
-        <MUIPopoverTarget>
+      <MaterialPopover refClose={refClose}>
+        <MaterialPopoverTarget>
           <a href="#">Simple Link!</a>
-        </MUIPopoverTarget>
-        <MUIPopoverContent>Some content</MUIPopoverContent>
-      </MUIPopover>,
+        </MaterialPopoverTarget>
+        <MaterialPopoverContent>Some content</MaterialPopoverContent>
+      </MaterialPopover>,
     );
 
     // open popover
@@ -85,12 +85,12 @@ describe("<MUIPopover />", function() {
 
   it("should open popover when calling method handleClick", () => {
     const mountWrapper = mount(
-      <MUIPopover>
-        <MUIPopoverTarget>
+      <MaterialPopover>
+        <MaterialPopoverTarget>
           <a href="#">Simple Link!</a>
-        </MUIPopoverTarget>
-        <MUIPopoverContent>Some content</MUIPopoverContent>
-      </MUIPopover>,
+        </MaterialPopoverTarget>
+        <MaterialPopoverContent>Some content</MaterialPopoverContent>
+      </MaterialPopover>,
     );
 
     let state = mountWrapper.state();

@@ -70,4 +70,6 @@ class MaterialDatatableToolbarSelect extends React.Component {
   }
 }
 
-export default withStyles(defaultToolbarSelectStyles, { name: "MaterialDatatableToolbarSelect" })(MaterialDatatableToolbarSelect);
+export default withStyles(defaultToolbarSelectStyles, { name: "MaterialDatatableToolbarSelect" })(
+  MaterialDatatableToolbarSelect,
+);

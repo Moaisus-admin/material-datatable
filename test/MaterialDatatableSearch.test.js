@@ -24,7 +24,9 @@ describe("<MaterialDatatableSearch />", function() {
     const onSearch = spy();
     const onHide = () => {};
 
-    const shallowWrapper = shallow(<MaterialDatatableSearch onSearch={onSearch} onHide={onHide} options={options} />).dive();
+    const shallowWrapper = shallow(
+      <MaterialDatatableSearch onSearch={onSearch} onHide={onHide} options={options} />,
+    ).dive();
 
     const instance = shallowWrapper.instance();
 
@@ -36,7 +38,9 @@ describe("<MaterialDatatableSearch />", function() {
     const options = { textLabels };
     const onHide = spy();
 
-    const mountWrapper = mount(<MaterialDatatableSearch onHide={onHide} options={options} />, { attachTo: document.body });
+    const mountWrapper = mount(<MaterialDatatableSearch onHide={onHide} options={options} />, {
+      attachTo: document.body,
+    });
 
     simulant.fire(document.body.querySelector("input"), "keydown", { keyCode: 27 });
     assert.strictEqual(onHide.callCount, 1);
@@ -46,7 +50,9 @@ describe("<MaterialDatatableSearch />", function() {
     const options = { textLabels };
     const onHide = spy();
 
-    const mountWrapper = mount(<MaterialDatatableSearch onHide={onHide} options={options} />, { attachTo: document.body });
+    const mountWrapper = mount(<MaterialDatatableSearch onHide={onHide} options={options} />, {
+      attachTo: document.body,
+    });
 
     simulant.fire(document.body.querySelector("input"), "keydown", { keyCode: 25 });
     assert.strictEqual(onHide.callCount, 0);

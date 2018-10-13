@@ -96,10 +96,14 @@ class MaterialDatatableBody extends React.Component {
                         <MaterialDatatableBodyRow
                             options={options}
                             rowSelected={options.selectableRows ? this.isRowSelected(rowIndex) : false}
-                            onClick={options.onRowClick ? options.onRowClick.bind(null, row, {
-                                rowIndex,
-                                dataIndex
-                            }) : null}
+                            onClick={
+                                options.onRowClick
+                                    ? options.onRowClick.bind(null, row, {
+                                        rowIndex,
+                                        dataIndex,
+                                    })
+                                    : null
+                            }
                             id={"MaterialDatatableBodyRow-" + dataIndex}
                             key={rowIndex}>
                             {options.selectableRows ? (

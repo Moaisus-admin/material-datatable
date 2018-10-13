@@ -7,7 +7,7 @@ Fix package.json issue
 ## 1.0.4 (2018-01-01)
 
 * accessibility fixes + live announce area added to handle announcement of sorting columns and other f ([8dba3f7](https://github.com/gregnb/mui-datatables/commit/8dba3f7))
-* added jsx-a11y to eslint. material-ui upgraded to 1.0.0.beta.26. now injecting MUIPopover with conta ([533a818](https://github.com/gregnb/mui-datatables/commit/533a818))
+* added jsx-a11y to eslint. material-ui upgraded to 1.0.0.beta.26. now injecting MaterialPopover with conta ([533a818](https://github.com/gregnb/mui-datatables/commit/533a818))
 * added updatePosition to Popover after table row content updates ([baceb9f](https://github.com/gregnb/mui-datatables/commit/baceb9f))
 
 <a name="1.0.3"></a>

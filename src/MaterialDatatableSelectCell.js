@@ -47,4 +47,6 @@ class MaterialDatatableSelectCell extends React.Component {
   }
 }
 
-export default withStyles(defaultSelectCellStyles, { name: "MaterialDatatableSelectCell" })(MaterialDatatableSelectCell);
+export default withStyles(defaultSelectCellStyles, { name: "MaterialDatatableSelectCell" })(
+  MaterialDatatableSelectCell,
+);

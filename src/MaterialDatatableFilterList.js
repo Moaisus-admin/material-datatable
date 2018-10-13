@@ -45,4 +45,6 @@ class MaterialDatatableFilterList extends React.Component {
   }
 }
 
-export default withStyles(defaultFilterListStyles, { name: "MaterialDatatableFilterList" })(MaterialDatatableFilterList);
+export default withStyles(defaultFilterListStyles, { name: "MaterialDatatableFilterList" })(
+  MaterialDatatableFilterList,
+);

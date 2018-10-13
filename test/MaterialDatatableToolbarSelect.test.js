@@ -12,7 +12,11 @@ describe("<MaterialDatatableSelectCell />", function() {
   it("should render table toolbar select", () => {
     const onRowsDelete = () => {};
     const mountWrapper = mount(
-      <MaterialDatatableToolbarSelect options={{ textLabels }} selectedRows={{ data: [1] }} onRowsDelete={onRowsDelete} />,
+      <MaterialDatatableToolbarSelect
+        options={{ textLabels }}
+        selectedRows={{ data: [1] }}
+        onRowsDelete={onRowsDelete}
+      />,
     );
 
     const actualResult = mountWrapper.find(DeleteIcon);
