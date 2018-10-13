@@ -5,7 +5,7 @@ import TableBody from "@material-ui/core/TableBody";
 import MaterialDatatableBodyCell from "./MaterialDatatableBodyCell";
 import MaterialDatatableBodyRow from "./MaterialDatatableBodyRow";
 import MaterialDatatableSelectCell from "./MaterialDatatableSelectCell";
-import {withStyles} from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 
 const defaultBodyStyles = {
   root: {},
@@ -39,7 +39,7 @@ class MaterialDatatableBody extends React.Component {
   };
 
   buildRows() {
-    const {data, page, rowsPerPage, count} = this.props;
+    const { data, page, rowsPerPage, count } = this.props;
 
     if (this.props.options.serverSide) return data;
 
@@ -50,7 +50,7 @@ class MaterialDatatableBody extends React.Component {
 
     if (page > totalPages && totalPages !== 0) {
       throw new Error(
-          "Provided options.page of `" +
+        "Provided options.page of `" +
           page +
           "` is greater than the total available page length of `" +
           totalPages +
@@ -66,7 +66,7 @@ class MaterialDatatableBody extends React.Component {
   }
 
   getRowIndex(index) {
-    const {page, rowsPerPage, options} = this.props;
+    const { page, rowsPerPage, options } = this.props;
 
     if (options.serverSide) {
       return index;
@@ -77,7 +77,7 @@ class MaterialDatatableBody extends React.Component {
   }
 
   isRowSelected(index) {
-    const {selectedRows} = this.props;
+    const { selectedRows } = this.props;
     return selectedRows.lookup && selectedRows.lookup[index] ? true : false;
   }
 
@@ -86,71 +86,71 @@ class MaterialDatatableBody extends React.Component {
   };
 
   render() {
-    const {classes, columns, options} = this.props;
+    const { classes, columns, options } = this.props;
     const tableRows = this.buildRows();
 
     return (
-        <TableBody>
-          {tableRows ? (
-              tableRows.map(({data: row, dataIndex}, rowIndex) => (
-                  <MaterialDatatableBodyRow
+      <TableBody>
+        {tableRows ? (
+          tableRows.map(({ data: row, dataIndex }, rowIndex) => (
+            <MaterialDatatableBodyRow
+              options={options}
+              rowSelected={options.selectableRows ? this.isRowSelected(rowIndex) : false}
+              onClick={
+                options.onRowClick
+                  ? options.onRowClick.bind(null, row, {
+                      rowIndex,
+                      dataIndex,
+                    })
+                  : null
+              }
+              id={"MaterialDatatableBodyRow-" + dataIndex}
+              key={rowIndex}>
+              {options.selectableRows ? (
+                <MaterialDatatableSelectCell
+                  onChange={this.handleRowSelect.bind(null, {
+                    index: this.getRowIndex(rowIndex),
+                    dataIndex: dataIndex,
+                  })}
+                  checked={this.isRowSelected(this.getRowIndex(rowIndex))}
+                />
+              ) : (
+                false
+              )}
+              {row.map(
+                (column, index) =>
+                  columns[index].display === "true" ? (
+                    <MaterialDatatableBodyCell
+                      dataIndex={dataIndex}
+                      rowIndex={rowIndex}
+                      colIndex={index}
+                      columnHeader={columns[index].name}
                       options={options}
-                      rowSelected={options.selectableRows ? this.isRowSelected(rowIndex) : false}
-                      onClick={
-                        options.onRowClick
-                            ? options.onRowClick.bind(null, row, {
-                              rowIndex,
-                              dataIndex,
-                            })
-                            : null
-                      }
-                      id={"MaterialDatatableBodyRow-" + dataIndex}
-                      key={rowIndex}>
-                    {options.selectableRows ? (
-                        <MaterialDatatableSelectCell
-                            onChange={this.handleRowSelect.bind(null, {
-                              index: this.getRowIndex(rowIndex),
-                              dataIndex: dataIndex,
-                            })}
-                            checked={this.isRowSelected(this.getRowIndex(rowIndex))}
-                        />
-                    ) : (
-                        false
-                    )}
-                    {row.map(
-                        (column, index) =>
-                            columns[index].display === "true" ? (
-                                <MaterialDatatableBodyCell
-                                    dataIndex={dataIndex}
-                                    rowIndex={rowIndex}
-                                    colIndex={index}
-                                    columnHeader={columns[index].name}
-                                    options={options}
-                                    key={index}>
-                                  {column}
-                                </MaterialDatatableBodyCell>
-                            ) : (
-                                false
-                            ),
-                    )}
-                  </MaterialDatatableBodyRow>
-              ))
-          ) : (
-              <MaterialDatatableBodyRow options={options}>
-                <MaterialDatatableBodyCell
-                    colSpan={options.selectableRows ? columns.length + 1 : columns.length}
-                    options={options}
-                    colIndex={0}
-                    rowIndex={0}>
-                  <Typography variant="subheading" className={classes.emptyTitle}>
-                    {options.textLabels.body.noMatch}
-                  </Typography>
-                </MaterialDatatableBodyCell>
-              </MaterialDatatableBodyRow>
-          )}
-        </TableBody>
+                      key={index}>
+                      {column}
+                    </MaterialDatatableBodyCell>
+                  ) : (
+                    false
+                  ),
+              )}
+            </MaterialDatatableBodyRow>
+          ))
+        ) : (
+          <MaterialDatatableBodyRow options={options}>
+            <MaterialDatatableBodyCell
+              colSpan={options.selectableRows ? columns.length + 1 : columns.length}
+              options={options}
+              colIndex={0}
+              rowIndex={0}>
+              <Typography variant="subtitle1" className={classes.emptyTitle}>
+                {options.textLabels.body.noMatch}
+              </Typography>
+            </MaterialDatatableBodyCell>
+          </MaterialDatatableBodyRow>
+        )}
+      </TableBody>
     );
   }
 }
 
-export default withStyles(defaultBodyStyles, {name: "MaterialDatatableBody"})(MaterialDatatableBody);
+export default withStyles(defaultBodyStyles, { name: "MaterialDatatableBody" })(MaterialDatatableBody);

@@ -12,7 +12,7 @@ import MaterialDatatablePagination from "./MaterialDatatablePagination";
 import cloneDeep from "lodash.clonedeep";
 import merge from "lodash.merge";
 import textLabels from "./textLabels";
-import {withStyles} from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 
 const defaultTableStyles = {
   root: {},
@@ -48,20 +48,20 @@ class MaterialDatatable extends React.Component {
     data: PropTypes.array.isRequired,
     /** Columns used to describe table */
     columns: PropTypes.PropTypes.arrayOf(
-        PropTypes.oneOfType([
-          PropTypes.string,
-          PropTypes.shape({
-            name: PropTypes.string.isRequired,
-            options: PropTypes.shape({
-              display: PropTypes.string, // enum('true', 'false', 'excluded')
-              filter: PropTypes.bool,
-              sort: PropTypes.bool,
-              download: PropTypes.bool,
-              customHeadRender: PropTypes.func,
-              customBodyRender: PropTypes.func,
-            }),
+      PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.shape({
+          name: PropTypes.string.isRequired,
+          options: PropTypes.shape({
+            display: PropTypes.string, // enum('true', 'false', 'excluded')
+            filter: PropTypes.bool,
+            sort: PropTypes.bool,
+            download: PropTypes.bool,
+            customHeadRender: PropTypes.func,
+            customBodyRender: PropTypes.func,
           }),
-        ]),
+        }),
+      ]),
     ).isRequired,
     /** Options used to describe table */
     options: PropTypes.shape({
@@ -129,8 +129,7 @@ class MaterialDatatable extends React.Component {
     super();
     this.tableRef = false;
     this.headCellRefs = {};
-    this.setHeadResizeable = () => {
-    };
+    this.setHeadResizeable = () => {};
   }
 
   componentWillMount() {
@@ -218,14 +217,13 @@ class MaterialDatatable extends React.Component {
      *  Build the source table data
      */
 
-  setTableData(props, status, callback = () => {
-  }) {
-    const {data, columns, options} = props;
+  setTableData(props, status, callback = () => {}) {
+    const { data, columns, options } = props;
 
     let columnData = [],
-        filterData = [],
-        filterList = [],
-        tableData = [];
+      filterData = [],
+      filterList = [],
+      tableData = [];
 
     columns.forEach((column, colIndex) => {
       let columnOptions = {
@@ -248,7 +246,7 @@ class MaterialDatatable extends React.Component {
           ...(column.options ? column.options : {}),
         };
       } else {
-        columnOptions = {...columnOptions, name: column};
+        columnOptions = { ...columnOptions, name: column };
       }
 
       columnData.push(columnOptions);
@@ -281,7 +279,7 @@ class MaterialDatatable extends React.Component {
       }
 
       if (this.options.sortFilterList) {
-        const collator = new Intl.Collator(undefined, {numeric: true, sensitivity: "base"});
+        const collator = new Intl.Collator(undefined, { numeric: true, sensitivity: "base" });
         filterData[colIndex].sort(collator.compare);
       }
     });
@@ -300,7 +298,7 @@ class MaterialDatatable extends React.Component {
     if (TABLE_LOAD.INITIAL) {
       if (options.rowsSelected && options.rowsSelected.length) {
         options.rowsSelected.forEach(row => {
-          selectedRowsData.data.push({index: row, dataIndex: row});
+          selectedRowsData.data.push({ index: row, dataIndex: row });
           selectedRowsData.lookup[row] = true;
         });
       }
@@ -308,15 +306,15 @@ class MaterialDatatable extends React.Component {
 
     /* set source data and display Data set source set */
     this.setState(
-        prevState => ({
-          columns: columnData,
-          filterData: filterData,
-          filterList: filterList,
-          selectedRows: selectedRowsData,
-          data: tableData,
-          displayData: this.getDisplayData(columnData, tableData, filterList, prevState.searchText),
-        }),
-        callback,
+      prevState => ({
+        columns: columnData,
+        filterData: filterData,
+        filterList: filterList,
+        selectedRows: selectedRowsData,
+        data: tableData,
+        displayData: this.getDisplayData(columnData, tableData, filterList, prevState.searchText),
+      }),
+      callback,
     );
   }
 
@@ -338,19 +336,19 @@ class MaterialDatatable extends React.Component {
         });
 
         const funcResult = columns[index].customBodyRender(
-            columnValue,
-            tableMeta,
-            this.updateDataCol.bind(null, rowIndex, index),
+          columnValue,
+          tableMeta,
+          this.updateDataCol.bind(null, rowIndex, index),
         );
         columnDisplay = funcResult;
 
         /* drill down to get the value of a cell */
         columnValue =
-            typeof funcResult === "string"
-                ? funcResult
-                : funcResult.props && funcResult.props.value
-                ? funcResult.props.value
-                : columnValue;
+          typeof funcResult === "string"
+            ? funcResult
+            : funcResult.props && funcResult.props.value
+              ? funcResult.props.value
+              : columnValue;
       }
 
       displayRow.push(columnDisplay);
@@ -439,9 +437,9 @@ class MaterialDatatable extends React.Component {
       const funcResult = prevState.columns[index].customBodyRender(value, tableMeta);
 
       const filterValue =
-          React.isValidElement(funcResult) && funcResult.props.value
-              ? funcResult.props.value
-              : prevState["data"][row][index];
+        React.isValidElement(funcResult) && funcResult.props.value
+          ? funcResult.props.value
+          : prevState["data"][row][index];
 
       const prevFilterIndex = filterData[index].indexOf(filterValue);
       filterData[index].splice(prevFilterIndex, 1, filterValue);
@@ -449,7 +447,7 @@ class MaterialDatatable extends React.Component {
       changedData[row].data[index] = value;
 
       if (this.options.sortFilterList) {
-        const collator = new Intl.Collator(undefined, {numeric: true, sensitivity: "base"});
+        const collator = new Intl.Collator(undefined, { numeric: true, sensitivity: "base" });
         filterData[index].sort(collator.compare);
       }
 
@@ -462,7 +460,7 @@ class MaterialDatatable extends React.Component {
   };
 
   getTableMeta = (rowIndex, colIndex, rowData, columnData, tableData, curState) => {
-    const {columns, data, displayData, filterData, ...tableState} = curState;
+    const { columns, data, displayData, filterData, ...tableState } = curState;
 
     return {
       rowIndex: rowIndex,
@@ -494,22 +492,22 @@ class MaterialDatatable extends React.Component {
 
   toggleViewColumn = index => {
     this.setState(
-        prevState => {
-          const columns = cloneDeep(prevState.columns);
-          columns[index].display = columns[index].display === "true" ? "false" : "true";
-          return {
-            columns: columns,
-          };
-        },
-        () => {
-          this.setTableAction("columnViewChange");
-          if (this.options.onColumnViewChange) {
-            this.options.onColumnViewChange(
-                this.state.columns[index].name,
-                this.state.columns[index].display === "true" ? "add" : "remove",
-            );
-          }
-        },
+      prevState => {
+        const columns = cloneDeep(prevState.columns);
+        columns[index].display = columns[index].display === "true" ? "false" : "true";
+        return {
+          columns: columns,
+        };
+      },
+      () => {
+        this.setTableAction("columnViewChange");
+        if (this.options.onColumnViewChange) {
+          this.options.onColumnViewChange(
+            this.state.columns[index].name,
+            this.state.columns[index].display === "true" ? "add" : "remove",
+          );
+        }
+      },
     );
   };
 
@@ -519,158 +517,158 @@ class MaterialDatatable extends React.Component {
 
   toggleSortColumn = index => {
     this.setState(
-        prevState => {
-          let columns = cloneDeep(prevState.columns);
-          let data = prevState.data;
-          const order = prevState.columns[index].sortDirection;
+      prevState => {
+        let columns = cloneDeep(prevState.columns);
+        let data = prevState.data;
+        const order = prevState.columns[index].sortDirection;
 
-          for (let pos = 0; pos < columns.length; pos++) {
-            if (index !== pos) {
-              columns[pos].sortDirection = null;
-            } else {
-              columns[pos].sortDirection = columns[pos].sortDirection === "asc" ? "desc" : "asc";
-            }
-          }
-
-          const orderLabel = this.getSortDirection(columns[index]);
-          const announceText = `Table now sorted by ${columns[index].name} : ${orderLabel}`;
-
-          let newState = {
-            columns: columns,
-            announceText: announceText,
-            activeColumn: index,
-          };
-
-          if (this.options.serverSide) {
-            newState = {
-              ...newState,
-              data: prevState.data,
-              displayData: prevState.displayData,
-              selectedRows: prevState.selectedRows,
-            };
+        for (let pos = 0; pos < columns.length; pos++) {
+          if (index !== pos) {
+            columns[pos].sortDirection = null;
           } else {
-            const sortedData = this.sortTable(data, index, order);
-
-            newState = {
-              ...newState,
-              data: sortedData.data,
-              displayData: this.getDisplayData(columns, sortedData.data, prevState.filterList, prevState.searchText),
-              selectedRows: sortedData.selectedRows,
-            };
+            columns[pos].sortDirection = columns[pos].sortDirection === "asc" ? "desc" : "asc";
           }
+        }
 
-          return newState;
-        },
-        () => {
-          this.setTableAction("sort");
-          if (this.options.onColumnSortChange) {
-            this.options.onColumnSortChange(
-                this.state.columns[index].name,
-                this.getSortDirection(this.state.columns[index]),
-            );
-          }
-        },
+        const orderLabel = this.getSortDirection(columns[index]);
+        const announceText = `Table now sorted by ${columns[index].name} : ${orderLabel}`;
+
+        let newState = {
+          columns: columns,
+          announceText: announceText,
+          activeColumn: index,
+        };
+
+        if (this.options.serverSide) {
+          newState = {
+            ...newState,
+            data: prevState.data,
+            displayData: prevState.displayData,
+            selectedRows: prevState.selectedRows,
+          };
+        } else {
+          const sortedData = this.sortTable(data, index, order);
+
+          newState = {
+            ...newState,
+            data: sortedData.data,
+            displayData: this.getDisplayData(columns, sortedData.data, prevState.filterList, prevState.searchText),
+            selectedRows: sortedData.selectedRows,
+          };
+        }
+
+        return newState;
+      },
+      () => {
+        this.setTableAction("sort");
+        if (this.options.onColumnSortChange) {
+          this.options.onColumnSortChange(
+            this.state.columns[index].name,
+            this.getSortDirection(this.state.columns[index]),
+          );
+        }
+      },
     );
   };
 
   changeRowsPerPage = rows => {
     this.setState(
-        () => ({
-          rowsPerPage: rows,
-        }),
-        () => {
-          this.setTableAction("changeRowsPerPage");
-          if (this.options.onChangeRowsPerPage) {
-            this.options.onChangeRowsPerPage(this.state.rowsPerPage);
-          }
-        },
+      () => ({
+        rowsPerPage: rows,
+      }),
+      () => {
+        this.setTableAction("changeRowsPerPage");
+        if (this.options.onChangeRowsPerPage) {
+          this.options.onChangeRowsPerPage(this.state.rowsPerPage);
+        }
+      },
     );
   };
 
   changePage = page => {
     this.setState(
-        () => ({
-          page: page,
-        }),
-        () => {
-          this.setTableAction("changePage");
-          if (this.options.onChangePage) {
-            this.options.onChangePage(this.state.page);
-          }
-        },
+      () => ({
+        page: page,
+      }),
+      () => {
+        this.setTableAction("changePage");
+        if (this.options.onChangePage) {
+          this.options.onChangePage(this.state.page);
+        }
+      },
     );
   };
 
   searchTextUpdate = text => {
     this.setState(
-        prevState => ({
-          searchText: text && text.length ? text : null,
-          displayData: this.options.serverSide
-              ? prevState.displayData
-              : this.getDisplayData(prevState.columns, prevState.data, prevState.filterList, text),
-        }),
-        () => {
-          this.setTableAction("search");
-        },
+      prevState => ({
+        searchText: text && text.length ? text : null,
+        displayData: this.options.serverSide
+          ? prevState.displayData
+          : this.getDisplayData(prevState.columns, prevState.data, prevState.filterList, text),
+      }),
+      () => {
+        this.setTableAction("search");
+      },
     );
   };
 
   resetFilters = () => {
     this.setState(
-        prevState => {
-          const filterList = prevState.columns.map((column, index) => []);
+      prevState => {
+        const filterList = prevState.columns.map((column, index) => []);
 
-          return {
-            filterList: filterList,
-            displayData: this.options.serverSide
-                ? prevState.displayData
-                : this.getDisplayData(prevState.columns, prevState.data, filterList, prevState.searchText),
-          };
-        },
-        () => {
-          this.setTableAction("resetFilters");
-          if (this.options.onFilterChange) {
-            this.options.onFilterChange(null, this.state.filterList);
-          }
-        },
+        return {
+          filterList: filterList,
+          displayData: this.options.serverSide
+            ? prevState.displayData
+            : this.getDisplayData(prevState.columns, prevState.data, filterList, prevState.searchText),
+        };
+      },
+      () => {
+        this.setTableAction("resetFilters");
+        if (this.options.onFilterChange) {
+          this.options.onFilterChange(null, this.state.filterList);
+        }
+      },
     );
   };
 
   filterUpdate = (index, column, type) => {
     this.setState(
-        prevState => {
-          const filterList = cloneDeep(prevState.filterList);
-          const filterPos = filterList[index].indexOf(column);
+      prevState => {
+        const filterList = cloneDeep(prevState.filterList);
+        const filterPos = filterList[index].indexOf(column);
 
-          switch (type) {
-            case "checkbox":
-              filterPos >= 0 ? filterList[index].splice(filterPos, 1) : filterList[index].push(column);
-              break;
-            case "multiselect":
-              filterList[index] = column === "" ? [] : column;
-              break;
-            default:
-              filterList[index] = filterPos >= 0 || column === "" ? [] : [column];
-          }
+        switch (type) {
+          case "checkbox":
+            filterPos >= 0 ? filterList[index].splice(filterPos, 1) : filterList[index].push(column);
+            break;
+          case "multiselect":
+            filterList[index] = column === "" ? [] : column;
+            break;
+          default:
+            filterList[index] = filterPos >= 0 || column === "" ? [] : [column];
+        }
 
-          return {
-            filterList: filterList,
-            displayData: this.options.serverSide
-                ? prevState.displayData
-                : this.getDisplayData(prevState.columns, prevState.data, filterList, prevState.searchText),
-          };
-        },
-        () => {
-          this.setTableAction("filterChange");
-          if (this.options.onFilterChange) {
-            this.options.onFilterChange(column, this.state.filterList);
-          }
-        },
+        return {
+          filterList: filterList,
+          displayData: this.options.serverSide
+            ? prevState.displayData
+            : this.getDisplayData(prevState.columns, prevState.data, filterList, prevState.searchText),
+        };
+      },
+      () => {
+        this.setTableAction("filterChange");
+        if (this.options.onFilterChange) {
+          this.options.onFilterChange(column, this.state.filterList);
+        }
+      },
     );
   };
 
   selectRowDelete = () => {
-    const {selectedRows, data, filterList} = this.state;
+    const { selectedRows, data, filterList } = this.state;
 
     const selectedMap = this.buildSelectedMap(selectedRows.data);
     const cleanRows = data.filter((_, index) => !selectedMap[index]);
@@ -680,22 +678,22 @@ class MaterialDatatable extends React.Component {
     }
 
     this.setTableData(
-        {
-          columns: this.props.columns,
-          data: cleanRows,
-          options: {
-            filterList: filterList,
-          },
+      {
+        columns: this.props.columns,
+        data: cleanRows,
+        options: {
+          filterList: filterList,
         },
-        TABLE_LOAD.UPDATE,
-        () => {
-          this.setTableAction("rowDelete");
-        },
+      },
+      TABLE_LOAD.UPDATE,
+      () => {
+        this.setTableAction("rowDelete");
+      },
     );
   };
 
   buildSelectedMap = rows => {
-    return rows.reduce((accum, {index}) => {
+    return rows.reduce((accum, { index }) => {
       accum[index] = true;
       return accum;
     }, {});
@@ -704,72 +702,72 @@ class MaterialDatatable extends React.Component {
   selectRowUpdate = (type, value) => {
     if (type === "head") {
       this.setState(
-          prevState => {
-            const {data} = prevState;
-            const selectedRowsLen = prevState.selectedRows.data.length;
-            const isDeselect =
-                selectedRowsLen === data.length || (selectedRowsLen < data.length && selectedRowsLen > 0) ? true : false;
+        prevState => {
+          const { data } = prevState;
+          const selectedRowsLen = prevState.selectedRows.data.length;
+          const isDeselect =
+            selectedRowsLen === data.length || (selectedRowsLen < data.length && selectedRowsLen > 0) ? true : false;
 
-            let selectedRows = Array(data.length)
-                .fill()
-                .map((d, i) => ({index: i, dataIndex: data[i].index}));
+          let selectedRows = Array(data.length)
+            .fill()
+            .map((d, i) => ({ index: i, dataIndex: data[i].index }));
 
-            let newRows = [...prevState.selectedRows, ...selectedRows];
-            let selectedMap = this.buildSelectedMap(newRows);
+          let newRows = [...prevState.selectedRows, ...selectedRows];
+          let selectedMap = this.buildSelectedMap(newRows);
 
-            if (isDeselect) {
-              newRows = prevState.selectedRows.data.filter(({index}) => !selectedMap[index]);
-              selectedMap = this.buildSelectedMap(newRows);
-            }
+          if (isDeselect) {
+            newRows = prevState.selectedRows.data.filter(({ index }) => !selectedMap[index]);
+            selectedMap = this.buildSelectedMap(newRows);
+          }
 
-            return {
-              curSelectedRows: newRows,
-              selectedRows: {
-                data: newRows,
-                lookup: selectedMap,
-              },
-            };
-          },
-          () => {
-            this.setTableAction("rowsSelect");
-            if (this.options.onRowsSelect) {
-              this.options.onRowsSelect(this.state.curSelectedRows, this.state.selectedRows.data);
-            }
-          },
+          return {
+            curSelectedRows: newRows,
+            selectedRows: {
+              data: newRows,
+              lookup: selectedMap,
+            },
+          };
+        },
+        () => {
+          this.setTableAction("rowsSelect");
+          if (this.options.onRowsSelect) {
+            this.options.onRowsSelect(this.state.curSelectedRows, this.state.selectedRows.data);
+          }
+        },
       );
     } else if (type === "cell") {
       this.setState(
-          prevState => {
-            const {index, dataIndex} = value;
-            let selectedRows = [...prevState.selectedRows.data];
-            let rowPos = -1;
+        prevState => {
+          const { index, dataIndex } = value;
+          let selectedRows = [...prevState.selectedRows.data];
+          let rowPos = -1;
 
-            for (let cIndex = 0; cIndex < selectedRows.length; cIndex++) {
-              if (selectedRows[cIndex].index === index) {
-                rowPos = cIndex;
-                break;
-              }
+          for (let cIndex = 0; cIndex < selectedRows.length; cIndex++) {
+            if (selectedRows[cIndex].index === index) {
+              rowPos = cIndex;
+              break;
             }
+          }
 
-            if (rowPos >= 0) {
-              selectedRows.splice(rowPos, 1);
-            } else {
-              selectedRows.push(value);
-            }
+          if (rowPos >= 0) {
+            selectedRows.splice(rowPos, 1);
+          } else {
+            selectedRows.push(value);
+          }
 
-            return {
-              selectedRows: {
-                lookup: this.buildSelectedMap(selectedRows),
-                data: selectedRows,
-              },
-            };
-          },
-          () => {
-            this.setTableAction("rowsSelect");
-            if (this.options.onRowsSelect) {
-              this.options.onRowsSelect([value], this.state.selectedRows.data);
-            }
-          },
+          return {
+            selectedRows: {
+              lookup: this.buildSelectedMap(selectedRows),
+              data: selectedRows,
+            },
+          };
+        },
+        () => {
+          this.setTableAction("rowsSelect");
+          if (this.options.onRowsSelect) {
+            this.options.onRowsSelect([value], this.state.selectedRows.data);
+          }
+        },
       );
     }
   };
@@ -779,8 +777,8 @@ class MaterialDatatable extends React.Component {
       if (a.data === null) a.data = "";
       if (b.data === null) b.data = "";
       return (
-          (typeof a.data.localeCompare === "function" ? a.data.localeCompare(b.data) : a.data - b.data) *
-          (order === "asc" ? -1 : 1)
+        (typeof a.data.localeCompare === "function" ? a.data.localeCompare(b.data) : a.data - b.data) *
+        (order === "asc" ? -1 : 1)
       );
     };
   }
@@ -801,7 +799,7 @@ class MaterialDatatable extends React.Component {
       const row = sortedData[i];
       tableData.push(data[row.position]);
       if (row.rowSelected) {
-        selectedRows.push({index: i, dataIndex: data[row.position].index});
+        selectedRows.push({ index: i, dataIndex: data[row.position].index });
       }
     }
 
@@ -815,7 +813,7 @@ class MaterialDatatable extends React.Component {
   }
 
   render() {
-    const {classes, title} = this.props;
+    const { classes, title } = this.props;
     const {
       announceText,
       activeColumn,
@@ -833,86 +831,86 @@ class MaterialDatatable extends React.Component {
     const rowCount = this.options.count || displayData.length;
 
     return (
-        <Paper elevation={4} ref={el => (this.tableContent = el)} className={classes.paper}>
-          {selectedRows.data.length ? (
-              <MaterialDatatableToolbarSelect
-                  options={this.options}
-                  selectedRows={selectedRows}
-                  onRowsDelete={this.selectRowDelete}
-              />
-          ) : (
-              <MaterialDatatableToolbar
-                  columns={columns}
-                  data={data}
-                  filterData={filterData}
-                  filterList={filterList}
-                  filterUpdate={this.filterUpdate}
-                  options={this.options}
-                  resetFilters={this.resetFilters}
-                  searchTextUpdate={this.searchTextUpdate}
-                  tableRef={() => this.tableContent}
-                  title={title}
-                  toggleViewColumn={this.toggleViewColumn}
-              />
+      <Paper elevation={4} ref={el => (this.tableContent = el)} className={classes.paper}>
+        {selectedRows.data.length ? (
+          <MaterialDatatableToolbarSelect
+            options={this.options}
+            selectedRows={selectedRows}
+            onRowsDelete={this.selectRowDelete}
+          />
+        ) : (
+          <MaterialDatatableToolbar
+            columns={columns}
+            data={data}
+            filterData={filterData}
+            filterList={filterList}
+            filterUpdate={this.filterUpdate}
+            options={this.options}
+            resetFilters={this.resetFilters}
+            searchTextUpdate={this.searchTextUpdate}
+            tableRef={() => this.tableContent}
+            title={title}
+            toggleViewColumn={this.toggleViewColumn}
+          />
+        )}
+        <MaterialDatatableFilterList options={this.options} filterList={filterList} filterUpdate={this.filterUpdate} />
+        <div
+          style={{ position: "relative" }}
+          className={this.options.responsive === "scroll" ? classes.responsiveScroll : null}>
+          {this.options.resizableColumns && (
+            <MaterialDatatableResize key={rowCount} setResizeable={fn => (this.setHeadResizeable = fn)} />
           )}
-          <MaterialDatatableFilterList options={this.options} filterList={filterList} filterUpdate={this.filterUpdate}/>
-          <div
-              style={{position: "relative"}}
-              className={this.options.responsive === "scroll" ? classes.responsiveScroll : null}>
-            {this.options.resizableColumns && (
-                <MaterialDatatableResize key={rowCount} setResizeable={fn => (this.setHeadResizeable = fn)}/>
-            )}
-            <Table ref={el => (this.tableRef = el)} tabIndex={"0"} role={"grid"}>
-              <caption className={classes.caption}>{title}</caption>
-              <MaterialDatatableHead
-                  activeColumn={activeColumn}
-                  data={this.state.displayData}
-                  count={rowCount}
-                  columns={columns}
-                  page={page}
-                  rowsPerPage={rowsPerPage}
-                  handleHeadUpdateRef={fn => (this.updateToolbarSelect = fn)}
-                  selectedRows={selectedRows}
-                  selectRowUpdate={this.selectRowUpdate}
-                  toggleSort={this.toggleSortColumn}
-                  setCellRef={this.setHeadCellRef}
-                  options={this.options}
-              />
-              <MaterialDatatableBody
-                  data={this.state.displayData}
-                  count={rowCount}
-                  columns={columns}
-                  page={page}
-                  rowsPerPage={rowsPerPage}
-                  selectedRows={selectedRows}
-                  selectRowUpdate={this.selectRowUpdate}
-                  options={this.options}
-                  searchText={searchText}
-                  filterList={filterList}
-              />
-            </Table>
-          </div>
-          <Table>
-            {this.options.customFooter
-                ? this.options.customFooter(rowCount, page, rowsPerPage, this.changeRowsPerPage, this.changePage)
-                : this.options.pagination && (
-                <MaterialDatatablePagination
-                    count={rowCount}
-                    page={page}
-                    rowsPerPage={rowsPerPage}
-                    changeRowsPerPage={this.changeRowsPerPage}
-                    changePage={this.changePage}
-                    component={"div"}
-                    options={this.options}
-                />
-            )}
+          <Table ref={el => (this.tableRef = el)} tabIndex={"0"} role={"grid"}>
+            <caption className={classes.caption}>{title}</caption>
+            <MaterialDatatableHead
+              activeColumn={activeColumn}
+              data={this.state.displayData}
+              count={rowCount}
+              columns={columns}
+              page={page}
+              rowsPerPage={rowsPerPage}
+              handleHeadUpdateRef={fn => (this.updateToolbarSelect = fn)}
+              selectedRows={selectedRows}
+              selectRowUpdate={this.selectRowUpdate}
+              toggleSort={this.toggleSortColumn}
+              setCellRef={this.setHeadCellRef}
+              options={this.options}
+            />
+            <MaterialDatatableBody
+              data={this.state.displayData}
+              count={rowCount}
+              columns={columns}
+              page={page}
+              rowsPerPage={rowsPerPage}
+              selectedRows={selectedRows}
+              selectRowUpdate={this.selectRowUpdate}
+              options={this.options}
+              searchText={searchText}
+              filterList={filterList}
+            />
           </Table>
-          <div className={classes.liveAnnounce} aria-live={"polite"} ref={el => (this.announceRef = el)}>
-            {announceText}
-          </div>
-        </Paper>
+        </div>
+        <Table>
+          {this.options.customFooter
+            ? this.options.customFooter(rowCount, page, rowsPerPage, this.changeRowsPerPage, this.changePage)
+            : this.options.pagination && (
+                <MaterialDatatablePagination
+                  count={rowCount}
+                  page={page}
+                  rowsPerPage={rowsPerPage}
+                  changeRowsPerPage={this.changeRowsPerPage}
+                  changePage={this.changePage}
+                  component={"div"}
+                  options={this.options}
+                />
+              )}
+        </Table>
+        <div className={classes.liveAnnounce} aria-live={"polite"} ref={el => (this.announceRef = el)}>
+          {announceText}
+        </div>
+      </Paper>
     );
   }
 }
 
-export default withStyles(defaultTableStyles, {name: "MaterialDatatable"})(MaterialDatatable);
+export default withStyles(defaultTableStyles, { name: "MaterialDatatable" })(MaterialDatatable);
