@@ -69,6 +69,7 @@ class MaterialDatatable extends React.Component {
       filterType: PropTypes.oneOf(["dropdown", "checkbox", "multiselect"]),
       textLabels: PropTypes.object,
       pagination: PropTypes.bool,
+      usePaperPlaceholder: PropTypes.bool,
       customToolbar: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
       customToolbarSelect: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
       customFooter: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
@@ -125,8 +126,8 @@ class MaterialDatatable extends React.Component {
     searchText: null,
   };
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.tableRef = false;
     this.headCellRefs = {};
     this.setHeadResizeable = () => {};
@@ -152,13 +153,12 @@ class MaterialDatatable extends React.Component {
     this.setTableData(props, TABLE_LOAD.INITIAL);
   }
 
-  /*
-     * React currently does not support deep merge for defaultProps. Objects are overwritten
-     */
+  //React currently does not support deep merge for defaultProps. Objects are overwritten
   getDefaultOptions(props) {
     const defaultOptions = {
       responsive: "stacked",
       filterType: "checkbox",
+      usePaperPlaceholder: true,
       pagination: true,
       textLabels,
       resizableColumns: false,
@@ -213,10 +213,7 @@ class MaterialDatatable extends React.Component {
     this.headCellRefs[index] = el;
   };
 
-  /*
-     *  Build the source table data
-     */
-
+  // Build the source table data
   setTableData(props, status, callback = () => {}) {
     const { data, columns, options } = props;
 
@@ -373,56 +370,6 @@ class MaterialDatatable extends React.Component {
         }
       }
     }
-
-    /*  for (let index = 0; index < row.length; index++) {
-            let columnDisplay = row[index];
-            let columnValue = row[index];
-
-            if (columns[index].customBodyRender) {
-                const tableMeta = this.getTableMeta(rowIndex, index, row, columns[index], this.state.data, {
-                    ...this.state,
-                    filterList: filterList,
-                    searchText: searchText,
-                });
-
-                const funcResult = columns[index].customBodyRender(
-                    columnValue,
-                    tableMeta,
-                    this.updateDataCol.bind(null, rowIndex, index),
-                );
-                columnDisplay = funcResult;
-
-                /!* drill down to get the value of a cell *!/
-                columnValue =
-                    typeof funcResult === "string"
-                        ? funcResult
-                        : funcResult.props && funcResult.props.value
-                        ? funcResult.props.value
-                        : columnValue;
-            }
-
-            displayRow.push(columnDisplay);
-
-            if (filterList[index].length && filterList[index].indexOf(columnValue) < 0) {
-                isFiltered = true;
-            }
-
-            const columnVal = columnValue === null ? "" : columnValue.toString();
-
-            if (searchText) {
-                let searchNeedle = searchText.toString();
-                let searchStack = columnVal.toString();
-
-                if (!this.options.caseSensitive) {
-                    searchNeedle = searchNeedle.toLowerCase();
-                    searchStack = searchStack.toLowerCase();
-                }
-
-                if (searchStack.indexOf(searchNeedle) >= 0) {
-                    isSearchFound = true;
-                }
-            }
-        }*/
 
     if (isFiltered || (searchText && !isSearchFound)) return null;
     else return displayRow;
@@ -812,103 +759,141 @@ class MaterialDatatable extends React.Component {
     };
   }
 
-  render() {
+  renderTableToolbar() {
+    const { title } = this.props;
+    const { data, columns, filterData, filterList, selectedRows } = this.state;
+
+    return selectedRows.data.length ? (
+      <MaterialDatatableToolbarSelect
+        options={this.options}
+        selectedRows={selectedRows}
+        onRowsDelete={this.selectRowDelete}
+      />
+    ) : (
+      <MaterialDatatableToolbar
+        columns={columns}
+        data={data}
+        filterData={filterData}
+        filterList={filterList}
+        filterUpdate={this.filterUpdate}
+        options={this.options}
+        resetFilters={this.resetFilters}
+        searchTextUpdate={this.searchTextUpdate}
+        tableRef={() => this.tableContent}
+        title={title}
+        toggleViewColumn={this.toggleViewColumn}
+      />
+    );
+  }
+
+  renderTable() {
     const { classes, title } = this.props;
-    const {
-      announceText,
-      activeColumn,
-      data,
-      displayData,
-      columns,
-      page,
-      filterData,
-      filterList,
-      rowsPerPage,
-      selectedRows,
-      searchText,
-    } = this.state;
+    const { activeColumn, displayData, columns, page, filterList, rowsPerPage, selectedRows, searchText } = this.state;
 
     const rowCount = this.options.count || displayData.length;
 
     return (
-      <Paper elevation={4} ref={el => (this.tableContent = el)} className={classes.paper}>
-        {selectedRows.data.length ? (
-          <MaterialDatatableToolbarSelect
-            options={this.options}
-            selectedRows={selectedRows}
-            onRowsDelete={this.selectRowDelete}
-          />
-        ) : (
-          <MaterialDatatableToolbar
-            columns={columns}
-            data={data}
-            filterData={filterData}
-            filterList={filterList}
-            filterUpdate={this.filterUpdate}
-            options={this.options}
-            resetFilters={this.resetFilters}
-            searchTextUpdate={this.searchTextUpdate}
-            tableRef={() => this.tableContent}
-            title={title}
-            toggleViewColumn={this.toggleViewColumn}
-          />
+      <div
+        style={{ position: "relative" }}
+        className={this.options.responsive === "scroll" ? classes.responsiveScroll : null}>
+        {this.options.resizableColumns && (
+          <MaterialDatatableResize key={rowCount} setResizeable={fn => (this.setHeadResizeable = fn)} />
         )}
-        <MaterialDatatableFilterList options={this.options} filterList={filterList} filterUpdate={this.filterUpdate} />
-        <div
-          style={{ position: "relative" }}
-          className={this.options.responsive === "scroll" ? classes.responsiveScroll : null}>
-          {this.options.resizableColumns && (
-            <MaterialDatatableResize key={rowCount} setResizeable={fn => (this.setHeadResizeable = fn)} />
-          )}
-          <Table ref={el => (this.tableRef = el)} tabIndex={"0"} role={"grid"}>
-            <caption className={classes.caption}>{title}</caption>
-            <MaterialDatatableHead
-              activeColumn={activeColumn}
-              data={this.state.displayData}
-              count={rowCount}
-              columns={columns}
-              page={page}
-              rowsPerPage={rowsPerPage}
-              handleHeadUpdateRef={fn => (this.updateToolbarSelect = fn)}
-              selectedRows={selectedRows}
-              selectRowUpdate={this.selectRowUpdate}
-              toggleSort={this.toggleSortColumn}
-              setCellRef={this.setHeadCellRef}
-              options={this.options}
-            />
-            <MaterialDatatableBody
-              data={this.state.displayData}
-              count={rowCount}
-              columns={columns}
-              page={page}
-              rowsPerPage={rowsPerPage}
-              selectedRows={selectedRows}
-              selectRowUpdate={this.selectRowUpdate}
-              options={this.options}
-              searchText={searchText}
-              filterList={filterList}
-            />
-          </Table>
-        </div>
-        <Table>
-          {this.options.customFooter
-            ? this.options.customFooter(rowCount, page, rowsPerPage, this.changeRowsPerPage, this.changePage)
-            : this.options.pagination && (
-                <MaterialDatatablePagination
-                  count={rowCount}
-                  page={page}
-                  rowsPerPage={rowsPerPage}
-                  changeRowsPerPage={this.changeRowsPerPage}
-                  changePage={this.changePage}
-                  component={"div"}
-                  options={this.options}
-                />
-              )}
+        <Table ref={el => (this.tableRef = el)} tabIndex={"0"} role={"grid"}>
+          <caption className={classes.caption}>{title}</caption>
+          <MaterialDatatableHead
+            activeColumn={activeColumn}
+            data={this.state.displayData}
+            count={rowCount}
+            columns={columns}
+            page={page}
+            rowsPerPage={rowsPerPage}
+            handleHeadUpdateRef={fn => (this.updateToolbarSelect = fn)}
+            selectedRows={selectedRows}
+            selectRowUpdate={this.selectRowUpdate}
+            toggleSort={this.toggleSortColumn}
+            setCellRef={this.setHeadCellRef}
+            options={this.options}
+          />
+          <MaterialDatatableBody
+            data={this.state.displayData}
+            count={rowCount}
+            columns={columns}
+            page={page}
+            rowsPerPage={rowsPerPage}
+            selectedRows={selectedRows}
+            selectRowUpdate={this.selectRowUpdate}
+            options={this.options}
+            searchText={searchText}
+            filterList={filterList}
+          />
         </Table>
-        <div className={classes.liveAnnounce} aria-live={"polite"} ref={el => (this.announceRef = el)}>
-          {announceText}
-        </div>
+      </div>
+    );
+  }
+
+  renderFilterList() {
+    const { filterList } = this.state;
+
+    return (
+      <MaterialDatatableFilterList options={this.options} filterList={filterList} filterUpdate={this.filterUpdate} />
+    );
+  }
+
+  renderPagination() {
+    const { displayData, page, rowsPerPage } = this.state;
+
+    const rowCount = this.options.count || displayData.length;
+
+    return (
+      <Table>
+        {this.options.customFooter
+          ? this.options.customFooter(rowCount, page, rowsPerPage, this.changeRowsPerPage, this.changePage)
+          : this.options.pagination && (
+              <MaterialDatatablePagination
+                count={rowCount}
+                page={page}
+                rowsPerPage={rowsPerPage}
+                changeRowsPerPage={this.changeRowsPerPage}
+                changePage={this.changePage}
+                component={"div"}
+                options={this.options}
+              />
+            )}
+      </Table>
+    );
+  }
+
+  renderLiveAnnounce() {
+    const { classes } = this.props;
+    const { announceText } = this.state;
+
+    return (
+      <div className={classes.liveAnnounce} aria-live={"polite"} ref={el => (this.announceRef = el)}>
+        {announceText}
+      </div>
+    );
+  }
+
+  render() {
+    const { classes } = this.props;
+
+    return this.options.usePaperPlaceholder ? (
+      <Paper elevation={4} ref={el => (this.tableContent = el)} className={classes.paper}>
+        {this.renderTableToolbar()}
+        {this.renderFilterList()}
+        {this.renderTable()}
+        {this.renderPagination()}
+        {this.renderLiveAnnounce()}
       </Paper>
+    ) : (
+      <React.Fragment>
+        {this.renderTableToolbar()}
+        {this.renderFilterList()}
+        {this.renderTable()}
+        {this.renderPagination()}
+        {this.renderLiveAnnounce()}
+      </React.Fragment>
     );
   }
 }

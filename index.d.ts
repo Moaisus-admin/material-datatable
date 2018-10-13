@@ -24,6 +24,7 @@ export interface MaterialDatatableOptions {
     filterType?: string
     textLabels?: object
     pagination?: boolean
+    usePaperPlaceholder?: boolean,
     selectableRows?: boolean
     resizableColumns?: boolean
     customToolbar?: () => ReactNode

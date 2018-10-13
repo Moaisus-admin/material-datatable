@@ -140,6 +140,7 @@ The component accepts the following props:
 |**`page`**|number||User provided starting page for pagination
 |**`count`**|number||User provided override for total number of rows
 |**`serverSide`**|boolean|false|Enable remote data source
+|**`usePaperPlaceholder`**|boolean|true|When false, component use React.Fragment as placeholder
 |**`filterList`**|array||User provided filter list
 |**`rowsSelected`**|array||User provided selected rows
 |**`filterType `**|string|'dropdown'|Choice of filtering view. Options are "checkbox", "dropdown", or "multiselect"

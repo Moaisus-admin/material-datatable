@@ -21,6 +21,7 @@ class Example extends React.Component {
         const options = {
             filter: true,
             selectableRows: true,
+            usePaperPlaceholder: false,
             filterType: 'dropdown',
             responsive: 'stacked',
             rowsPerPage: 10,
