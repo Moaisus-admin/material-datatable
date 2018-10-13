@@ -1,13 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import MUIDataTable from "../../src/";
+import MaterialDatatable from "../../src/";
 import { createMuiTheme, MuiThemeProvider, withStyles } from '@material-ui/core/styles';
 
 class Example extends React.Component {
 
   getMuiTheme = () => createMuiTheme({
     overrides: {
-      MUIDataTable: {
+      MaterialDatatable: {
         root: {
           backgroundColor: "#FF000",
         },
@@ -15,7 +15,7 @@ class Example extends React.Component {
           boxShadow: "none",
         }
       },
-      MUIDataTableBodyCell: {
+      MaterialDatatableBodyCell: {
         root: {
           backgroundColor: "#FFF"
         }
@@ -100,7 +100,7 @@ class Example extends React.Component {
 
     return (
       <MuiThemeProvider theme={this.getMuiTheme()}>
-        <MUIDataTable title={"ACME Employee list"} data={data} columns={columns} options={options} />
+        <MaterialDatatable title={"ACME Employee list"} data={data} columns={columns} options={options} />
       </MuiThemeProvider>
     );
 

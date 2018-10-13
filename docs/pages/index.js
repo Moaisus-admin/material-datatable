@@ -33,7 +33,7 @@ class Homepage extends React.Component {
       <Layout>
         <div>
           <p>
-            MUI-Datatables is a data tables component built on <a href="https://www.material-ui.com">Material-UI V1</a>.
+            Material-Datatable is a data tables component built on <a href="https://www.material-ui.com">Material-UI V1</a>.
             It comes with features like filtering, view/hide columns, search, export to CSV download, printing,
             selectable rows, pagination, and sorting. On top of the ability to customize styling on most views, there
             are two responsive modes "stacked" and "scroll" for mobile/tablet devices.
@@ -49,7 +49,7 @@ class Homepage extends React.Component {
             <DownloadIcon className={classes.stepIcon} />
             <Typography variant="title">Installation</Typography>
           </div>
-          <CodeSnippet withMargin language={"bash"} text={`npm install mui-datatables --save`} />
+          <CodeSnippet withMargin language={"bash"} text={`npm install material-datatable --save`} />
 
           <div className={classes.stepWrapper}>
             <BuildIcon className={classes.stepIcon} />
@@ -57,7 +57,7 @@ class Homepage extends React.Component {
           </div>
           <CodeSnippet
             language={"jsx"}
-            text={`import MUIDataTable from "mui-datatables";
+            text={`import MaterialDatatable from "material-datatable";
 
 const columns = ["Name", "Company", "City", "State"];
 
@@ -72,7 +72,7 @@ const options = {
   filterType: 'checkbox',
 };
 
-<MUIDataTable 
+<MaterialDatatable 
   title={"Employee List"} 
   data={data} 
   columns={columns} 

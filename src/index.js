@@ -1,3 +1,3 @@
-import MUIDataTable from "./MUIDataTable";
+import MaterialDatatable from "./MaterialDatatable";
 
-export default MUIDataTable;
+export default MaterialDatatable;

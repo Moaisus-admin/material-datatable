@@ -84,7 +84,7 @@ class Layout extends React.Component {
               <IconButton
                 component="a"
                 color="inherit"
-                href="https://github.com/gregnb/mui-datatables"
+                href="https://github.com/diaver/material-datatable"
                 aria-labelledby="appbar-github">
                 <GitHub />
               </IconButton>

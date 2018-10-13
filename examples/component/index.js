@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
-import MUIDataTable from "../../src/";
+import MaterialDatatable from "../../src/";
 import Cities from "./cities";
 
 class Example extends React.Component {
@@ -116,7 +116,7 @@ class Example extends React.Component {
     };
 
     return (
-      <MUIDataTable title={"ACME Employee list"} data={data} columns={columns} options={options} />
+      <MaterialDatatable title={"ACME Employee list"} data={data} columns={columns} options={options} />
     );
 
   }

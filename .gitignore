@@ -10,6 +10,8 @@ npm-debug.log*
 *.sublime-project
 *.sublime-workspace
 
+.idea
+
 # Runtime data
 pids
 *.pid

@@ -2,14 +2,14 @@
   <img src="https://user-images.githubusercontent.com/19170080/34070522-e15d32e2-e235-11e7-8af5-fa704cdcad56.png" />
 </div>
 
-# MUI-Datatables - Datatables for Material-UI
+# Material-Datatable - Datatable for Material-UI
 
-[![Build Status](https://travis-ci.org/gregnb/mui-datatables.svg?branch=master)](https://travis-ci.org/gregnb/mui-datatables)
-[![Coverage Status](https://coveralls.io/repos/github/gregnb/mui-datatables/badge.svg?branch=master)](https://coveralls.io/github/gregnb/mui-datatables?branch=master)
-[![dependencies Status](https://david-dm.org/gregnb/mui-datatables/status.svg)](https://david-dm.org/gregnb/mui-datatables)
-[![npm version](https://badge.fury.io/js/mui-datatables.svg)](https://badge.fury.io/js/mui-datatables)
+[![Build Status](https://travis-ci.org/diaver/material-datatable.svg?branch=master)](https://travis-ci.org/diaver/material-datatable)
+[![Coverage Status](https://coveralls.io/repos/github/diaver/material-datatable/badge.svg?branch=master)](https://coveralls.io/github/diaver/material-datatable?branch=master)
+[![dependencies Status](https://david-dm.org/diaver/material-datatable/status.svg)](https://david-dm.org/diaver/material-datatable)
+[![npm version](https://badge.fury.io/js/material-datatable.svg)](https://badge.fury.io/js/material-datatable)
 
-MUI-Datatables is a data tables component built on [Material-UI V1](https://www.material-ui-next.com).  It comes with features like filtering, resizable + view/hide columns, search, export to CSV download, printing, selectable rows, pagination, and sorting. On top of the ability to customize styling on most views, there are two responsive modes "stacked" and "scroll" for mobile/tablet devices.
+Material-Datatable is a data tables component built on [Material-UI V1](https://www.material-ui-next.com).  It comes with features like filtering, resizable + view/hide columns, search, export to CSV download, printing, selectable rows, pagination, and sorting. On top of the ability to customize styling on most views, there are two responsive modes "stacked" and "scroll" for mobile/tablet devices.
 
 <div align="center">
 	<img src="https://user-images.githubusercontent.com/19170080/38026128-eac9d506-3258-11e8-92a7-b0d06e5faa82.gif" />
@@ -17,7 +17,7 @@ MUI-Datatables is a data tables component built on [Material-UI V1](https://www.
 
 ## Install
 
-`npm install mui-datatables --save`
+`npm install material-datatable --save`
 
 ## Demo
 
@@ -29,22 +29,26 @@ For a simple table:
 
 ```js
 
-import MUIDataTable from "mui-datatables";
+import MaterialDatatable from "material-datatable";
 
-const columns = ["Name", "Company", "City", "State"];
+const columns = [
+    {name: 'Name', field: 'name'},
+    {name: 'Title', field: 'title'},
+    {name: 'Location', field: 'location'},
+    {name: 'Age', field: 'age'},
+    {name: 'Salary', field: 'salary'}
+];
 
 const data = [
- ["Joe James", "Test Corp", "Yonkers", "NY"],
- ["John Walsh", "Test Corp", "Hartford", "CT"],
- ["Bob Herm", "Test Corp", "Tampa", "FL"],
- ["James Houston", "Test Corp", "Dallas", "TX"],
+    {name: "Name 1", title: "Title 1", location: "Location 1", age: 30, salary: 10},
+    {name: "Name 2", title: "Title 2", location: "Location 2", age: 31, salary: 11},
 ];
 
 const options = {
   filterType: 'checkbox',
 };
 
-<MUIDataTable
+<MaterialDatatable
   title={"Employee List"}
   data={data}
   columns={columns}
@@ -57,11 +61,12 @@ Or customize columns:
 
 ```js
 
-import MUIDataTable from "mui-datatables";
+import MaterialDatatable from "material-datatable";
 
 const columns = [
  {
   name: "Name",
+  field: "name",
   options: {
    filter: true,
    sort: true,
@@ -69,6 +74,7 @@ const columns = [
  },
  {
   name: "Company",
+  field: "company",
   options: {
    filter: true,
    sort: false,
@@ -76,6 +82,7 @@ const columns = [
  },
  {
   name: "City",
+  field: "city",
   options: {
    filter: true,
    sort: false,
@@ -83,6 +90,7 @@ const columns = [
  },
  {
   name: "State",
+  field: "state",
   options: {
    filter: true,
    sort: false,
@@ -91,17 +99,15 @@ const columns = [
 ];
 
 const data = [
- ["Joe James", "Test Corp", "Yonkers", "NY"],
- ["John Walsh", "Test Corp", "Hartford", "CT"],
- ["Bob Herm", "Test Corp", "Tampa", "FL"],
- ["James Houston", "Test Corp", "Dallas", "TX"],
+    {name: "Name 1", title: "Title 1", location: "Location 1", age: 30, salary: 10},
+    {name: "Name 2", title: "Title 2", location: "Location 2", age: 31, salary: 11},
 ];
 
 const options = {
   filterType: 'checkbox',
 };
 
-<MUIDataTable
+<MaterialDatatable
   title={"Employee List"}
   data={data}
   columns={columns}
@@ -113,7 +119,7 @@ const options = {
 ## API
 
 
-#### &lt;MUIDataTable />
+#### &lt;MaterialDatatable />
 
 The component accepts the following props:
 
@@ -174,6 +180,7 @@ On each column object, you have the ability to customize columns to your liking 
 const columns = [
  {
   name: "Name",
+  field: "name",
   options: {
    filter: true,
    sort: false
@@ -187,6 +194,7 @@ const columns = [
 |Name|Type|Description
 |:--:|:-----|:-----|
 |**`Name`**|string|Name of column (This field is required)
+|**`Field`**|string|Field of object field (This field is required)
 |**`options`**|object|Options for customizing column
 
 
@@ -198,7 +206,7 @@ const columns = [
 |**`sort`**|boolean|true|Enable/disable sorting on column
 |**`download`**|boolean|true|Display column in CSV download file
 |**`customHeadRender`**|function||Function that returns a string or React component. Used as display for column header. `function(value, tableMeta, updateValue) => string`&#124;`
-|**`customBodyRender`**|function||Function that returns a string or React component. Used as display data within all table cells of a given column. `function(value, tableMeta, updateValue) => string`&#124;` React Component` [Example](https://github.com/gregnb/mui-datatables/blob/master/examples/component/index.js)
+|**`customBodyRender`**|function||Function that returns a string or React component. Used as display data within all table cells of a given column. `function(value, tableMeta, updateValue) => string`&#124;` React Component` [Example](https://github.com/diaver/material-datatable/blob/master/examples/component/index.js)
 
 `customHeadRender` is called with these arguments:
 
@@ -242,14 +250,14 @@ Using Material-UI theme overrides will allow you to customize styling to your li
 
 ```js
 import React from "react";
-import MUIDataTable from "mui-datatables";
+import MaterialDatatable from "material-datatable";
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 
 class BodyCellExample extends React.Component {
 
   getMuiTheme = () => createMuiTheme({
     overrides: {
-      MUIDataTableBodyCell: {
+      MaterialDatatableBodyCell: {
         root: {
           backgroundColor: "#FF0000"
         }
@@ -261,7 +269,7 @@ class BodyCellExample extends React.Component {
 
     return (
       <MuiThemeProvider theme={this.getMuiTheme()}>
-        <MUIDataTable title={"ACME Employee list"} data={data} columns={columns} options={options} />
+        <MaterialDatatable title={"ACME Employee list"} data={data} columns={columns} options={options} />
       </MuiThemeProvider>
     );
 
@@ -285,7 +293,7 @@ const options = {
 };
 ```
 
-To see an example **[Click Here](https://github.com/gregnb/mui-datatables/blob/master/examples/serverside-pagination/index.js)**
+To see an example **[Click Here](https://github.com/diaver/material-datatable/blob/master/examples/serverside-pagination/index.js)**
 
 ## Localization
 

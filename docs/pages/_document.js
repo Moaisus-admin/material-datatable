@@ -15,7 +15,7 @@ class MyDocument extends Document {
 
           <meta
             name="description"
-            content={"MUI-Datatables is a data tables component built for React Material-UI V1"}
+            content={"Material-Datatable is a data tables component built for React Material-UI V1"}
           />
           <meta
             name="keywords"

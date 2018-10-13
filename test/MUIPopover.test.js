@@ -2,7 +2,7 @@ import React from "react";
 import { spy, stub } from "sinon";
 import { mount, shallow } from "enzyme";
 import { assert, expect, should } from "chai";
-import { MUIPopover, MUIPopoverTarget, MUIPopoverContent } from "../src/MUIPopover";
+import { MaterialPopover, MaterialPopoverTarget, MaterialPopoverContent } from "../src/MUIPopover";
 import Popover from "@material-ui/core/Popover";
 
 describe("<MUIPopover />", function() {

@@ -35,7 +35,7 @@ const defaultHeadCellStyles = {
   },
 };
 
-class MUIDataTableHeadCell extends React.Component {
+class MaterialDatatableHeadCell extends React.Component {
   static propTypes = {
     /** Extend the style applied to components */
     classes: PropTypes.object,
@@ -99,4 +99,4 @@ class MUIDataTableHeadCell extends React.Component {
   }
 }
 
-export default withStyles(defaultHeadCellStyles, { name: "MUIDataTableHeadCell" })(MUIDataTableHeadCell);
+export default withStyles(defaultHeadCellStyles, { name: "MaterialDatatableHeadCell" })(MaterialDatatableHeadCell);

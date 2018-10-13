@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import MUIDataTable from "../../src/";
+import MaterialDatatable from "../../src/";
 
 class Example extends React.Component {
 
@@ -24,7 +24,7 @@ class Example extends React.Component {
     };
 
     return (
-      <MUIDataTable title={"ACME Employee list"} data={data} columns={columns} options={options} />
+      <MaterialDatatable title={"ACME Employee list"} data={data} columns={columns} options={options} />
     );
 
   }

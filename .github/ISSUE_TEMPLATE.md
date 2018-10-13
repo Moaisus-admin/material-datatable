@@ -1,7 +1,7 @@
 <!--- Provide a general summary of the issue in the Title above -->
 
 <!--
-    Thank you very much for contributing to MUI-datatables by creating an issue! ❤️
+    Thank you very much for contributing to Material-Datatable by creating an issue! ❤️
 -->
 
 ## Expected Behavior
@@ -33,7 +33,7 @@
 | Tech         | Version |
 |--------------|---------|
 | Material-UI  |         |
-| MUI-datatables  |         |
+| Material-datatable  |         |
 | React        |         |
 | browser      |         |
 | etc          |         |

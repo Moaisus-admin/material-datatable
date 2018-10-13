@@ -2,14 +2,14 @@ import React from "react";
 import { spy, stub } from "sinon";
 import { mount, shallow } from "enzyme";
 import { assert, expect, should } from "chai";
-import MUIDataTable from "../src/MUIDataTable";
-import MUIDataTableFilterList from "../src/MUIDataTableFilterList";
-import MUIDataTablePagination from "../src/MUIDataTablePagination";
+import MaterialDatatable from "../src/MaterialDatatable";
+import MaterialDatatableFilterList from "../src/MaterialDatatableFilterList";
+import MaterialDatatablePagination from "../src/MaterialDatatablePagination";
 import textLabels from "../src/textLabels";
 import Chip from "@material-ui/core/Chip";
 import Cities from "../examples/component/cities";
 
-describe("<MUIDataTable />", function() {
+describe("<MaterialDatatable />", function() {
   let data;
   let displayData;
   let columns;
@@ -62,7 +62,7 @@ describe("<MUIDataTable />", function() {
   });
 
   it("should render a table", () => {
-    const shallowWrapper = shallow(<MUIDataTable columns={columns} data={data} />);
+    const shallowWrapper = shallow(<MaterialDatatable columns={columns} data={data} />);
     assert.strictEqual(
       shallowWrapper
         .dive()
@@ -73,7 +73,7 @@ describe("<MUIDataTable />", function() {
   });
 
   it("should correctly build internal columns data structure", () => {
-    const shallowWrapper = shallow(<MUIDataTable columns={columns} data={data} />);
+    const shallowWrapper = shallow(<MaterialDatatable columns={columns} data={data} />);
     const actualResult = shallowWrapper.dive().state().columns;
 
     const expectedResult = [
@@ -103,14 +103,14 @@ describe("<MUIDataTable />", function() {
   });
 
   it("should correctly build internal table data and displayData structure", () => {
-    const shallowWrapper = shallow(<MUIDataTable columns={columns} data={data} />);
+    const shallowWrapper = shallow(<MaterialDatatable columns={columns} data={data} />);
     const state = shallowWrapper.dive().state();
     //assert.deepEqual(state.data, data);
     assert.deepEqual(JSON.stringify(state.displayData), displayData);
   });
 
   it("should correctly re-build internal table data and displayData structure with prop change", () => {
-    const shallowWrapper = shallow(<MUIDataTable columns={columns} data={data} />);
+    const shallowWrapper = shallow(<MaterialDatatable columns={columns} data={data} />);
     let state = shallowWrapper.dive().state();
 
     assert.deepEqual(JSON.stringify(state.displayData), displayData);
@@ -133,8 +133,8 @@ describe("<MUIDataTable />", function() {
   });
 
   it("should not re-build internal table data and displayData structure with no prop change to data or columns", () => {
-    const initializeTableSpy = spy(MUIDataTable.Naked.prototype, "initializeTable");
-    const mountWrapper = mount(shallow(<MUIDataTable columns={columns} data={data} />).get(0));
+    const initializeTableSpy = spy(MaterialDatatable.Naked.prototype, "initializeTable");
+    const mountWrapper = mount(shallow(<MaterialDatatable columns={columns} data={data} />).get(0));
 
     let state = mountWrapper.state();
     assert.deepEqual(JSON.stringify(state.displayData), displayData);
@@ -150,7 +150,7 @@ describe("<MUIDataTable />", function() {
   });
 
   it("should correctly build internal filterList structure", () => {
-    const shallowWrapper = shallow(<MUIDataTable columns={columns} data={data} />);
+    const shallowWrapper = shallow(<MaterialDatatable columns={columns} data={data} />);
     const state = shallowWrapper.dive().state();
     const expectedResult = [[], [], [], []];
 
@@ -158,7 +158,7 @@ describe("<MUIDataTable />", function() {
   });
 
   it("should correctly build internal unique column data for filterData structure", () => {
-    const shallowWrapper = shallow(<MUIDataTable columns={columns} data={data} />);
+    const shallowWrapper = shallow(<MaterialDatatable columns={columns} data={data} />);
     const state = shallowWrapper.dive().state();
     const expectedResult = [
       ["Herm, Bob", "Houston, James", "James, Joe", "Walsh, John"],
@@ -176,7 +176,7 @@ describe("<MUIDataTable />", function() {
       textLabels,
     };
 
-    const shallowWrapper = shallow(<MUIDataTable columns={columns} data={data} options={options} />);
+    const shallowWrapper = shallow(<MaterialDatatable columns={columns} data={data} options={options} />);
     const state = shallowWrapper.dive().state();
     assert.strictEqual(state.rowsPerPage, 20);
   });
@@ -186,7 +186,7 @@ describe("<MUIDataTable />", function() {
       rowsPerPageOptions: [5, 10, 15],
     };
 
-    const shallowWrapper = shallow(<MUIDataTable columns={columns} data={data} options={options} />);
+    const shallowWrapper = shallow(<MaterialDatatable columns={columns} data={data} options={options} />);
     const state = shallowWrapper.dive().state();
     assert.deepEqual(state.rowsPerPageOptions, [5, 10, 15]);
   });
@@ -196,8 +196,8 @@ describe("<MUIDataTable />", function() {
       pagination: true,
     };
 
-    const mountWrapper = mount(<MUIDataTable columns={columns} data={data} options={options} />);
-    const actualResult = mountWrapper.find(MUIDataTablePagination);
+    const mountWrapper = mount(<MaterialDatatable columns={columns} data={data} options={options} />);
+    const actualResult = mountWrapper.find(MaterialDatatablePagination);
     assert.lengthOf(actualResult, 1);
   });
 
@@ -206,13 +206,13 @@ describe("<MUIDataTable />", function() {
       pagination: false,
     };
 
-    const mountWrapper = mount(<MUIDataTable columns={columns} data={data} options={options} />);
-    const actualResult = mountWrapper.find(MUIDataTablePagination);
+    const mountWrapper = mount(<MaterialDatatable columns={columns} data={data} options={options} />);
+    const actualResult = mountWrapper.find(MaterialDatatablePagination);
     assert.lengthOf(actualResult, 0);
   });
 
   it("should properly set internal filterList when calling filterUpdate method with type=checkbox", () => {
-    const shallowWrapper = shallow(<MUIDataTable columns={columns} data={data} />);
+    const shallowWrapper = shallow(<MaterialDatatable columns={columns} data={data} />);
     const table = shallowWrapper.dive();
     const instance = table.instance();
     instance.filterUpdate(0, "Joe James", "checkbox");
@@ -223,7 +223,7 @@ describe("<MUIDataTable />", function() {
   });
 
   it("should remove entry from filterList when calling filterUpdate method with type=checkbox and same arguments a second time", () => {
-    const shallowWrapper = shallow(<MUIDataTable columns={columns} data={data} />);
+    const shallowWrapper = shallow(<MaterialDatatable columns={columns} data={data} />);
     const table = shallowWrapper.dive();
     const instance = table.instance();
     instance.filterUpdate(0, "Joe James", "checkbox");
@@ -240,7 +240,7 @@ describe("<MUIDataTable />", function() {
   });
 
   it("should properly set internal filterList when calling filterUpdate method with type=dropdown", () => {
-    const shallowWrapper = shallow(<MUIDataTable columns={columns} data={data} />);
+    const shallowWrapper = shallow(<MaterialDatatable columns={columns} data={data} />);
     const table = shallowWrapper.dive();
     const instance = table.instance();
     instance.filterUpdate(0, "Joe James", "dropdown");
@@ -253,13 +253,13 @@ describe("<MUIDataTable />", function() {
   it("should create Chip when filterList is populated", () => {
     const filterList = [["Joe James"], [], [], []];
 
-    const mountWrapper = mount(<MUIDataTableFilterList filterList={filterList} filterUpdate={() => true} />);
+    const mountWrapper = mount(<MaterialDatatableFilterList filterList={filterList} filterUpdate={() => true} />);
     const actualResult = mountWrapper.find(Chip);
     assert.strictEqual(actualResult.length, 1);
   });
 
   it("should remove entry from filterList when calling filterUpdate method with type=dropdown and same arguments a second time", () => {
-    const shallowWrapper = shallow(<MUIDataTable columns={columns} data={data} />);
+    const shallowWrapper = shallow(<MaterialDatatable columns={columns} data={data} />);
     const table = shallowWrapper.dive();
     const instance = table.instance();
     instance.filterUpdate(0, "Joe James", "dropdown");
@@ -277,7 +277,7 @@ describe("<MUIDataTable />", function() {
 
   it("should properly reset internal filterList when calling resetFilters method", () => {
     // set a filter
-    const shallowWrapper = shallow(<MUIDataTable columns={columns} data={data} />);
+    const shallowWrapper = shallow(<MaterialDatatable columns={columns} data={data} />);
     const table = shallowWrapper.dive();
     const instance = table.instance();
     instance.filterUpdate(0, "Joe James", "checkbox");
@@ -294,7 +294,7 @@ describe("<MUIDataTable />", function() {
   });
 
   it("should properly set searchText when calling searchTextUpdate method", () => {
-    const shallowWrapper = shallow(<MUIDataTable columns={columns} data={data} />);
+    const shallowWrapper = shallow(<MaterialDatatable columns={columns} data={data} />);
     const table = shallowWrapper.dive();
     const instance = table.instance();
 
@@ -310,7 +310,7 @@ describe("<MUIDataTable />", function() {
   });
 
   it("should sort provided column when calling toggleSortColum method", () => {
-    const shallowWrapper = shallow(<MUIDataTable columns={columns} data={data} />).dive();
+    const shallowWrapper = shallow(<MaterialDatatable columns={columns} data={data} />).dive();
     const instance = shallowWrapper.instance();
 
     instance.toggleSortColumn(0);
@@ -328,7 +328,7 @@ describe("<MUIDataTable />", function() {
   });
 
   it("should toggle provided column when calling toggleViewCol method", () => {
-    const shallowWrapper = shallow(<MUIDataTable columns={columns} data={data} />).dive();
+    const shallowWrapper = shallow(<MaterialDatatable columns={columns} data={data} />).dive();
     const instance = shallowWrapper.instance();
 
     instance.toggleViewColumn(0);
@@ -362,7 +362,7 @@ describe("<MUIDataTable />", function() {
   });
 
   it("should get displayable data when calling getDisplayData method", () => {
-    const shallowWrapper = shallow(<MUIDataTable columns={columns} data={data} />).dive();
+    const shallowWrapper = shallow(<MaterialDatatable columns={columns} data={data} />).dive();
     const instance = shallowWrapper.instance();
     const state = shallowWrapper.state();
 
@@ -371,7 +371,7 @@ describe("<MUIDataTable />", function() {
   });
 
   it("should update rowsPerPage when calling changeRowsPerPage method", () => {
-    const shallowWrapper = shallow(<MUIDataTable columns={columns} data={data} />).dive();
+    const shallowWrapper = shallow(<MaterialDatatable columns={columns} data={data} />).dive();
     const instance = shallowWrapper.instance();
 
     instance.changeRowsPerPage(10);
@@ -382,7 +382,7 @@ describe("<MUIDataTable />", function() {
   });
 
   it("should update page position when calling changePage method", () => {
-    const shallowWrapper = shallow(<MUIDataTable columns={columns} data={data} />).dive();
+    const shallowWrapper = shallow(<MaterialDatatable columns={columns} data={data} />).dive();
     const instance = shallowWrapper.instance();
 
     instance.changePage(2);
@@ -393,7 +393,7 @@ describe("<MUIDataTable />", function() {
   });
 
   it("should update selectedRows when calling selectRowUpdate method with type=head", () => {
-    const shallowWrapper = shallow(<MUIDataTable columns={columns} data={data} />).dive();
+    const shallowWrapper = shallow(<MaterialDatatable columns={columns} data={data} />).dive();
     const instance = shallowWrapper.instance();
 
     instance.selectRowUpdate("head", 0);
@@ -410,7 +410,7 @@ describe("<MUIDataTable />", function() {
   });
 
   it("should update selectedRows when calling selectRowUpdate method with type=cell", () => {
-    const shallowWrapper = shallow(<MUIDataTable columns={columns} data={data} />).dive();
+    const shallowWrapper = shallow(<MaterialDatatable columns={columns} data={data} />).dive();
     const instance = shallowWrapper.instance();
 
     instance.selectRowUpdate("cell", 0);
@@ -421,7 +421,7 @@ describe("<MUIDataTable />", function() {
   });
 
   it("should update value when calling updateValue method in customBodyRender", () => {
-    const shallowWrapper = shallow(<MUIDataTable columns={columns} data={data} />).dive();
+    const shallowWrapper = shallow(<MaterialDatatable columns={columns} data={data} />).dive();
     const instance = shallowWrapper.instance();
 
     instance.updateDataCol(0, 2, "Las Vegas");
@@ -432,7 +432,7 @@ describe("<MUIDataTable />", function() {
   });
   it("should call onTableChange when calling selectRowUpdate method with type=head", () => {
     const options = { selectableRows: true, onTableChange: spy() };
-    const shallowWrapper = shallow(<MUIDataTable columns={columns} data={data} options={options} />).dive();
+    const shallowWrapper = shallow(<MaterialDatatable columns={columns} data={data} options={options} />).dive();
     const instance = shallowWrapper.instance();
 
     instance.selectRowUpdate("head", 0);
@@ -451,7 +451,7 @@ describe("<MUIDataTable />", function() {
   it("should call onTableChange when calling selectRowUpdate method with type=cell", () => {
     const options = { selectableRows: true, onTableChange: spy() };
 
-    const shallowWrapper = shallow(<MUIDataTable columns={columns} data={data} options={options} />).dive();
+    const shallowWrapper = shallow(<MaterialDatatable columns={columns} data={data} options={options} />).dive();
     const instance = shallowWrapper.instance();
 
     instance.selectRowUpdate("cell", 0);

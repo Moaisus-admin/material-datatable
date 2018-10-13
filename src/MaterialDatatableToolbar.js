@@ -3,10 +3,10 @@ import Typography from "@material-ui/core/Typography";
 import Toolbar from "@material-ui/core/Toolbar";
 import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
-import { MUIPopover, MUIPopoverTarget, MUIPopoverContent } from "./MUIPopover";
-import MUIDataTableFilter from "./MUIDataTableFilter";
-import MUIDataTableViewCol from "./MUIDataTableViewCol";
-import MUIDataTableSearch from "./MUIDataTableSearch";
+import { MaterialPopover, MaterialPopoverTarget, MaterialPopoverContent } from "./MaterialPopover";
+import MaterialDatatableFilter from "./MaterialDatatableFilter";
+import MaterialDatatableViewCol from "./MaterialDatatableViewCol";
+import MaterialDatatableSearch from "./MaterialDatatableSearch";
 import SearchIcon from "@material-ui/icons/Search";
 import DownloadIcon from "@material-ui/icons/CloudDownload";
 import PrintIcon from "@material-ui/icons/Print";
@@ -77,7 +77,7 @@ export const responsiveToolbarStyles = {
   "@media screen and (max-width: 480px)": {},
 };
 
-class MUIDataTableToolbar extends React.Component {
+class MaterialDatatableToolbar extends React.Component {
   state = {
     iconActive: null,
     showSearch: false,
@@ -172,7 +172,7 @@ class MUIDataTableToolbar extends React.Component {
       <Toolbar className={classes.root} role={"toolbar"} aria-label={"Table Toolbar"}>
         <div className={classes.left}>
           {showSearch === true ? (
-            <MUIDataTableSearch onSearch={searchTextUpdate} onHide={this.hideSearch} options={options} />
+            <MaterialDatatableSearch onSearch={searchTextUpdate} onHide={this.hideSearch} options={options} />
           ) : (
             <div className={classes.titleRoot} aria-hidden={"true"}>
               <Typography variant="title" className={classes.titleText}>
@@ -221,8 +221,8 @@ class MUIDataTableToolbar extends React.Component {
             false
           )}
           {options.viewColumns ? (
-            <MUIPopover refExit={this.setActiveIcon.bind(null)} container={tableRef}>
-              <MUIPopoverTarget>
+            <MaterialPopover refExit={this.setActiveIcon.bind(null)} container={tableRef}>
+              <MaterialPopoverTarget>
                 <IconButton
                   aria-label={viewColumns}
                   classes={{ root: this.getActiveIcon(classes, "viewcolumns") }}
@@ -231,22 +231,22 @@ class MUIDataTableToolbar extends React.Component {
                     <ViewColumnIcon />
                   </Tooltip>
                 </IconButton>
-              </MUIPopoverTarget>
-              <MUIPopoverContent>
-                <MUIDataTableViewCol
+              </MaterialPopoverTarget>
+              <MaterialPopoverContent>
+                <MaterialDatatableViewCol
                   data={data}
                   columns={columns}
                   options={options}
                   onColumnUpdate={toggleViewColumn}
                 />
-              </MUIPopoverContent>
-            </MUIPopover>
+              </MaterialPopoverContent>
+            </MaterialPopover>
           ) : (
             false
           )}
           {options.filter ? (
-            <MUIPopover refExit={this.setActiveIcon.bind(null)} container={tableRef}>
-              <MUIPopoverTarget>
+            <MaterialPopover refExit={this.setActiveIcon.bind(null)} container={tableRef}>
+              <MaterialPopoverTarget>
                 <IconButton
                   aria-label={filterTable}
                   classes={{ root: this.getActiveIcon(classes, "filter") }}
@@ -255,9 +255,9 @@ class MUIDataTableToolbar extends React.Component {
                     <FilterIcon />
                   </Tooltip>
                 </IconButton>
-              </MUIPopoverTarget>
-              <MUIPopoverContent>
-                <MUIDataTableFilter
+              </MaterialPopoverTarget>
+              <MaterialPopoverContent>
+                <MaterialDatatableFilter
                   columns={columns}
                   options={options}
                   filterList={filterList}
@@ -265,8 +265,8 @@ class MUIDataTableToolbar extends React.Component {
                   onFilterUpdate={filterUpdate}
                   onFilterReset={resetFilters}
                 />
-              </MUIPopoverContent>
-            </MUIPopover>
+              </MaterialPopoverContent>
+            </MaterialPopover>
           ) : (
             false
           )}
@@ -277,4 +277,4 @@ class MUIDataTableToolbar extends React.Component {
   }
 }
 
-export default styled(MUIDataTableToolbar)(defaultToolbarStyles, { name: "MUIDataTableToolbar" });
+export default styled(MaterialDatatableToolbar)(defaultToolbarStyles, { name: "MaterialDatatableToolbar" });

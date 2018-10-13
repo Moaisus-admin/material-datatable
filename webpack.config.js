@@ -15,7 +15,7 @@ module.exports = {
     disableHostCheck: true,
     hot: true,
     inline: true,
-    host: "0.0.0.0",
+    host: "localhost",
     port: 5050
   },
   module: {

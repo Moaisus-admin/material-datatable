@@ -3,10 +3,10 @@ import { spy, stub } from "sinon";
 import { mount, shallow } from "enzyme";
 import { assert, expect, should } from "chai";
 import textLabels from "../src/textLabels";
-import MUIDataTableHeadCell from "../src/MUIDataTableHeadCell";
+import MaterialDatatableHeadCell from "../src/MaterialDatatableHeadCell";
 import Tooltip from "@material-ui/core/Tooltip";
 
-describe("<MUIDataTableHeadCell />", function() {
+describe("<MaterialDatatableHeadCell />", function() {
   let classes;
 
   before(() => {
@@ -20,14 +20,14 @@ describe("<MUIDataTableHeadCell />", function() {
     const toggleSort = () => {};
 
     const shallowWrapper = shallow(
-      <MUIDataTableHeadCell
+      <MaterialDatatableHeadCell
         options={options}
         sortDirection={"asc"}
         sort={true}
         toggleSort={toggleSort}
         classes={classes}>
         some content
-      </MUIDataTableHeadCell>,
+      </MaterialDatatableHeadCell>,
     ).dive();
 
     const actualResult = shallowWrapper.find(Tooltip);
@@ -39,14 +39,14 @@ describe("<MUIDataTableHeadCell />", function() {
     const toggleSort = () => {};
 
     const shallowWrapper = shallow(
-      <MUIDataTableHeadCell
+      <MaterialDatatableHeadCell
         options={options}
         sortDirection={"asc"}
         sort={true}
         toggleSort={toggleSort}
         classes={classes}>
         some content
-      </MUIDataTableHeadCell>,
+      </MaterialDatatableHeadCell>,
     );
 
     const actualResult = shallowWrapper.find(Tooltip);
@@ -58,9 +58,9 @@ describe("<MUIDataTableHeadCell />", function() {
     const toggleSort = spy();
 
     const shallowWrapper = shallow(
-      <MUIDataTableHeadCell options={options} index={0} sortDirection={"asc"} toggleSort={toggleSort} classes={classes}>
+      <MaterialDatatableHeadCell options={options} index={0} sortDirection={"asc"} toggleSort={toggleSort} classes={classes}>
         some content
-      </MUIDataTableHeadCell>,
+      </MaterialDatatableHeadCell>,
     ).dive();
 
     const instance = shallowWrapper.instance();

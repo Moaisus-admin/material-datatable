@@ -2,9 +2,9 @@ import React from "react";
 import { findDOMNode } from "react-dom";
 import classNames from "classnames";
 import TableHead from "@material-ui/core/TableHead";
-import MUIDataTableHeadRow from "./MUIDataTableHeadRow";
-import MUIDataTableHeadCell from "./MUIDataTableHeadCell";
-import MUIDataTableSelectCell from "./MUIDataTableSelectCell";
+import MaterialDatatableHeadRow from "./MaterialDatatableHeadRow";
+import MaterialDatatableHeadCell from "./MaterialDatatableHeadCell";
+import MaterialDatatableSelectCell from "./MaterialDatatableSelectCell";
 import { withStyles } from "@material-ui/core/styles";
 
 const defaultHeadStyles = {
@@ -16,7 +16,7 @@ const defaultHeadStyles = {
   },
 };
 
-class MUIDataTableHead extends React.Component {
+class MaterialDatatableHead extends React.Component {
   componentDidMount() {
     this.props.handleHeadUpdateRef(this.handleUpdateCheck);
   }
@@ -39,9 +39,9 @@ class MUIDataTableHead extends React.Component {
     return (
       <TableHead
         className={classNames({ [classes.responsiveStacked]: options.responsive === "stacked", [classes.main]: true })}>
-        <MUIDataTableHeadRow>
+        <MaterialDatatableHeadRow>
           {options.selectableRows && (
-            <MUIDataTableSelectCell
+            <MaterialDatatableSelectCell
               ref={el => setCellRef(0, findDOMNode(el))}
               onChange={this.handleRowSelect.bind(null)}
               indeterminate={isDeterminate}
@@ -54,7 +54,7 @@ class MUIDataTableHead extends React.Component {
               (column.customHeadRender ? (
                 column.customHeadRender({ index, ...column }, this.handleToggleColumn)
               ) : (
-                <MUIDataTableHeadCell
+                <MaterialDatatableHeadCell
                   key={index}
                   index={index}
                   type={"cell"}
@@ -64,13 +64,13 @@ class MUIDataTableHead extends React.Component {
                   toggleSort={this.handleToggleColumn}
                   options={options}>
                   {column.name}
-                </MUIDataTableHeadCell>
+                </MaterialDatatableHeadCell>
               )),
           )}
-        </MUIDataTableHeadRow>
+        </MaterialDatatableHeadRow>
       </TableHead>
     );
   }
 }
 
-export default withStyles(defaultHeadStyles, { name: "MUIDataTableHead" })(MUIDataTableHead);
+export default withStyles(defaultHeadStyles, { name: "MaterialDatatableHead" })(MaterialDatatableHead);

@@ -6,9 +6,9 @@ import TableRow from "@material-ui/core/TableRow";
 import TableFooter from "@material-ui/core/TableFooter";
 import TablePagination from "@material-ui/core/TablePagination";
 import textLabels from "../src/textLabels";
-import MUIDataTablePagination from "../src/MUIDataTablePagination";
+import MaterialDatatablePagination from "../src/MaterialDatatablePagination";
 
-describe("<MUIDataTablePagination />", function() {
+describe("<MaterialDatatablePagination />", function() {
   let options;
 
   before(() => {
@@ -19,7 +19,7 @@ describe("<MUIDataTablePagination />", function() {
   });
 
   it("should render a table footer with pagination", () => {
-    const mountWrapper = mount(<MUIDataTablePagination options={options} count={100} page={1} rowsPerPage={10} />);
+    const mountWrapper = mount(<MaterialDatatablePagination options={options} count={100} page={1} rowsPerPage={10} />);
 
     const actualResult = mountWrapper.find(TablePagination);
     assert.strictEqual(actualResult.length, 1);
@@ -28,7 +28,7 @@ describe("<MUIDataTablePagination />", function() {
   it("should trigger changeRowsPerPage prop callback when calling method handleRowChange", () => {
     const changeRowsPerPage = spy();
     const shallowWrapper = shallow(
-      <MUIDataTablePagination
+      <MaterialDatatablePagination
         options={options}
         count={100}
         page={1}
@@ -45,7 +45,7 @@ describe("<MUIDataTablePagination />", function() {
   it("should trigger changePage prop callback when calling method handlePageChange", () => {
     const changePage = spy();
     const shallowWrapper = shallow(
-      <MUIDataTablePagination options={options} count={100} page={1} rowsPerPage={10} changePage={changePage} />,
+      <MaterialDatatablePagination options={options} count={100} page={1} rowsPerPage={10} changePage={changePage} />,
     ).dive();
     const instance = shallowWrapper.instance();
 

@@ -19,7 +19,7 @@ const defaultSelectCellStyles = {
   disabled: {},
 };
 
-class MUIDataTableSelectCell extends React.Component {
+class MaterialDatatableSelectCell extends React.Component {
   static propTypes = {
     /** Select cell checked on/off */
     checked: PropTypes.bool.isRequired,
@@ -47,4 +47,4 @@ class MUIDataTableSelectCell extends React.Component {
   }
 }
 
-export default withStyles(defaultSelectCellStyles, { name: "MUIDataTableSelectCell" })(MUIDataTableSelectCell);
+export default withStyles(defaultSelectCellStyles, { name: "MaterialDatatableSelectCell" })(MaterialDatatableSelectCell);

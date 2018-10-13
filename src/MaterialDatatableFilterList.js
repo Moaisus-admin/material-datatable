@@ -15,7 +15,7 @@ const defaultFilterListStyles = {
   },
 };
 
-class MUIDataTableFilterList extends React.Component {
+class MaterialDatatableFilterList extends React.Component {
   static propTypes = {
     /** Data used to filter table against */
     filterList: PropTypes.array.isRequired,
@@ -45,4 +45,4 @@ class MUIDataTableFilterList extends React.Component {
   }
 }
 
-export default withStyles(defaultFilterListStyles, { name: "MUIDataTableFilterList" })(MUIDataTableFilterList);
+export default withStyles(defaultFilterListStyles, { name: "MaterialDatatableFilterList" })(MaterialDatatableFilterList);

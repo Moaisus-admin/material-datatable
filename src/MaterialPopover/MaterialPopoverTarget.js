@@ -1,6 +1,6 @@
 import React from "react";
 
-class MUIPopoverTarget extends React.Component {
+class MaterialPopoverTarget extends React.Component {
   render() {
     const targetContent = React.Children.map(this.props.children, (child, index) => {
       return React.cloneElement(child, {
@@ -14,4 +14,4 @@ class MUIPopoverTarget extends React.Component {
   }
 }
 
-export default MUIPopoverTarget;
+export default MaterialPopoverTarget;

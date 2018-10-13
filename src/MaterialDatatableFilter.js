@@ -106,7 +106,7 @@ export const defaultFilterStyles = {
   },
 };
 
-class MUIDataTableFilter extends React.Component {
+class MaterialDatatableFilter extends React.Component {
   static propTypes = {
     /** Data used to populate filter dropdown/checkbox */
     filterData: PropTypes.array.isRequired,
@@ -283,4 +283,4 @@ class MUIDataTableFilter extends React.Component {
   }
 }
 
-export default withStyles(defaultFilterStyles, { name: "MUIDataTableFilter" })(MUIDataTableFilter);
+export default withStyles(defaultFilterStyles, { name: "MaterialDatatableFilter" })(MaterialDatatableFilter);

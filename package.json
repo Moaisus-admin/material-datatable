@@ -1,7 +1,7 @@
 {
-  "name": "mui-datatables",
-  "version": "2.0.0-beta-32",
-  "description": "Datatables for React using Material-UI",
+  "name": "material-datatable",
+  "version": "0.0.1-beta",
+  "description": "Datatable for React using Material-UI",
   "main": "dist/index.js",
   "files": [
     "dist"
@@ -22,19 +22,20 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gregnb/mui-datatables.git"
+    "url": "git+https://github.com/diaver/material-datatable.git"
   },
   "keywords": [
     "material-ui",
     "datatables",
-    "react"
+    "react",
+    "typescript"
   ],
-  "author": "gregnb <gregnb@gmail.com>",
+  "author": "Diaver <st.glushak@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/gregnb/mui-datatables/issues"
+    "url": "https://github.com/diaver/material-datatable/issues"
   },
-  "homepage": "https://github.com/gregnb/mui-datatables#readme",
+  "homepage": "https://github.com/diaver/material-datatable#readme",
   "devDependencies": {
     "@material-ui/core": "^3.0.2",
     "@material-ui/icons": "^3.0.1",

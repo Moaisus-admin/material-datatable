@@ -1,11 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Popover from "@material-ui/core/Popover";
-import MUIPopoverContent from "./MUIPopoverContent";
-import MUIPopoverTarget from "./MUIPopoverTarget";
+import MaterialPopoverContent from "./MaterialPopoverContent";
+import MaterialPopoverTarget from "./MaterialPopoverTarget";
 import { findDOMNode } from "react-dom";
 
-class MUIPopover extends React.Component {
+class MaterialPopover extends React.Component {
   static propTypes = {
     /** Show indicating arrow. default: true */
     arrow: PropTypes.bool,
@@ -16,7 +16,7 @@ class MUIPopover extends React.Component {
     /** MUIPopoverTarget and MUIPopoverContent are required children */
     children: (props, propName, componentName) => {
       let childMatch = true;
-      const expectedComponents = [MUIPopoverContent, MUIPopoverTarget];
+      const expectedComponents = [MaterialPopoverContent, MaterialPopoverTarget];
 
       React.Children.map(props.children, (child, index) => {
         if (expectedComponents.indexOf(child.type) === -1) childMatch = false;
@@ -27,7 +27,7 @@ class MUIPopover extends React.Component {
           "`" +
             componentName +
             "` " +
-            "should only have children of the following types: `MUIPopoverTarget`, `MUIPopoverContent`.",
+            "should only have children of the following types: `MaterialPopoverTarget`, `MaterialPopoverContent`.",
         );
       }
     },
@@ -82,7 +82,7 @@ class MUIPopover extends React.Component {
     const { className, placement, refClose, refExit, children, ...providedProps } = this.props;
 
     React.Children.map(children, (child, index) => {
-      if (child.type === MUIPopoverContent || child.type === <MUIPopoverContent />.type) {
+      if (child.type === MaterialPopoverContent || child.type === <MaterialPopoverContent />.type) {
         const transformOriginSpecs = {
           vertical: "top",
           horizontal: "center",
@@ -111,7 +111,7 @@ class MUIPopover extends React.Component {
         );
 
         popoverRender.push(popoverContent);
-      } else if (child.type === MUIPopoverTarget || child.type === <MUIPopoverTarget />.type) {
+      } else if (child.type === MaterialPopoverTarget || child.type === <MaterialPopoverTarget />.type) {
         const targetContent = React.cloneElement(child, {
           key: index,
           targetRef: el => (this.anchorEl = el),
@@ -126,4 +126,4 @@ class MUIPopover extends React.Component {
   }
 }
 
-export default MUIPopover;
+export default MaterialPopover;

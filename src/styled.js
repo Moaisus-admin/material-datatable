@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import merge from "lodash.merge";
-import { withStyles } from "@material-ui/core/styles";
+import {withStyles} from "@material-ui/core/styles";
 
 /*
  *  Material-UI does not yet support ability to grab props within style()
@@ -35,8 +35,7 @@ const styled = (WrappedComponent, customProps = {}) => {
           super(props);
           this.FinalComponent = withStyles(theme => {
             const defaultStyles = styles(theme, props, style);
-            const mergedStyles = merge(defaultStyles, props.styles ? props.styles : {});
-            return mergedStyles;
+              return merge(defaultStyles, props.styles ? props.styles : {});
           }, options)(StyledComponent);
         }
 
