@@ -17,8 +17,8 @@ describe("<MaterialDatatable />", function () {
   let renderCities = (value, tableMeta, updateValueFn) => (
       <Cities value={value} index={tableMeta.rowIndex} change={event => updateValueFn(event)}/>
   );
-  let renderName = (value) => {
-    return value.split(" ")[1] + ", " + value.split(" ")[0]
+  let renderName = value => {
+    return value.split(" ")[1] + ", " + value.split(" ")[0];
   };
 
   before(() => {
@@ -26,13 +26,13 @@ describe("<MaterialDatatable />", function () {
       {name: "Name", field: "name", options: {customBodyRender: renderName}},
       {name: "Company", field: "company"},
       {name: "City", field: "city", options: {customBodyRender: renderCities}},
-      {name: "State", field: "state",},
+      {name: "State", field: "state"},
     ];
     data = [
       {name: "Joe James", company: "Test Corp", city: "Yonkers", state: "NY"},
       {name: "John Walsh", company: "Test Corp", city: "Hartford", state: "CT"},
       {name: "Bob Herm", company: "Test Corp", city: "Tampa", state: "FL"},
-      {name: "James Houston", company: "Test Corp", city: "Dallas", state: "TX"}
+      {name: "James Houston", company: "Test Corp", city: "Dallas", state: "TX"},
     ];
     // internal table data built from source data provided
     displayData = JSON.stringify([
@@ -54,10 +54,32 @@ describe("<MaterialDatatable />", function () {
       },
     ]);
     tableData = [
-      {index: 0, data: {name:"James, Joe", company: "Test Corp", city: renderCities("Yonkers", {rowIndex: 0}),state: "NY"}},
-      {index: 1, data: {name:"Walsh, John", company:"Test Corp", city:renderCities("Hartford", {rowIndex: 1}), state:"CT"}},
-      {index: 2, data: {name:"Herm, Bob", company:"Test Corp", city:renderCities("Tampa", {rowIndex: 2}), state:"FL"}},
-      {index: 3, data: {name:"Houston, James", company:"Test Corp", city:renderCities("Dallas", {rowIndex: 3}), state:"TX"}},
+      {
+        index: 0,
+        data: {name: "James, Joe", company: "Test Corp", city: renderCities("Yonkers", {rowIndex: 0}), state: "NY"},
+      },
+      {
+        index: 1,
+        data: {
+          name: "Walsh, John",
+          company: "Test Corp",
+          city: renderCities("Hartford", {rowIndex: 1}),
+          state: "CT",
+        },
+      },
+      {
+        index: 2,
+        data: {name: "Herm, Bob", company: "Test Corp", city: renderCities("Tampa", {rowIndex: 2}), state: "FL"},
+      },
+      {
+        index: 3,
+        data: {
+          name: "Houston, James",
+          company: "Test Corp",
+          city: renderCities("Dallas", {rowIndex: 3}),
+          state: "TX",
+        },
+      },
     ];
     renderCities = renderCities;
     renderName = renderName;
@@ -90,13 +112,13 @@ describe("<MaterialDatatable />", function () {
         customBodyRender: renderName,
       },
       {
-        display: "true", 
-        name: "Company", 
-        field:"company",
-        sort: true, 
-        filter: true, 
-        download: true, 
-        sortDirection: null
+        display: "true",
+        name: "Company",
+        field: "company",
+        sort: true,
+        filter: true,
+        download: true,
+        sortDirection: null,
       },
       {
         display: "true",
@@ -109,13 +131,13 @@ describe("<MaterialDatatable />", function () {
         customBodyRender: renderCities,
       },
       {
-        display: "true", 
-        field: "state", 
-        name: "State", 
-        sort: true, 
-        filter: true, 
-        download: true, 
-        sortDirection: null
+        display: "true",
+        field: "state",
+        name: "State",
+        sort: true,
+        filter: true,
+        download: true,
+        sortDirection: null,
       },
     ];
 
@@ -141,20 +163,20 @@ describe("<MaterialDatatable />", function () {
       {name: "Joe James", company: "Test Corp", city: "Yonkers", state: "NY"},
       {name: "John Walsh", company: "Test Corp", city: "Hartford", state: "CT"},
       {name: "Bob Herm", company: "Test Corp", city: "Tampa", state: "FL"},
-      {name: "James Houston", company: "Test Corp", city: "Dallas", state: "TX"}
+      {name: "James Houston", company: "Test Corp", city: "Dallas", state: "TX"},
     ];
-    
-  /*  let newData = data.map(item => new {}(item));*/
+
+    /*  let newData = data.map(item => new {}(item));*/
     newData[0].name = "testing";
     shallowWrapper.setProps({data: newData});
     shallowWrapper.update();
 
     state = shallowWrapper.dive().state();
     const expectedResult = [
-      {index: 0, data: {name:"testing", company: "Test Corp", city:"Yonkers", state: "NY"}},
-      {index: 1, data: {name:"John Walsh", company:"Test Corp", city:"Hartford", state:"CT"}},
-      {index: 2, data: {name:"Bob Herm", company:"Test Corp", city:"Tampa", state:"FL"}},
-      {index: 3, data: {name:"James Houston", company:"Test Corp", city:"Dallas", state:"TX"}},
+      {index: 0, data: {name: "testing", company: "Test Corp", city: "Yonkers", state: "NY"}},
+      {index: 1, data: {name: "John Walsh", company: "Test Corp", city: "Hartford", state: "CT"}},
+      {index: 2, data: {name: "Bob Herm", company: "Test Corp", city: "Tampa", state: "FL"}},
+      {index: 3, data: {name: "James Houston", company: "Test Corp", city: "Dallas", state: "TX"}},
     ];
 
     assert.deepEqual(state.data, expectedResult);
@@ -381,7 +403,7 @@ describe("<MaterialDatatable />", function () {
         sort: true,
         filter: true,
         download: true,
-        sortDirection: null
+        sortDirection: null,
       },
       {
         name: "City",
@@ -396,11 +418,11 @@ describe("<MaterialDatatable />", function () {
       {
         name: "State",
         field: "state",
-        display: "true", 
-        sort: true, 
-        filter: true, 
-        download: true, 
-        sortDirection: null
+        display: "true",
+        sort: true,
+        filter: true,
+        download: true,
+        sortDirection: null,
       },
     ];
 

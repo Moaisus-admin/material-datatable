@@ -21,7 +21,7 @@ Material-Datatable is a data tables component built on [Material-UI V1](https://
 
 ## Demo
 
-[![Edit react-to-print](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/wy2rl1nyzl)
+[![Edit react-to-print](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/2o35y90xrp)
 
 ## Usage
 

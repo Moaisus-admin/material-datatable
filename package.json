@@ -1,10 +1,12 @@
 {
   "name": "material-datatable",
-  "version": "0.0.1-beta",
+  "version": "0.0.3",
   "description": "Datatable for React using Material-UI",
   "main": "dist/index.js",
+  "types": "index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "index.d.ts"
   ],
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server -d --progress --colors",
@@ -30,7 +32,7 @@
     "react",
     "typescript"
   ],
-  "author": "Diaver <st.glushak@gmail.com>",
+  "author": "Stanislav Glushak <st.glushak@gmail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/diaver/material-datatable/issues"
@@ -39,7 +41,7 @@
   "devDependencies": {
     "@material-ui/core": "^3.0.2",
     "@material-ui/icons": "^3.0.1",
-    "babel-cli": "^6.26.0", 
+    "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.0.3",
     "babel-loader": "^7.1.2",
@@ -97,6 +99,7 @@
     "lodash.get": "^4.4.2",
     "lodash.memoize": "^4.1.2",
     "lodash.merge": "^4.6.0",
+    "mui-datatables": "^2.0.0-beta-32",
     "prop-types": "^15.6.0",
     "react-to-print": "^1.0.10"
   },
