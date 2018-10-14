@@ -73,11 +73,13 @@ class MaterialDatatableBody extends React.Component {
     }
 
     const startIndex = page === 0 ? 0 : page * rowsPerPage;
+
     return startIndex + index;
   }
 
   isRowSelected(index) {
     const { selectedRows } = this.props;
+
     return selectedRows.lookup && selectedRows.lookup[index] ? true : false;
   }
 
@@ -88,7 +90,7 @@ class MaterialDatatableBody extends React.Component {
   render() {
     const { classes, columns, options } = this.props;
     const tableRows = this.buildRows();
-
+    
     return (
       <TableBody>
         {tableRows ? (

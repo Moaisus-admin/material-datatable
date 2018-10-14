@@ -21,7 +21,7 @@ Material-Datatable is a data tables component built on [Material-UI V1](https://
 
 ## Demo
 
-[![Edit react-to-print](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/2o35y90xrp)
+[![Edit react-to-print](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/v09ymp9737)
 
 ## Typescript
 
@@ -36,27 +36,57 @@ For a simple table:
 import MaterialDatatable from "material-datatable";
 
 const columns = [
-    {name: 'Name', field: 'name'},
-    {name: 'Title', field: 'title'},
-    {name: 'Location', field: 'location'},
-    {name: 'Age', field: 'age'},
-    {name: 'Salary', field: 'salary'}
+    {   
+        name: 'Name', 
+        field: 'name',
+        options: {
+            width: 70,
+        },
+    },
+    {
+        name: 'Title', 
+        field: 'title'
+    },
+    {
+        name: 'Location', 
+        field: 'location',
+        options: {
+            width: 100,
+        },
+    },
+    {
+        name: 'Age', 
+        field: 'age'
+    },
+    {
+        name: 'Salary', 
+        field: 'salary'
+    },
+    {
+        name: 'Veeeeery loooooooooong naaaaaaaaaaame title', 
+        field: 'salary',
+        options: {
+            headerNoWrap: true,
+            customBodyRender: (value, tableMeta, updateValue) => {
+                return `${value.name} (${value.title})`; 
+            }
+        },
+    }
 ];
-
-const data = [
-    {name: "Name 1", title: "Title 1", location: "Location 1", age: 30, salary: 10},
+ const data = [
+    {name: "Veeeeery loooooooooong naaaaaaaaaaame", title: "Title 1", location: "Location 1", age: 30, salary: 10},
     {name: "Name 2", title: "Title 2", location: "Location 2", age: 31, salary: 11},
 ];
 
 const options = {
-  filterType: 'checkbox',
+    filterType: 'checkbox',
 };
 
 <MaterialDatatable
-  title={"Employee List"}
-  data={data}
-  columns={columns}
-  options={options}
+    title={"Employee List"}
+    data={data}
+    columns={columns}
+    options={options}
 />
 
 ```
@@ -183,15 +213,17 @@ On each column object, you have the ability to customize columns to your liking 
 
 ```js
 const columns = [
- {
-  name: "Name",
-  field: "name",
-  options: {
-   filter: true,
-   sort: false
-  }
- },
- ...
+    {
+        name: "Name",
+        field: "name",
+        options: {
+            width: 150,
+            headerNoWrap: true,
+            filter: true,
+            sort: false
+        }
+    },
+    ...
 ];
 ```
 
@@ -209,6 +241,8 @@ const columns = [
 |**`display`**|string|'true'|Display column in table. `enum('true', 'false', 'excluded')`
 |**`filter`**|boolean|true|Display column in filter list
 |**`sort`**|boolean|true|Enable/disable sorting on column
+|**`width`**|number|null|Set width for column (header and data)
+|**`headerNoWrap`**|boolean|false|No wrap for table header cell
 |**`download`**|boolean|true|Display column in CSV download file
 |**`customHeadRender`**|function||Function that returns a string or React component. Used as display for column header. `function(value, tableMeta, updateValue) => string`&#124;`
 |**`customBodyRender`**|function||Function that returns a string or React component. Used as display data within all table cells of a given column. `function(value, tableMeta, updateValue) => string`&#124;` React Component` [Example](https://github.com/diaver/material-datatable/blob/master/examples/component/index.js)

@@ -10,6 +10,8 @@ export interface MaterialDatatableColumnOptions {
     display?: "true" | "false" | "excluded"
     filter?: boolean
     sort?: boolean
+    width?: number,
+    headerNoWrap?: boolean,
     download?: boolean
     customHeadRender?: (value: any, tableMeta: any, updateValue: any) => string
     customBodyRender?: (value: any, tableMeta: any, updateValue: any) => string | ReactNode

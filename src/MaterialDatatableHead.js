@@ -30,7 +30,7 @@ class MaterialDatatableHead extends React.Component {
   };
 
   render() {
-    const { classes, columns, count, options, data, page, setCellRef, selectedRows } = this.props;
+    const { classes, columns, count, options, setCellRef, selectedRows } = this.props;
 
     const numSelected = (selectedRows && selectedRows.data.length) || 0;
     const isDeterminate = numSelected > 0 && numSelected < count;
@@ -60,6 +60,8 @@ class MaterialDatatableHead extends React.Component {
                   type={"cell"}
                   ref={el => setCellRef(index + 1, findDOMNode(el))}
                   sort={column.sort}
+                  width={column.width}
+                  headerNoWrap={column.headerNoWrap}
                   sortDirection={column.sortDirection}
                   toggleSort={this.handleToggleColumn}
                   options={options}>

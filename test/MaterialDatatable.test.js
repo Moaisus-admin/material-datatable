@@ -15,17 +15,17 @@ describe("<MaterialDatatable />", function() {
   let columns;
   let tableData;
   let renderCities = (value, tableMeta, updateValueFn) => (
-    <Cities value={value} index={tableMeta.rowIndex} change={event => updateValueFn(event)} />
+    <Cities value={value.city} index={tableMeta.rowIndex} change={event => updateValueFn(event)} />
   );
   let renderName = value => {
-    return value.split(" ")[1] + ", " + value.split(" ")[0];
+    return value.name.split(" ")[1] + ", " + value.name.split(" ")[0];
   };
 
   before(() => {
     columns = [
-      { name: "Name", field: "name", options: { customBodyRender: renderName } },
+      { name: "Name", field: "name", options: { customBodyRender: renderName, width: 100 } },
       { name: "Company", field: "company" },
-      { name: "City", field: "city", options: { customBodyRender: renderCities } },
+      { name: "City", field: "city", options: { customBodyRender: renderCities, headerNoWrap: 200 } },
       { name: "State", field: "state" },
     ];
     data = [
@@ -37,52 +37,60 @@ describe("<MaterialDatatable />", function() {
     // internal table data built from source data provided
     displayData = JSON.stringify([
       {
-        data: ["James, Joe", "Test Corp", renderCities("Yonkers", { rowIndex: 0 }), "NY"],
+        data: ["James, Joe", "Test Corp", renderCities(data[0], { rowIndex: 0 }), "NY"],
         dataIndex: 0,
       },
       {
-        data: ["Walsh, John", "Test Corp", renderCities("Hartford", { rowIndex: 1 }), "CT"],
+        data: ["Walsh, John", "Test Corp", renderCities(data[1], { rowIndex: 1 }), "CT"],
         dataIndex: 1,
       },
       {
-        data: ["Herm, Bob", "Test Corp", renderCities("Tampa", { rowIndex: 2 }), "FL"],
+        data: ["Herm, Bob", "Test Corp", renderCities(data[2], { rowIndex: 2 }), "FL"],
         dataIndex: 2,
       },
       {
-        data: ["Houston, James", "Test Corp", renderCities("Dallas", { rowIndex: 3 }), "TX"],
+        data: ["Houston, James", "Test Corp", renderCities(data[3], { rowIndex: 3 }), "TX"],
         dataIndex: 3,
       },
     ]);
     tableData = [
       {
         index: 0,
-        data: { name: "James, Joe", company: "Test Corp", city: renderCities("Yonkers", { rowIndex: 0 }), state: "NY" },
+        data: {
+          name: "James, Joe",
+          company: "Test Corp",
+          city: renderCities(data[0], { rowIndex: 0 }),
+          state: "NY",
+        },
       },
       {
         index: 1,
         data: {
           name: "Walsh, John",
           company: "Test Corp",
-          city: renderCities("Hartford", { rowIndex: 1 }),
+          city: renderCities(data[1], { rowIndex: 1 }),
           state: "CT",
         },
       },
       {
         index: 2,
-        data: { name: "Herm, Bob", company: "Test Corp", city: renderCities("Tampa", { rowIndex: 2 }), state: "FL" },
+        data: {
+          name: "Herm, Bob",
+          company: "Test Corp",
+          city: renderCities(data[2], { rowIndex: 2 }),
+          state: "FL",
+        },
       },
       {
         index: 3,
         data: {
           name: "Houston, James",
           company: "Test Corp",
-          city: renderCities("Dallas", { rowIndex: 3 }),
+          city: renderCities(data[3], { rowIndex: 3 }),
           state: "TX",
         },
       },
     ];
-    renderCities = renderCities;
-    renderName = renderName;
   });
 
   it("should render a table", () => {
@@ -107,6 +115,8 @@ describe("<MaterialDatatable />", function() {
         field: "name",
         sort: true,
         filter: true,
+        width: 100,
+        headerNoWrap: null,
         download: true,
         sortDirection: null,
         customBodyRender: renderName,
@@ -117,6 +127,8 @@ describe("<MaterialDatatable />", function() {
         field: "company",
         sort: true,
         filter: true,
+        width: null,
+        headerNoWrap: null,
         download: true,
         sortDirection: null,
       },
@@ -126,6 +138,8 @@ describe("<MaterialDatatable />", function() {
         field: "city",
         sort: true,
         filter: true,
+        width: null,
+        headerNoWrap: 200,
         download: true,
         sortDirection: null,
         customBodyRender: renderCities,
@@ -136,6 +150,8 @@ describe("<MaterialDatatable />", function() {
         name: "State",
         sort: true,
         filter: true,
+        width: null,
+        headerNoWrap: null,
         download: true,
         sortDirection: null,
       },
@@ -353,7 +369,7 @@ describe("<MaterialDatatable />", function() {
     const state = table.state();
 
     const expectedResult = JSON.stringify([
-      { data: ["James, Joe", "Test Corp", renderCities("Yonkers", { rowIndex: 0 }), "NY"], dataIndex: 0 },
+      { data: ["James, Joe", "Test Corp", renderCities(data[0], { rowIndex: 0 }), "NY"], dataIndex: 0 },
     ]);
 
     assert.deepEqual(JSON.stringify(state.displayData), expectedResult);
@@ -368,10 +384,10 @@ describe("<MaterialDatatable />", function() {
     const state = shallowWrapper.state();
 
     const expectedResult = JSON.stringify([
-      { data: ["Herm, Bob", "Test Corp", renderCities("Tampa", { rowIndex: 0 }), "FL"], dataIndex: 2 },
-      { data: ["Houston, James", "Test Corp", renderCities("Dallas", { rowIndex: 1 }), "TX"], dataIndex: 3 },
-      { data: ["James, Joe", "Test Corp", renderCities("Yonkers", { rowIndex: 2 }), "NY"], dataIndex: 0 },
-      { data: ["Walsh, John", "Test Corp", renderCities("Hartford", { rowIndex: 3 }), "CT"], dataIndex: 1 },
+      { data: ["Herm, Bob", "Test Corp", renderCities(data[2], { rowIndex: 0 }), "FL"], dataIndex: 2 },
+      { data: ["Houston, James", "Test Corp", renderCities(data[3], { rowIndex: 1 }), "TX"], dataIndex: 3 },
+      { data: ["James, Joe", "Test Corp", renderCities(data[0], { rowIndex: 2 }), "NY"], dataIndex: 0 },
+      { data: ["Walsh, John", "Test Corp", renderCities(data[1], { rowIndex: 3 }), "CT"], dataIndex: 1 },
     ]);
 
     assert.deepEqual(JSON.stringify(state.displayData), expectedResult);
@@ -392,6 +408,8 @@ describe("<MaterialDatatable />", function() {
         display: "false",
         sort: true,
         filter: true,
+        width: 100,
+        headerNoWrap: null,
         download: true,
         sortDirection: null,
         customBodyRender: renderName,
@@ -402,6 +420,8 @@ describe("<MaterialDatatable />", function() {
         display: "true",
         sort: true,
         filter: true,
+        width: null,
+        headerNoWrap: null,
         download: true,
         sortDirection: null,
       },
@@ -411,6 +431,8 @@ describe("<MaterialDatatable />", function() {
         display: "true",
         sort: true,
         filter: true,
+        width: null,
+        headerNoWrap: 200,
         download: true,
         sortDirection: null,
         customBodyRender: renderCities,
@@ -421,6 +443,8 @@ describe("<MaterialDatatable />", function() {
         display: "true",
         sort: true,
         filter: true,
+        width: null,
+        headerNoWrap: null,
         download: true,
         sortDirection: null,
       },

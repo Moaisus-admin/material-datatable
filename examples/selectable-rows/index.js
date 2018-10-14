@@ -6,15 +6,45 @@ class Example extends React.Component {
 
     render() {
         const columns = [
-            {name: 'Name', field: 'name'},
-            {name: 'Title', field: 'title'},
-            {name: 'Location', field: 'location'},
-            {name: 'Age', field: 'age'},
-            {name: 'Salary', field: 'salary'}
+            {   
+                name: 'Name', 
+                field: 'name',
+                options: {
+                    width: 70,
+                    
+                },
+            },
+            {
+                name: 'Title', 
+                field: 'title'
+            },
+            {
+                name: 'Location', 
+                field: 'location'
+            },
+            {
+                name: 'Age', 
+                field: 'age'
+            },
+            {
+                name: 'Salary', 
+                field: 'salary'
+            },
+            {
+                name: 'Veeeeery loooooooooong title', 
+                field: 'salary',
+                options: {
+                    width: 100,
+                    headerNoWrap: true,
+                    customBodyRender: (value, tableMeta, updateValue) => {
+                        return `${value.name} (${value.title})`; 
+                    }
+                },
+            }
         ];
 
         const data = [
-            {name: "Name 1", title: "Title 1", location: "Location 1", age: 30, salary: 10},
+            {name: "Veeeeery loooooooooong naaaaaaaaaaame", title: "Title 1", location: "Location 1", age: 30, salary: 10},
             {name: "Name 2", title: "Title 2", location: "Location 2", age: 31, salary: 11},
         ];
 

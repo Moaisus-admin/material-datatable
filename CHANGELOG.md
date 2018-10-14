@@ -1,3 +1,19 @@
+<a name="0.1.2"></a>
+## 0.1.2 (2018-10-13)
+
+* Added width and headerNoWrap options for columns (table header cell and table body cell)
+* Reduced table body cell padding to "4px 8px 4px 8px"
+
+<a name="0.1.1"></a>
+## 0.1.1 (2018-10-13)
+
+* Updated readme for new link on sandbox
+
+<a name="0.1.0"></a>
+## 0.1.0 (2018-10-13)
+
+* CustomRenderBody receive full object, not just one field
+
 <a name="0.0.9"></a>
 ## 0.0.9 (2018-10-13)
 

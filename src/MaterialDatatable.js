@@ -55,6 +55,8 @@ class MaterialDatatable extends React.Component {
           options: PropTypes.shape({
             display: PropTypes.string, // enum('true', 'false', 'excluded')
             filter: PropTypes.bool,
+            width: PropTypes.number,
+            headerNoWrap: PropTypes.bool,
             sort: PropTypes.bool,
             download: PropTypes.bool,
             customHeadRender: PropTypes.func,
@@ -229,6 +231,8 @@ class MaterialDatatable extends React.Component {
         sort: true,
         download: true,
         sortDirection: null,
+        width: null,
+        headerNoWrap: null
       };
 
       if (typeof column === "object") {
@@ -252,7 +256,8 @@ class MaterialDatatable extends React.Component {
       filterList[colIndex] = [];
 
       for (let rowIndex = 0; rowIndex < data.length; rowIndex++) {
-        let value = status === TABLE_LOAD.INITIAL ? data[rowIndex][column.field] : data[rowIndex].data[column.field];
+        let rowData = status === TABLE_LOAD.INITIAL ? data[rowIndex] : data[rowIndex].data;
+        let value = rowData[column.field];
 
         if (typeof tableData[rowIndex] === "undefined") {
           tableData.push({
@@ -263,7 +268,7 @@ class MaterialDatatable extends React.Component {
 
         if (typeof columnOptions.customBodyRender === "function") {
           const tableMeta = this.getTableMeta(rowIndex, colIndex, value, [], columnData, this.state);
-          const funcResult = columnOptions.customBodyRender(value, tableMeta);
+          const funcResult = columnOptions.customBodyRender(rowData, tableMeta);
 
           if (React.isValidElement(funcResult) && funcResult.props.value) {
             value = funcResult.props.value;
@@ -333,7 +338,7 @@ class MaterialDatatable extends React.Component {
         });
 
         const funcResult = columns[index].customBodyRender(
-          columnValue,
+          row,
           tableMeta,
           this.updateDataCol.bind(null, rowIndex, index),
         );
