@@ -88,17 +88,15 @@ class MaterialDatatableToolbar extends React.Component {
 
     const CSVHead =
       columns
-        .reduce(
-          (soFar, column) =>
-            column.download ? soFar + '"' + column.name + '"' + options.downloadOptions.separator : soFar,
-          "",
-        )
+        .reduce((accumulator, column) => {
+          return column.download ? `${accumulator}"${column.name}"${options.downloadOptions.separator}` : accumulator;
+        }, "")
         .slice(0, -1) + "\r\n";
 
     const CSVBody = data
       .reduce(
-        (soFar, row) =>
-          soFar +
+        (accumulator, row) =>
+          accumulator +
           '"' +
           row.data
             .filter((field, index) => columns[index].download)

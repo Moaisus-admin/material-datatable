@@ -41,11 +41,23 @@ class Example extends React.Component {
                     }
                 },
             }
+            ,
+            {
+                name: 'SubFieldData',
+                field: 'subFieldData',
+                options: {
+                    width: 100,
+                    headerNoWrap: true,
+                    customBodyRender: (value, tableMeta, updateValue) => {
+                        return `${value.subFieldData.value}`;
+                    }
+                },
+            }
         ];
 
         const data = [
-            {name: "Veeeeery loooooooooong naaaaaaaaaaame", title: "Title 1", location: "Location 1", age: 30, salary: 10},
-            {name: "Name 2", title: "Title 2", location: "Location 2", age: 31, salary: 11},
+            {name: "Veeeeery loooooooooong naaaaaaaaaaame", title: "Title 1", location: "Location 1", age: 30, salary: 10, subFieldData: {value:"11111111"}},
+            {name: "Name 2", title: "Title 2", location: "Location 2", age: 31, salary: 11, subFieldData: {value:"222222222"}},
         ];
 
         const options = {

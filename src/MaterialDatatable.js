@@ -232,7 +232,7 @@ class MaterialDatatable extends React.Component {
         download: true,
         sortDirection: null,
         width: null,
-        headerNoWrap: null
+        headerNoWrap: null,
       };
 
       if (typeof column === "object") {
@@ -472,7 +472,8 @@ class MaterialDatatable extends React.Component {
       prevState => {
         let columns = cloneDeep(prevState.columns);
         let data = prevState.data;
-        const order = prevState.columns[index].sortDirection;
+        let displayData = prevState.displayData;
+        let order = prevState.columns[index].sortDirection;
 
         for (let pos = 0; pos < columns.length; pos++) {
           if (index !== pos) {
@@ -499,7 +500,7 @@ class MaterialDatatable extends React.Component {
             selectedRows: prevState.selectedRows,
           };
         } else {
-          const sortedData = this.sortTable(data, index, order);
+          const sortedData = this.sortTable(data, index, order, displayData);
 
           newState = {
             ...newState,
@@ -728,16 +729,18 @@ class MaterialDatatable extends React.Component {
     return (a, b) => {
       if (a.data === null) a.data = "";
       if (b.data === null) b.data = "";
-      return (
-        (typeof a.data.localeCompare === "function" ? a.data.localeCompare(b.data) : a.data - b.data) *
-        (order === "asc" ? -1 : 1)
-      );
+
+      if (typeof a.data.localeCompare === "function") {
+        return a.data.localeCompare(b.data) * (order === "asc" ? -1 : 1);
+      } else {
+        return (a.data - b.data) * (order === "asc" ? -1 : 1);
+      }
     };
   }
 
-  sortTable(data, col, order) {
-    let sortedData = data.map((row, sIndex) => ({
-      data: row.data[this.props.columns[col].field],
+  sortTable(data, col, order, displayData) {
+    let sortedData = displayData.map((row, sIndex) => ({
+      data: row.data[col],
       position: sIndex,
       rowSelected: this.state.selectedRows.lookup[sIndex] ? true : false,
     }));
@@ -749,6 +752,7 @@ class MaterialDatatable extends React.Component {
 
     for (let i = 0; i < sortedData.length; i++) {
       const row = sortedData[i];
+      data[row.position].dataIndex = i;
       tableData.push(data[row.position]);
       if (row.rowSelected) {
         selectedRows.push({ index: i, dataIndex: data[row.position].index });
@@ -766,7 +770,7 @@ class MaterialDatatable extends React.Component {
 
   renderTableToolbar() {
     const { title } = this.props;
-    const { data, columns, filterData, filterList, selectedRows } = this.state;
+    const { columns, filterData, filterList, selectedRows } = this.state;
 
     return selectedRows.data.length ? (
       <MaterialDatatableToolbarSelect
@@ -777,7 +781,7 @@ class MaterialDatatable extends React.Component {
     ) : (
       <MaterialDatatableToolbar
         columns={columns}
-        data={data}
+        data={this.state.displayData}
         filterData={filterData}
         filterList={filterList}
         filterUpdate={this.filterUpdate}
@@ -799,6 +803,7 @@ class MaterialDatatable extends React.Component {
 
     return (
       <div
+        ref={el => (this.tableContent = el)}
         style={{ position: "relative" }}
         className={this.options.responsive === "scroll" ? classes.responsiveScroll : null}>
         {this.options.resizableColumns && (
@@ -884,7 +889,7 @@ class MaterialDatatable extends React.Component {
     const { classes } = this.props;
 
     return this.options.usePaperPlaceholder ? (
-      <Paper elevation={4} ref={el => (this.tableContent = el)} className={classes.paper}>
+      <Paper elevation={4} className={classes.paper}>
         {this.renderTableToolbar()}
         {this.renderFilterList()}
         {this.renderTable()}

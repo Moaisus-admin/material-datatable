@@ -1,3 +1,9 @@
+<a name="0.1.3"></a>
+## 0.1.3 (2018-10-14)
+
+* Fixed bugs with filter and search by sub level data
+* Fixed bugs with download and print 
+
 <a name="0.1.2"></a>
 ## 0.1.2 (2018-10-13)
 
