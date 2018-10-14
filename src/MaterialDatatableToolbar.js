@@ -3,7 +3,7 @@ import Typography from "@material-ui/core/Typography";
 import Toolbar from "@material-ui/core/Toolbar";
 import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
-import { MaterialPopover, MaterialPopoverTarget, MaterialPopoverContent } from "./MaterialPopover";
+import {MaterialPopover, MaterialPopoverTarget, MaterialPopoverContent} from "./MaterialPopover";
 import MaterialDatatableFilter from "./MaterialDatatableFilter";
 import MaterialDatatableViewCol from "./MaterialDatatableViewCol";
 import MaterialDatatableSearch from "./MaterialDatatableSearch";
@@ -16,263 +16,265 @@ import ReactToPrint from "react-to-print";
 import styled from "./styled";
 
 export const defaultToolbarStyles = (theme, props) => ({
-  root: {},
-  left: {
-    flex: "1 1 55%",
-  },
-  actions: {
-    flex: "0 0 45%",
-    textAlign: "right",
-  },
-  titleRoot: {},
-  titleText: {},
-  icon: {
-    "&:hover": {
-      color: "#307BB0",
+    root: {},
+    left: {
+        flex: "1 1 55%",
     },
-  },
-  iconActive: {
-    color: "#307BB0",
-  },
-  searchIcon: {
-    display: "inline-flex",
-    marginTop: "10px",
-    marginRight: "8px",
-  },
-  ...(props.options.responsive ? { ...responsiveToolbarStyles } : {}),
+    actions: {
+        flex: "0 0 45%",
+        textAlign: "right",
+    },
+    titleRoot: {},
+    titleText: {},
+    icon: {
+        "&:hover": {
+            color: "#307BB0",
+        },
+    },
+    iconActive: {
+        color: "#307BB0",
+    },
+    searchIcon: {
+        display: "inline-flex",
+        marginTop: "10px",
+        marginRight: "8px",
+    },
+    ...(props.options.responsive ? {...responsiveToolbarStyles} : {}),
 });
 
 export const responsiveToolbarStyles = {
-  "@media screen and (max-width: 960px)": {
-    titleRoot: {},
-    titleText: {
-      fontSize: "16px",
+    "@media screen and (max-width: 960px)": {
+        titleRoot: {},
+        titleText: {
+            fontSize: "16px",
+        },
+        spacer: {
+            display: "none",
+        },
+        left: {
+            // flex: "1 1 40%",
+            padding: "8px 0px",
+        },
+        actions: {
+            // flex: "1 1 60%",
+            textAlign: "right",
+        },
     },
-    spacer: {
-      display: "none",
+    "@media screen and (max-width: 600px)": {
+        root: {
+            display: "block",
+        },
+        left: {
+            padding: "8px 0px 0px 0px",
+        },
+        titleText: {
+            textAlign: "center",
+        },
+        actions: {
+            textAlign: "center",
+        },
     },
-    left: {
-      // flex: "1 1 40%",
-      padding: "8px 0px",
-    },
-    actions: {
-      // flex: "1 1 60%",
-      textAlign: "right",
-    },
-  },
-  "@media screen and (max-width: 600px)": {
-    root: {
-      display: "block",
-    },
-    left: {
-      padding: "8px 0px 0px 0px",
-    },
-    titleText: {
-      textAlign: "center",
-    },
-    actions: {
-      textAlign: "center",
-    },
-  },
-  "@media screen and (max-width: 480px)": {},
+    "@media screen and (max-width: 480px)": {},
 };
 
 class MaterialDatatableToolbar extends React.Component {
-  state = {
-    iconActive: null,
-    showSearch: false,
-  };
+    state = {
+        iconActive: null,
+        showSearch: false,
+    };
 
-  handleCSVDownload = () => {
-    const { data, columns, options } = this.props;
+    handleCSVDownload = () => {
+        const {data, columns, options} = this.props;
 
-    const CSVHead =
-      columns
-        .reduce((accumulator, column) => {
-          return column.download ? `${accumulator}"${column.name}"${options.downloadOptions.separator}` : accumulator;
-        }, "")
-        .slice(0, -1) + "\r\n";
+        const CSVHead =
+            columns
+                .reduce((accumulator, column) => {
+                    return column.download ? `${accumulator}"${column.name}"${options.downloadOptions.separator}` : accumulator;
+                }, "")
+                .slice(0, -1) + "\r\n";
 
-    const CSVBody = data
-      .reduce(
-        (accumulator, row) =>
-          accumulator +
-          '"' +
-          row.data
-            .filter((field, index) => columns[index].download)
-            .join('"' + options.downloadOptions.separator + '"') +
-          '"\r\n',
-        [],
-      )
-      .trim();
+        const CSVBody = data
+            .reduce(
+                (accumulator, row) =>
+                    accumulator +
+                    '"' +
+                    row.data
+                        .filter((field, index) => columns[index].download)
+                        .join('"' + options.downloadOptions.separator + '"') +
+                    '"\r\n',
+                [],
+            )
+            .trim();
 
-    /* taken from react-csv */
-    const csv = `${CSVHead}${CSVBody}`;
-    const blob = new Blob([csv], { type: "text/csv" });
-    const dataURI = `data:text/csv;charset=utf-8,${csv}`;
+        /* taken from react-csv */
+        const csv = `${CSVHead}${CSVBody}`;
+        const blob = new Blob([csv], {type: "text/csv"});
+        const dataURI = `data:text/csv;charset=utf-8,${csv}`;
 
-    const URL = window.URL || window.webkitURL;
-    const downloadURI = typeof URL.createObjectURL === "undefined" ? dataURI : URL.createObjectURL(blob);
+        const URL = window.URL || window.webkitURL;
+        const downloadURI = typeof URL.createObjectURL === "undefined" ? dataURI : URL.createObjectURL(blob);
 
-    let link = document.createElement("a");
-    link.setAttribute("href", downloadURI);
-    link.setAttribute("download", options.downloadOptions.filename);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
+        let link = document.createElement("a");
+        link.setAttribute("href", downloadURI);
+        link.setAttribute("download", options.downloadOptions.filename);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
 
-  setActiveIcon = iconName => {
-    this.setState(() => ({
-      iconActive: iconName,
-      showSearch: iconName === "search" ? true : false,
-    }));
-  };
+    setActiveIcon = iconName => {
+        this.setState(() => ({
+            iconActive: iconName,
+            showSearch: iconName === "search" ? true : false,
+        }));
+    };
 
-  getActiveIcon = (styles, iconName) => {
-    return this.state.iconActive !== iconName ? styles.icon : styles.iconActive;
-  };
+    getActiveIcon = (styles, iconName) => {
+        return this.state.iconActive !== iconName ? styles.icon : styles.iconActive;
+    };
 
-  hideSearch = () => {
-    const { onSearchClose } = this.props.options;
+    hideSearch = () => {
+        const {onSearchClose} = this.props.options;
 
-    if (onSearchClose) onSearchClose();
-    this.props.searchTextUpdate(null);
+        if (onSearchClose) onSearchClose();
+        this.props.searchTextUpdate(null);
 
-    this.setState(() => ({
-      iconActive: null,
-      showSearch: false,
-    }));
+        this.setState(() => ({
+            iconActive: null,
+            showSearch: false,
+        }));
 
-    this.searchButton.focus();
-  };
+        this.searchButton.focus();
+    };
 
-  render() {
-    const {
-      data,
-      options,
-      classes,
-      columns,
-      filterData,
-      filterList,
-      filterUpdate,
-      resetFilters,
-      searchTextUpdate,
-      toggleViewColumn,
-      title,
-      tableRef,
-    } = this.props;
+    render() {
+        const {
+            data,
+            options,
+            classes,
+            columns,
+            filterData,
+            filterList,
+            filterUpdate,
+            resetFilters,
+            searchTextUpdate,
+            toggleViewColumn,
+            title,
+            tableRef,
+        } = this.props;
 
-    const { search, downloadCsv, print, viewColumns, filterTable } = options.textLabels.toolbar;
-    const { showSearch } = this.state;
+        const {search, downloadCsv, print, viewColumns, filterTable} = options.textLabels.toolbar;
+        const {showSearch} = this.state;
 
-    return (
-      <Toolbar className={classes.root} role={"toolbar"} aria-label={"Table Toolbar"}>
-        <div className={classes.left}>
-          {showSearch === true ? (
-            <MaterialDatatableSearch onSearch={searchTextUpdate} onHide={this.hideSearch} options={options} />
-          ) : (
-            <div className={classes.titleRoot} aria-hidden={"true"}>
-              <Typography variant="title" className={classes.titleText}>
-                {title}
-              </Typography>
-            </div>
-          )}
-        </div>
-        <div className={classes.actions}>
-          {options.search ? (
-            <Tooltip title={search}>
-              <IconButton
-                aria-label={search}
-                buttonRef={el => (this.searchButton = el)}
-                classes={{ root: this.getActiveIcon(classes, "search") }}
-                onClick={this.setActiveIcon.bind(null, "search")}>
-                <SearchIcon />
-              </IconButton>
-            </Tooltip>
-          ) : (
-            false
-          )}
-          {options.download ? (
-            <Tooltip title={downloadCsv}>
-              <IconButton aria-label={downloadCsv} classes={{ root: classes.icon }} onClick={this.handleCSVDownload}>
-                <DownloadIcon />
-              </IconButton>
-            </Tooltip>
-          ) : (
-            false
-          )}
-          {options.print ? (
-            <Tooltip title={print}>
+        return (
+            <Toolbar className={classes.root} role={"toolbar"} aria-label={"Table Toolbar"}>
+                <div className={classes.left}>
+                    {showSearch === true ? (
+                        <MaterialDatatableSearch onSearch={searchTextUpdate} onHide={this.hideSearch}
+                                                 options={options}/>
+                    ) : (
+                        <div className={classes.titleRoot} aria-hidden={"true"}>
+                            <Typography variant="title" className={classes.titleText}>
+                                {title}
+                            </Typography>
+                        </div>
+                    )}
+                </div>
+                <div className={classes.actions}>
+                    {options.search ? (
+                        <Tooltip title={search}>
+                            <IconButton
+                                aria-label={search}
+                                buttonRef={el => (this.searchButton = el)}
+                                classes={{root: this.getActiveIcon(classes, "search")}}
+                                onClick={this.setActiveIcon.bind(null, "search")}>
+                                <SearchIcon/>
+                            </IconButton>
+                        </Tooltip>
+                    ) : (
+                        false
+                    )}
+                    {options.download ? (
+                        <Tooltip title={downloadCsv}>
+                            <IconButton aria-label={downloadCsv} classes={{root: classes.icon}}
+                                        onClick={this.handleCSVDownload}>
+                                <DownloadIcon/>
+                            </IconButton>
+                        </Tooltip>
+                    ) : (
+                        false
+                    )}
+                    {options.print ? (
+                        <Tooltip title={print}>
               <span>
                 <ReactToPrint
-                  trigger={() => (
-                    <IconButton aria-label={print} classes={{ root: classes.icon }}>
-                      <PrintIcon />
-                    </IconButton>
-                  )}
-                  content={() => this.props.tableRef()}
+                    trigger={() => (
+                        <IconButton aria-label={print} classes={{root: classes.icon}}>
+                            <PrintIcon/>
+                        </IconButton>
+                    )}
+                    content={() => this.props.tableRef()}
                 />
               </span>
-            </Tooltip>
-          ) : (
-            false
-          )}
-          {options.viewColumns ? (
-            <MaterialPopover refExit={this.setActiveIcon.bind(null)} container={tableRef}>
-              <MaterialPopoverTarget>
-                <IconButton
-                  aria-label={viewColumns}
-                  classes={{ root: this.getActiveIcon(classes, "viewcolumns") }}
-                  onClick={this.setActiveIcon.bind(null, "viewcolumns")}>
-                  <Tooltip title={viewColumns}>
-                    <ViewColumnIcon />
-                  </Tooltip>
-                </IconButton>
-              </MaterialPopoverTarget>
-              <MaterialPopoverContent>
-                <MaterialDatatableViewCol
-                  data={data}
-                  columns={columns}
-                  options={options}
-                  onColumnUpdate={toggleViewColumn}
-                />
-              </MaterialPopoverContent>
-            </MaterialPopover>
-          ) : (
-            false
-          )}
-          {options.filter ? (
-            <MaterialPopover refExit={this.setActiveIcon.bind(null)} container={tableRef}>
-              <MaterialPopoverTarget>
-                <IconButton
-                  aria-label={filterTable}
-                  classes={{ root: this.getActiveIcon(classes, "filter") }}
-                  onClick={this.setActiveIcon.bind(null, "filter")}>
-                  <Tooltip title={filterTable}>
-                    <FilterIcon />
-                  </Tooltip>
-                </IconButton>
-              </MaterialPopoverTarget>
-              <MaterialPopoverContent>
-                <MaterialDatatableFilter
-                  columns={columns}
-                  options={options}
-                  filterList={filterList}
-                  filterData={filterData}
-                  onFilterUpdate={filterUpdate}
-                  onFilterReset={resetFilters}
-                />
-              </MaterialPopoverContent>
-            </MaterialPopover>
-          ) : (
-            false
-          )}
-          {options.customToolbar ? options.customToolbar() : false}
-        </div>
-      </Toolbar>
-    );
-  }
+                        </Tooltip>
+                    ) : (
+                        false
+                    )}
+                    {options.viewColumns ? (
+                        <MaterialPopover refExit={this.setActiveIcon.bind(null)} container={tableRef}>
+                            <MaterialPopoverTarget>
+                                <IconButton
+                                    aria-label={viewColumns}
+                                    classes={{root: this.getActiveIcon(classes, "viewcolumns")}}
+                                    onClick={this.setActiveIcon.bind(null, "viewcolumns")}>
+                                    <Tooltip title={viewColumns}>
+                                        <ViewColumnIcon/>
+                                    </Tooltip>
+                                </IconButton>
+                            </MaterialPopoverTarget>
+                            <MaterialPopoverContent>
+                                <MaterialDatatableViewCol
+                                    data={data}
+                                    columns={columns}
+                                    options={options}
+                                    onColumnUpdate={toggleViewColumn}
+                                />
+                            </MaterialPopoverContent>
+                        </MaterialPopover>
+                    ) : (
+                        false
+                    )}
+                    {options.filter ? (
+                        <MaterialPopover refExit={this.setActiveIcon.bind(null)} container={tableRef}>
+                            <MaterialPopoverTarget>
+                                <IconButton
+                                    aria-label={filterTable}
+                                    classes={{root: this.getActiveIcon(classes, "filter")}}
+                                    onClick={this.setActiveIcon.bind(null, "filter")}>
+                                    <Tooltip title={filterTable}>
+                                        <FilterIcon/>
+                                    </Tooltip>
+                                </IconButton>
+                            </MaterialPopoverTarget>
+                            <MaterialPopoverContent>
+                                <MaterialDatatableFilter
+                                    columns={columns}
+                                    options={options}
+                                    filterList={filterList}
+                                    filterData={filterData}
+                                    onFilterUpdate={filterUpdate}
+                                    onFilterReset={resetFilters}
+                                />
+                            </MaterialPopoverContent>
+                        </MaterialPopover>
+                    ) : (
+                        false
+                    )}
+                    {options.customToolbar ? options.customToolbar() : false}
+                </div>
+            </Toolbar>
+        );
+    }
 }
 
-export default styled(MaterialDatatableToolbar)(defaultToolbarStyles, { name: "MaterialDatatableToolbar" });
+export default styled(MaterialDatatableToolbar)(defaultToolbarStyles, {name: "MaterialDatatableToolbar"});

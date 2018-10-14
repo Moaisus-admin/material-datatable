@@ -3,86 +3,86 @@ import PropTypes from "prop-types";
 import TableRow from "@material-ui/core/TableRow";
 import TableFooter from "@material-ui/core/TableFooter";
 import TablePagination from "@material-ui/core/TablePagination";
-import { withStyles } from "@material-ui/core/styles";
+import {withStyles} from "@material-ui/core/styles";
 
 const defaultPaginationStyles = {
-  root: {
-    "&:last-child": {
-      padding: "0px 24px 0px 24px",
+    root: {
+        "&:last-child": {
+            padding: "0px 24px 0px 24px",
+        },
     },
-  },
-  toolbar: {},
-  selectRoot: {},
-  "@media screen and (max-width: 400px)": {
-    toolbar: {
-      "& span:nth-child(2)": {
-        display: "none",
-      },
+    toolbar: {},
+    selectRoot: {},
+    "@media screen and (max-width: 400px)": {
+        toolbar: {
+            "& span:nth-child(2)": {
+                display: "none",
+            },
+        },
+        selectRoot: {
+            marginRight: "8px",
+        },
     },
-    selectRoot: {
-      marginRight: "8px",
-    },
-  },
 };
 
 class MaterialDatatablePagination extends React.Component {
-  static propTypes = {
-    /** Total number of table rows */
-    count: PropTypes.number.isRequired,
-    /** Options used to describe table */
-    options: PropTypes.object.isRequired,
-    /** Current page index */
-    page: PropTypes.number.isRequired,
-    /** Total number allowed of rows per page */
-    rowsPerPage: PropTypes.number.isRequired,
-    /** Callback to trigger rows per page change */
-    changeRowsPerPage: PropTypes.func.isRequired,
-  };
+    static propTypes = {
+        /** Total number of table rows */
+        count: PropTypes.number.isRequired,
+        /** Options used to describe table */
+        options: PropTypes.object.isRequired,
+        /** Current page index */
+        page: PropTypes.number.isRequired,
+        /** Total number allowed of rows per page */
+        rowsPerPage: PropTypes.number.isRequired,
+        /** Callback to trigger rows per page change */
+        changeRowsPerPage: PropTypes.func.isRequired,
+    };
 
-  handleRowChange = event => {
-    this.props.changeRowsPerPage(event.target.value);
-  };
+    handleRowChange = event => {
+        this.props.changeRowsPerPage(event.target.value);
+    };
 
-  handlePageChange = (_, page) => {
-    const { options } = this.props;
-    this.props.changePage(page);
-  };
+    handlePageChange = (_, page) => {
+        const {options} = this.props;
+        this.props.changePage(page);
+    };
 
-  render() {
-    const { count, classes, options, rowsPerPage, page } = this.props;
-    const textLabels = options.textLabels.pagination;
+    render() {
+        const {count, classes, options, rowsPerPage, page} = this.props;
+        const textLabels = options.textLabels.pagination;
 
-    return (
-      <TableFooter>
-        <TableRow>
-          <TablePagination
-            className={classes.root}
-            classes={{
-              caption: classes.caption,
-              toolbar: classes.toolbar,
-              selectRoot: classes.selectRoot,
-            }}
-            count={count}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            labelRowsPerPage={textLabels.rowsPerPage}
-            labelDisplayedRows={({ from, to, count }) => `${from}-${to} ${textLabels.displayRows} ${count}`}
-            backIconButtonProps={{
-              "aria-label": textLabels.previous,
-            }}
-            nextIconButtonProps={{
-              "aria-label": textLabels.next,
-            }}
-            rowsPerPageOptions={options.rowsPerPageOptions}
-            onChangePage={this.handlePageChange}
-            onChangeRowsPerPage={this.handleRowChange}
-          />
-        </TableRow>
-      </TableFooter>
-    );
-  }
+        return (
+            <TableFooter>
+                <TableRow>
+                    <TablePagination
+                        className={classes.root}
+                        classes={{
+                            caption: classes.caption,
+                            toolbar: classes.toolbar,
+                            selectRoot: classes.selectRoot,
+                        }}
+                        count={count}
+                        rowsPerPage={rowsPerPage}
+                        page={page}
+                        labelRowsPerPage={textLabels.rowsPerPage}
+                        labelDisplayedRows={({from, to, count}) => `${from}-${to} ${textLabels.displayRows} ${count}`}
+                        backIconButtonProps={{
+                            "aria-label": textLabels.previous,
+                        }}
+                        nextIconButtonProps={{
+                            "aria-label": textLabels.next,
+                        }}
+                        rowsPerPageOptions={options.rowsPerPageOptions}
+                        onChangePage={this.handlePageChange}
+                        onChangeRowsPerPage={this.handleRowChange}
+                    />
+                </TableRow>
+            </TableFooter>
+        );
+    }
 }
 
-export default withStyles(defaultPaginationStyles, { name: "MaterialDatatablePagination" })(
-  MaterialDatatablePagination,
+export default withStyles(defaultPaginationStyles, {name: "MaterialDatatablePagination"})(
+    MaterialDatatablePagination,
 );

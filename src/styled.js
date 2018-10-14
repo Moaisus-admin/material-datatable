@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import merge from "lodash.merge";
-import { withStyles } from "@material-ui/core/styles";
+import {withStyles} from "@material-ui/core/styles";
 
 /*
  *  Material-UI does not yet support ability to grab props within style()
@@ -11,42 +11,42 @@ import { withStyles } from "@material-ui/core/styles";
  */
 
 const styles = (theme, props, style) => {
-  return typeof style === "function" ? style(theme, props) : style;
+    return typeof style === "function" ? style(theme, props) : style;
 };
 
 class StyledComponent extends React.Component {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-    className: PropTypes.string,
-  };
+    static propTypes = {
+        classes: PropTypes.object.isRequired,
+        className: PropTypes.string,
+    };
 
-  render() {
-    const { classes, className = "", WrappedComponent, ...passThroughProps } = this.props;
+    render() {
+        const {classes, className = "", WrappedComponent, ...passThroughProps} = this.props;
 
-    return <WrappedComponent classes={classes} className={className} {...passThroughProps} />;
-  }
+        return <WrappedComponent classes={classes} className={className} {...passThroughProps} />;
+    }
 }
 
 const styled = (WrappedComponent, customProps = {}) => {
-  return (style, options = {}) => {
-    const HOCProps = WrappedComponent => {
-      return class _HOCProps extends React.Component {
-        constructor(props) {
-          super(props);
-          this.FinalComponent = withStyles(theme => {
-            const defaultStyles = styles(theme, props, style);
-            return merge(defaultStyles, props.styles ? props.styles : {});
-          }, options)(StyledComponent);
-        }
+    return (style, options = {}) => {
+        const HOCProps = WrappedComponent => {
+            return class _HOCProps extends React.Component {
+                constructor(props) {
+                    super(props);
+                    this.FinalComponent = withStyles(theme => {
+                        const defaultStyles = styles(theme, props, style);
+                        return merge(defaultStyles, props.styles ? props.styles : {});
+                    }, options)(StyledComponent);
+                }
 
-        render() {
-          const { styles, ...otherProps } = this.props;
-          return <this.FinalComponent {...customProps} {...otherProps} WrappedComponent={WrappedComponent} />;
-        }
-      };
+                render() {
+                    const {styles, ...otherProps} = this.props;
+                    return <this.FinalComponent {...customProps} {...otherProps} WrappedComponent={WrappedComponent}/>;
+                }
+            };
+        };
+        return HOCProps(WrappedComponent);
     };
-    return HOCProps(WrappedComponent);
-  };
 };
 
 export default styled;
