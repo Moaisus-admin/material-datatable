@@ -1,7 +1,11 @@
-<a name="0.1.6"></a>
-## 0.1.5 (2018-10-14)
+<a name="0.1.7"></a>
+## 0.1.7 (2018-10-14)
 
-* downgrade to "@material-ui/core": "^3.0.2",
+* Updated readme with instructions How to turn off Material UI Typography warnings
+
+## 0.1.6 (2018-10-14)
+
+* Downgrade to "@material-ui/core": "^3.0.2",
 
 ## 0.1.5 (2018-10-14)
 
