@@ -4,7 +4,7 @@
 
 # Material-Datatable - Datatable for Material-UI
 
-[![Build Status](https://travis-ci.org/Diaver/material-datatable.svg?branch=master)](https://travis-ci.org/diaver/material-datatable)
+[![Build Status](https://travis-ci.org/Diaver/material-datatable.svg?branch=master)](https://travis-ci.org/Diaver/material-datatable)
 [![Coverage Status](https://coveralls.io/repos/github/Diaver/material-datatable/badge.svg?branch=master)](https://coveralls.io/github/Diaver/material-datatable?branch=master)
 [![dependencies Status](https://david-dm.org/Diaver/material-datatable/status.svg)](https://david-dm.org/diaver/material-datatable)
 [![npm version](https://badge.fury.io/js/material-datatable.svg)](https://badge.fury.io/js/material-datatable)
@@ -28,6 +28,32 @@ Material-Datatable is a data tables component built on [Material-UI V1](https://
 Typescript definition included
 
 ## Usage
+
+For a simple table:
+
+## How to turn off Material UI Typography warnings
+
+Warnings like: 
+```js 
+Warning: Material-UI: You are using the typography variant body2 which will be restyled in the next major release.
+``` 
+
+Can be turned off with follow code:
+```js 
+const theme = createMuiTheme({
+    typography: {
+        useNextVariants: true
+    },
+});
+
+ReactDOM.hydrate(
+    <MuiThemeProvider theme={theme}>
+        <App/>
+    </MuiThemeProvider>,
+    document.getElementById('react-app')
+        
+```
+https://github.com/mui-org/material-ui/issues/12741#issuecomment-428130592
 
 For a simple table:
 
