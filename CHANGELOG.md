@@ -1,3 +1,8 @@
+<a name="0.1.5"></a>
+## 0.1.5 (2018-10-14)
+
+* Updated material-ui to the latest version 3.2.1
+
 <a name="0.1.4"></a>
 ## 0.1.4 (2018-10-14)
 
