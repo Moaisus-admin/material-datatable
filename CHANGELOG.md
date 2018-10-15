@@ -1,3 +1,9 @@
+<a name="0.1.4"></a>
+## 0.1.4 (2018-10-14)
+
+* Updated material-ui to the latest version 3.0.2
+* Removed Deprecated variants for Typography: title => h6,subheading => subtitle1
+
 <a name="0.1.3"></a>
 ## 0.1.3 (2018-10-14)
 
