@@ -31,32 +31,6 @@ Typescript definition included
 
 For a simple table:
 
-## How to turn off Material UI Typography warnings
-
-Warnings like: 
-```js 
-Warning: Material-UI: You are using the typography variant body2 which will be restyled in the next major release.
-``` 
-
-Can be turned off with follow code:
-```js 
-const theme = createMuiTheme({
-    typography: {
-        useNextVariants: true
-    },
-});
-
-ReactDOM.hydrate(
-    <MuiThemeProvider theme={theme}>
-        <App/>
-    </MuiThemeProvider>,
-    document.getElementById('react-app')
-        
-```
-https://github.com/mui-org/material-ui/issues/12741#issuecomment-428130592
-
-For a simple table:
-
 ```js
 
 import MaterialDatatable from "material-datatable";
@@ -175,6 +149,31 @@ const options = {
 />
 
 ```
+
+## How to turn off Material UI Typography warnings
+
+Warnings like: 
+```js 
+Warning: Material-UI: You are using the typography variant body2 which will be restyled in the next major release.
+``` 
+
+Can be turned off with follow code:
+```js 
+const theme = createMuiTheme({
+    typography: {
+        useNextVariants: true
+    },
+});
+
+ReactDOM.hydrate(
+    <MuiThemeProvider theme={theme}>
+        <App/>
+    </MuiThemeProvider>,
+    document.getElementById('react-app')
+        
+```
+https://github.com/mui-org/material-ui/issues/12741#issuecomment-428130592
+
 
 ## API
 

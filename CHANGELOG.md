@@ -1,3 +1,8 @@
+<a name="0.1.8"></a>
+## 0.1.8 (2018-10-14)
+
+* Fixed readme instructions How to turn off Material UI Typography warnings
+
 <a name="0.1.7"></a>
 ## 0.1.7 (2018-10-14)
 
