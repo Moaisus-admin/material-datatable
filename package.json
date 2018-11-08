@@ -1,6 +1,6 @@
 {
   "name": "material-datatable",
-  "version": "0.1.9",
+  "version": "0.2.0",
   "description": "Datatable for React using Material-UI",
   "main": "dist/index.js",
   "types": "index.d.ts",
