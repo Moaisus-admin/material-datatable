@@ -329,8 +329,8 @@ class MaterialDatatable extends React.Component {
 
         // go through all record columns -> need to change to go thru column definition
         for (let index = 0; index < columns.length; index++) {
-            let columnDisplay = row[columns[index].field];
-            let columnValue = row[columns[index].field];
+            let columnDisplay = '';
+            let columnValue = '';
 
             if (columns[index].customBodyRender) {
                 const tableMeta = this.getTableMeta(rowIndex, index, row, columns[index], this.state.data, {
@@ -353,6 +353,16 @@ class MaterialDatatable extends React.Component {
                         : funcResult.props && funcResult.props.value
                         ? funcResult.props.value
                         : columnValue;
+            }
+            else{
+                columnDisplay = row[columns[index].field];
+                columnValue = row[columns[index].field];
+                
+                if(columnValue === undefined || columnDisplay === undefined){
+                    let display = `Wrong column name ${columns[index].field}`;
+                    columnDisplay = display;
+                    columnValue = display;
+                }
             }
 
             displayRow.push(columnDisplay);

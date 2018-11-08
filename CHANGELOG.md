@@ -1,3 +1,9 @@
+<a name="0.1.9"></a>
+## 0.1.9 (2018-11-08)
+
+* customBodyRender doesn't require anymore rear field name
+* Added warning message in case if column field doesn't exist in DTO
+
 <a name="0.1.8"></a>
 ## 0.1.8 (2018-10-14)
 

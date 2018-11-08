@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import MaterialDatatable from "../../src/";
+import Button from "@material-ui/core/Button/Button";
 
 class Example extends React.Component {
 
@@ -37,19 +38,29 @@ class Example extends React.Component {
                     width: 100,
                     headerNoWrap: true,
                     customBodyRender: (value, tableMeta, updateValue) => {
-                        return `${value.name} (${value.title})`; 
+                        return (
+                            <Button size="large" variant={"contained"} color={"secondary"}>
+                                Edit
+                            </Button>
+                        );
                     }
                 },
             }
             ,
             {
                 name: 'SubFieldData',
-                field: 'subFieldData',
+                field: 'subFieldData2',
                 options: {
                     width: 100,
                     headerNoWrap: true,
                     customBodyRender: (value, tableMeta, updateValue) => {
-                        return `${value.subFieldData.value}`;
+                        return (
+                            <div>
+                                <Button size="large" variant={"contained"} color={"secondary"}>
+                                    {value.salary} 
+                                </Button>
+                            </div>
+                        );
                     }
                 },
             }
