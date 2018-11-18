@@ -339,13 +339,16 @@ class MaterialDatatable extends React.Component {
                     searchText: searchText,
                 });
 
-                const funcResult = columns[index].customBodyRender(
+                let funcResult = columns[index].customBodyRender(
                     row,
                     tableMeta,
                     this.updateDataCol.bind(null, rowIndex, index),
                 );
                 columnDisplay = funcResult;
 
+                if(funcResult === null || funcResult === undefined) {
+                    funcResult = "";
+                }
                 /* drill down to get the value of a cell */
                 columnValue =
                     typeof funcResult === "string"

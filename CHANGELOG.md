@@ -1,3 +1,8 @@
+<a name="0.2.1"></a>
+## 0.2.1 (2018-11-17)
+
+* Fixed exception when customBodyRender return null
+
 <a name="0.1.9"></a>
 ## 0.1.9 (2018-11-08)
 
