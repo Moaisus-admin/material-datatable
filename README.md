@@ -21,7 +21,7 @@ Material-Datatable is a data tables component built on [Material-UI V1](https://
 
 ## Demo
 
-[![Edit react-to-print](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/v09ymp9737)
+[![Edit react-to-print](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/lp8pvk1zk9)
 
 ## Typescript
 
@@ -271,8 +271,8 @@ const columns = [
 |**`download`**|boolean|true|Display column in CSV download file
 |**`customHeadRender`**|function||Function that returns a string or React component. Used as display for column header. `function(rowDataObject, tableMeta, updateValue) => string`&#124;`
 |**`customBodyRender`**|function||Function that returns a string or React component. Used as display data within all table cells of a given column. `function(rowDataObject, tableMeta, updateValue) => string`&#124;` React Component`
-|**`customValue`**|function||Function that returns a string or number. Can be used just with customBodyRender. For example you added some React component like Link into the column, but still wants to use that column for filtering. `function(rowDataObject) => string`&#124;`number`
-|**`customSortValue`**|function||Function that returns a string or number. Return value for which will be used for sorting. For example you added some data like string "Fed 10, 2016" which provide create date into the column, but still wants to use that column for correct sorting by date. `function(rowDataObject) => string`&#124;`number`
+|**`customValue`**|function||Function that returns a string or number. Can be used just with customBodyRender. For example you added some React component like Link into the column, but still wants to use that column for filtering. `function(rowDataObject) => string`&#124;`number`. Example https://codesandbox.io/s/lp8pvk1zk9
+|**`customSortValue`**|function||Function that returns a string or number. Return value for which will be used for sorting. For example you added some data like string "Fed 10, 2016" which provide create date into the column, but still wants to use that column for correct sorting by date. `function(rowDataObject) => string`&#124;`number` Example https://codesandbox.io/s/lp8pvk1zk9
 
 `customHeadRender` is called with these arguments:
 
@@ -359,7 +359,6 @@ const options = {
 };
 ```
 
-To see an example **[Click Here](https://github.com/diaver/material-datatable/blob/master/examples/serverside-pagination/index.js)**
 
 ## Localization
 
@@ -409,7 +408,12 @@ const options = {
 The files included in this repository are licensed under the MIT license.
 
 ## Changelog
- 0.2.2 (2018-21-21)
+
+0.2.3 (2018-21-21)
+
+* Updated Readme and link to an example 
+
+0.2.2 (2018-21-21)
 
 * Added new option for column which can be used just with customBodyRender - "customValue(value)"". For example you added some Link into the column, but still wants to use that column for filtering by some value. 
 * Added new option for column "customSortValue(value)"". For example you added some data like Date string "Fed 10, 2016" into the column, but still wants to use that column for correct sorting by date.

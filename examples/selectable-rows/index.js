@@ -43,7 +43,10 @@ class Example extends React.Component {
                                 Edit
                             </Button>
                         );
-                    }
+                    },
+                    customValue: (dataObject) => {
+                        return  dataObject.salary +"Edit";
+                    },
                 },
             }
             ,
