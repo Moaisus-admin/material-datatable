@@ -188,7 +188,7 @@ class MaterialDatatableFilter extends React.Component {
                             <FormControl className={classes.selectFormControl} key={index}>
                                 <InputLabel htmlFor={column.name}>{column.name}</InputLabel>
                                 <Select
-                                    value={filterList[index].toString() || textLabels.all}
+                                    value={filterList[index][0] || textLabels.all}
                                     name={column.name}
                                     onChange={event => this.handleDropdownChange(event, index)}
                                     input={<Input name={column.name} id={column.name}/>}>

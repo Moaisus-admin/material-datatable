@@ -49,19 +49,26 @@ class Example extends React.Component {
             ,
             {
                 name: 'SubFieldData',
-                field: 'subFieldData2',
+                field: 'subFieldData',
                 options: {
                     width: 100,
                     headerNoWrap: true,
-                    customBodyRender: (value, tableMeta, updateValue) => {
+                    customBodyRender: (dataObject, tableMeta, updateValue) => {
                         return (
                             <div>
                                 <Button size="large" variant={"contained"} color={"secondary"}>
-                                    {value.salary} 
+                                    {dataObject.salary * 10} 
                                 </Button>
                             </div>
                         );
-                    }
+                    },
+                    customSortValue: (dataObject) => {
+                        return (dataObject.salary * 10);
+                    },
+                    customValue: (dataObject) => {
+                        return (dataObject.salary * 10);
+                    },
+                    
                 },
             }
         ];
@@ -75,7 +82,7 @@ class Example extends React.Component {
             filter: true,
             selectableRows: true,
             usePaperPlaceholder: false,
-            filterType: 'dropdown',
+            filterType: 'multiselect',
             responsive: 'stacked',
             rowsPerPage: 10,
             onRowsSelect: (rowsSelected, allRows) => {

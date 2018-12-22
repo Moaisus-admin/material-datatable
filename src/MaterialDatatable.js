@@ -61,6 +61,8 @@ class MaterialDatatable extends React.Component {
                         download: PropTypes.bool,
                         customHeadRender: PropTypes.func,
                         customBodyRender: PropTypes.func,
+                        customSortValue: PropTypes.func,
+                        customValue: PropTypes.func,
                     }),
                 }),
             ]),
@@ -217,8 +219,7 @@ class MaterialDatatable extends React.Component {
     };
 
     // Build the source table data
-    setTableData(props, status, callback = () => {
-    }) {
+    setTableData(props, status, callback = () => {}) {
         const {data, columns, options} = props;
 
         let columnData = [],
@@ -259,7 +260,7 @@ class MaterialDatatable extends React.Component {
 
             for (let rowIndex = 0; rowIndex < data.length; rowIndex++) {
                 let rowData = status === TABLE_LOAD.INITIAL ? data[rowIndex] : data[rowIndex].data;
-                let value = rowData[column.field];
+                let value = rowData[columns[colIndex].field];
 
                 if (typeof tableData[rowIndex] === "undefined") {
                     tableData.push({
@@ -268,14 +269,21 @@ class MaterialDatatable extends React.Component {
                     });
                 }
 
+                //Call customBodyRender function we try to take filter value
                 if (typeof columnOptions.customBodyRender === "function") {
-                    const tableMeta = this.getTableMeta(rowIndex, colIndex, value, [], columnData, this.state);
+                    const tableMeta = this.getTableMeta(rowIndex, colIndex, rowData, [], columnData, this.state);
                     const funcResult = columnOptions.customBodyRender(rowData, tableMeta);
 
-                    if (React.isValidElement(funcResult) && funcResult.props.value) {
+                    value = funcResult;
+                    // is customBodyRender return string we just take that value or try to take value from customValue function if provided
+                    if (React.isValidElement(funcResult) && funcResult.props.value){
                         value = funcResult.props.value;
-                    } else if (typeof funcResult === "string") {
-                        value = funcResult;
+                    }
+                    else if (typeof columnOptions.customValue === "function") {
+                        value = columnOptions.customValue(rowData);
+                    } 
+                    if(value === null || value === undefined || React.isValidElement(value)){
+                        value = "";
                     }
                 }
 
@@ -288,7 +296,8 @@ class MaterialDatatable extends React.Component {
             }
         });
 
-        if (options.filterList) filterList = options.filterList;
+        if (options.filterList)
+            filterList = options.filterList;
 
         if (filterList.length !== columns.length) {
             throw new Error("Provided options.filterList does not match the column length");
@@ -322,7 +331,7 @@ class MaterialDatatable extends React.Component {
         );
     }
 
-    computeDisplayRow(columns, row, rowIndex, filterList, searchText) {
+    computeDisplayRow(columns, rowObjectData, rowIndex, filterList, searchText) {
         let isFiltered = false;
         let isSearchFound = false;
         let displayRow = [];
@@ -333,35 +342,30 @@ class MaterialDatatable extends React.Component {
             let columnValue = '';
 
             if (columns[index].customBodyRender) {
-                const tableMeta = this.getTableMeta(rowIndex, index, row, columns[index], this.state.data, {
+                const tableMeta = this.getTableMeta(rowIndex, index, rowObjectData, columns[index], this.state.data, {
                     ...this.state,
                     filterList: filterList,
                     searchText: searchText,
                 });
 
-                let funcResult = columns[index].customBodyRender(
-                    row,
-                    tableMeta,
-                    this.updateDataCol.bind(null, rowIndex, index),
-                );
+                let funcResult = columns[index].customBodyRender(rowObjectData, tableMeta, this.updateDataCol.bind(null, rowIndex, index));
                 columnDisplay = funcResult;
+                columnValue = funcResult;
 
-                if(funcResult === null || funcResult === undefined) {
-                    funcResult = "";
+                if (React.isValidElement(funcResult) && funcResult.props.value){
+                    columnValue = funcResult.props.value;
                 }
-                /* drill down to get the value of a cell */
-                columnValue =
-                    typeof funcResult === "string"
-                        ? funcResult
-                        : funcResult.props && funcResult.props.value
-                        ? funcResult.props.value
-                        : columnValue;
-            }
-            else{
-                columnDisplay = row[columns[index].field];
-                columnValue = row[columns[index].field];
-                
-                if(columnValue === undefined || columnDisplay === undefined){
+                else if (typeof columns[index].customValue === "function") {
+                    columnValue = columns[index].customValue(rowObjectData);
+                }
+                if(columnValue === null || columnValue === undefined || React.isValidElement(columnValue)){
+                    columnValue = "";
+                }
+             } else {
+                columnDisplay = rowObjectData[columns[index].field];
+                columnValue = rowObjectData[columns[index].field];
+
+                if (columnValue === undefined || columnDisplay === undefined) {
                     let display = `Wrong column name ${columns[index].field}`;
                     columnDisplay = display;
                     columnValue = display;
@@ -391,23 +395,32 @@ class MaterialDatatable extends React.Component {
             }
         }
 
-        if (isFiltered || (searchText && !isSearchFound)) return null;
-        else return displayRow;
+        if (isFiltered || (searchText && !isSearchFound)) {
+            return null;
+        }
+
+        return displayRow;
     }
 
     updateDataCol = (row, index, value) => {
         this.setState(prevState => {
             let changedData = cloneDeep(prevState.data);
             let filterData = cloneDeep(prevState.filterData);
-
+            let filterValue = prevState["data"][row][index];
+            
             const tableMeta = this.getTableMeta(row, index, row, prevState.columns[index], prevState.data, prevState);
-            const funcResult = prevState.columns[index].customBodyRender(value, tableMeta);
+            let customBodyRenderResult = prevState.columns[index].customBodyRender(value, tableMeta);
 
-            const filterValue =
-                React.isValidElement(funcResult) && funcResult.props.value
-                    ? funcResult.props.value
-                    : prevState["data"][row][index];
-
+            if (React.isValidElement(customBodyRenderResult) && customBodyRenderResult.props.value){
+                filterValue = customBodyRenderResult.props.value;
+            }
+            else if (typeof prevState.columns[index].customValue === "function") {
+                filterValue = prevState.columns[index].customValue(value);
+            }
+            if(filterValue === null || filterValue === undefined){
+                filterValue = "";
+            }
+       
             const prevFilterIndex = filterData[index].indexOf(filterValue);
             filterData[index].splice(prevFilterIndex, 1, filterValue);
 
@@ -515,7 +528,7 @@ class MaterialDatatable extends React.Component {
                         selectedRows: prevState.selectedRows,
                     };
                 } else {
-                    const sortedData = this.sortTable(data, index, order, displayData);
+                    const sortedData = this.sortTable(data, index, order, displayData, columns[index]);
 
                     newState = {
                         ...newState,
@@ -673,8 +686,7 @@ class MaterialDatatable extends React.Component {
                 prevState => {
                     const {data} = prevState;
                     const selectedRowsLen = prevState.selectedRows.data.length;
-                    const isDeselect =
-                        selectedRowsLen === data.length || (selectedRowsLen < data.length && selectedRowsLen > 0) ? true : false;
+                    const isDeselect = selectedRowsLen === data.length || (selectedRowsLen < data.length && selectedRowsLen > 0);
 
                     let selectedRows = Array(data.length)
                         .fill()
@@ -740,10 +752,17 @@ class MaterialDatatable extends React.Component {
         }
     };
 
-    sortCompare(order) {
+    sortCompare(order, column) {
         return (a, b) => {
-            if (a.data === null) a.data = "";
-            if (b.data === null) b.data = "";
+            if (a.data === null)
+                a.data = "";
+            if (b.data === null)
+                b.data = "";
+
+            if (typeof column.customSortValue === "function") {
+                a.data = column.customSortValue(a.dataObject);
+                b.data = column.customSortValue(b.dataObject);
+            }
 
             if (typeof a.data.localeCompare === "function") {
                 return a.data.localeCompare(b.data) * (order === "asc" ? -1 : 1);
@@ -753,14 +772,15 @@ class MaterialDatatable extends React.Component {
         };
     }
 
-    sortTable(data, col, order, displayData) {
+    sortTable(data, col, order, displayData, column) {
         let sortedData = displayData.map((row, sIndex) => ({
             data: row.data[col],
+            dataObject: data[sIndex].data,
             position: sIndex,
             rowSelected: this.state.selectedRows.lookup[sIndex] ? true : false,
         }));
 
-        sortedData.sort(this.sortCompare(order));
+        sortedData.sort(this.sortCompare(order, column));
 
         let tableData = [];
         let selectedRows = [];
@@ -861,8 +881,10 @@ class MaterialDatatable extends React.Component {
         const {filterList} = this.state;
 
         return (
-            <MaterialDatatableFilterList options={this.options} filterList={filterList}
-                                         filterUpdate={this.filterUpdate}/>
+            <MaterialDatatableFilterList
+                options={this.options}
+                filterList={filterList}
+                filterUpdate={this.filterUpdate}/>
         );
     }
 

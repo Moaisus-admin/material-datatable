@@ -1,3 +1,9 @@
+<a name="0.2.2"></a>
+## 0.2.2 (2018-21-21)
+
+* Added new option for column which can be used just with customBodyRender - "customValue(value)"". For example you added some Link into the column, but still wants to use that column for filtering. 
+* Added new option for column "customSortValue(value)"". For example you added some data like Date string "Fed 10, 2016" into the column, but still wants to use that column for correct sorting by date.
+
 <a name="0.2.1"></a>
 ## 0.2.1 (2018-11-17)
 

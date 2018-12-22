@@ -269,8 +269,10 @@ const columns = [
 |**`width`**|number|null|Set width for column (header and data)
 |**`headerNoWrap`**|boolean|false|No wrap for table header cell
 |**`download`**|boolean|true|Display column in CSV download file
-|**`customHeadRender`**|function||Function that returns a string or React component. Used as display for column header. `function(value, tableMeta, updateValue) => string`&#124;`
-|**`customBodyRender`**|function||Function that returns a string or React component. Used as display data within all table cells of a given column. `function(value, tableMeta, updateValue) => string`&#124;` React Component` [Example](https://github.com/diaver/material-datatable/blob/master/examples/component/index.js)
+|**`customHeadRender`**|function||Function that returns a string or React component. Used as display for column header. `function(rowDataObject, tableMeta, updateValue) => string`&#124;`
+|**`customBodyRender`**|function||Function that returns a string or React component. Used as display data within all table cells of a given column. `function(rowDataObject, tableMeta, updateValue) => string`&#124;` React Component`
+|**`customValue`**|function||Function that returns a string or number. Can be used just with customBodyRender. For example you added some React component like Link into the column, but still wants to use that column for filtering. `function(rowDataObject) => string`&#124;`number`
+|**`customSortValue`**|function||Function that returns a string or number. Return value for which will be used for sorting. For example you added some data like string "Fed 10, 2016" which provide create date into the column, but still wants to use that column for correct sorting by date. `function(rowDataObject) => string`&#124;`number`
 
 `customHeadRender` is called with these arguments:
 
@@ -406,9 +408,65 @@ const options = {
 ## License
 The files included in this repository are licensed under the MIT license.
 
+## Changelog
+ 0.2.2 (2018-21-21)
 
-## Thanks
+* Added new option for column which can be used just with customBodyRender - "customValue(value)"". For example you added some Link into the column, but still wants to use that column for filtering by some value. 
+* Added new option for column "customSortValue(value)"". For example you added some data like Date string "Fed 10, 2016" into the column, but still wants to use that column for correct sorting by date.
 
-[<img src="https://www.browserstack.com/images/mail/browserstack-logo-footer.png" width="120">](https://www.browserstack.com/)
+0.2.1 (2018-11-17)
 
-Thank you to [BrowserStack](https://www.browserstack.com/) for providing the infrastructure that allows us to test in real browsers.
+* Fixed exception when customBodyRender return null
+
+0.1.9 (2018-11-08)
+
+* customBodyRender doesn't require anymore rear field name
+* Added warning message in case if column field doesn't exist in DTO
+
+0.1.8 (2018-10-14)
+
+* Fixed readme instructions How to turn off Material UI Typography warnings
+
+0.1.7 (2018-10-14)
+
+* Updated readme with instructions How to turn off Material UI Typography warnings
+
+0.1.6 (2018-10-14)
+
+* Downgrade to "@material-ui/core": "^3.0.2",
+
+0.1.5 (2018-10-14)
+
+* Updated material-ui to the latest version 3.2.1
+
+0.1.4 (2018-10-14)
+
+* Updated material-ui to the latest version 3.0.2
+* Removed Deprecated variants for Typography: title => h6,subheading => subtitle1
+
+0.1.3 (2018-10-14)
+
+* Fixed bugs with filter and search by sub level data
+* Fixed bugs with download and print 
+
+0.1.2 (2018-10-13)
+
+* Added width and headerNoWrap options for columns (table header cell and table body cell)
+* Reduced table body cell padding to "4px 8px 4px 8px"
+
+0.1.1 (2018-10-13)
+
+* Updated readme for new link on sandbox
+
+0.1.0 (2018-10-13)
+
+* CustomRenderBody receive full object, not just one field
+
+0.0.9 (2018-10-13)
+
+* updated TS definition for new option usePaperPlaceholder
+
+0.0.8 (2018-10-13)
+
+* added new option usePaperPlaceholder. By default it is true. Can be turned off if you don't need paper placeholder
+* moved back to original styles. Need to fix it in future

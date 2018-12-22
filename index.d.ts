@@ -12,9 +12,11 @@ export interface MaterialDatatableColumnOptions {
     sort?: boolean
     width?: number,
     headerNoWrap?: boolean,
-    download?: boolean
-    customHeadRender?: (value: any, tableMeta: any, updateValue: any) => string
-    customBodyRender?: (value: any, tableMeta: any, updateValue: any) => string | ReactNode
+    download?: boolean,
+    customHeadRender?: (value: any, tableMeta: any, updateValue: any) => string,
+    customBodyRender?: (value: any, tableMeta: any, updateValue: any) => string | ReactNode,
+    customSortValue?: (value: any) => string | number,
+    customValue?: (value: any) => string | number,
 }
 
 export interface MaterialDatatableOptions {
