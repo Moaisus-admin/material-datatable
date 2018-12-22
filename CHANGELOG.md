@@ -1,10 +1,15 @@
+<a name="0.2.4"></a>
+## 0.2.4 (2018-12-22)
+
+* Fixed bug with multiselect filter crash when filter item is null  
+
 <a name="0.2.3"></a>
-## 0.2.3 (2018-21-21)
+## 0.2.3 (2018-12-21)
 
 * Updated Readme and link to an example 
 
 <a name="0.2.2"></a>
-## 0.2.2 (2018-21-21)
+## 0.2.2 (2018-12-21)
 
 * Added new option for column which can be used just with customBodyRender - "customValue(value)"". For example you added some Link into the column, but still wants to use that column for filtering. 
 * Added new option for column "customSortValue(value)"". For example you added some data like Date string "Fed 10, 2016" into the column, but still wants to use that column for correct sorting by date.
@@ -36,7 +41,7 @@
 
 ## 0.1.5 (2018-10-14)
 
-* Updated material-ui to the latest version 3.2.1
+* Updated material-ui to the latest versi   on 3.2.1
 
 <a name="0.1.4"></a>
 ## 0.1.4 (2018-10-14)

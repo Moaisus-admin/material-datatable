@@ -146,7 +146,7 @@ class MaterialDatatableFilter extends React.Component {
                             <Typography variant="caption" className={classes.checkboxListTitle}>
                                 {column.name}
                             </Typography>
-                            {filterData[index].map((filterColumn, filterIndex) => (
+                            {filterData[index].map((filterColumn, filterIndex) =>  (
                                 <FormControlLabel
                                     key={filterIndex}
                                     classes={{
@@ -227,7 +227,7 @@ class MaterialDatatableFilter extends React.Component {
                                     name={column.name}
                                     onChange={event => this.handleMultiselectChange(index, event.target.value)}
                                     input={<Input name={column.name} id={column.name}/>}>
-                                    {filterData[index].map((filterColumn, filterIndex) => (
+                                    {filterData[index].map((filterColumn, filterIndex) => filterColumn !== null && filterColumn !== undefined  && (
                                         <MenuItem value={filterColumn} key={filterIndex + 1}>
                                             <Checkbox
                                                 checked={filterList[index].indexOf(filterColumn) >= 0 ? true : false}

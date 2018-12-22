@@ -409,6 +409,10 @@ The files included in this repository are licensed under the MIT license.
 
 ## Changelog
 
+0.2.4 (2018-12-22)
+
+* Fixed bug when multiselect filter crash when filter item is null
+
 0.2.3 (2018-21-21)
 
 * Updated Readme and link to an example 
