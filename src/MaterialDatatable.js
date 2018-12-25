@@ -276,13 +276,12 @@ class MaterialDatatable extends React.Component {
 
                     value = funcResult;
                     // is customBodyRender return string we just take that value or try to take value from customValue function if provided
-                    if (React.isValidElement(funcResult) && funcResult.props.value){
+                    if (React.isValidElement(funcResult) && funcResult.props.value) {
                         value = funcResult.props.value;
-                    }
-                    else if (typeof columnOptions.customValue === "function") {
+                    } else if (typeof columnOptions.customValue === "function") {
                         value = columnOptions.customValue(rowData);
-                    } 
-                    if(value === null || value === undefined || React.isValidElement(value)){
+                    }
+                    if (value === null || value === undefined || React.isValidElement(value)) {
                         value = "";
                     }
                 }
@@ -352,16 +351,15 @@ class MaterialDatatable extends React.Component {
                 columnDisplay = funcResult;
                 columnValue = funcResult;
 
-                if (React.isValidElement(funcResult) && funcResult.props.value){
+                if (React.isValidElement(funcResult) && funcResult.props.value) {
                     columnValue = funcResult.props.value;
-                }
-                else if (typeof columns[index].customValue === "function") {
+                } else if (typeof columns[index].customValue === "function") {
                     columnValue = columns[index].customValue(rowObjectData);
                 }
-                if(columnValue === null || columnValue === undefined || React.isValidElement(columnValue)){
+                if (columnValue === null || columnValue === undefined || React.isValidElement(columnValue)) {
                     columnValue = "";
                 }
-             } else {
+            } else {
                 columnDisplay = rowObjectData[columns[index].field];
                 columnValue = rowObjectData[columns[index].field];
 
@@ -407,20 +405,19 @@ class MaterialDatatable extends React.Component {
             let changedData = cloneDeep(prevState.data);
             let filterData = cloneDeep(prevState.filterData);
             let filterValue = prevState["data"][row][index];
-            
+
             const tableMeta = this.getTableMeta(row, index, row, prevState.columns[index], prevState.data, prevState);
             let customBodyRenderResult = prevState.columns[index].customBodyRender(value, tableMeta);
 
-            if (React.isValidElement(customBodyRenderResult) && customBodyRenderResult.props.value){
+            if (React.isValidElement(customBodyRenderResult) && customBodyRenderResult.props.value) {
                 filterValue = customBodyRenderResult.props.value;
-            }
-            else if (typeof prevState.columns[index].customValue === "function") {
+            } else if (typeof prevState.columns[index].customValue === "function") {
                 filterValue = prevState.columns[index].customValue(value);
             }
-            if(filterValue === null || filterValue === undefined){
+            if (filterValue === null || filterValue === undefined) {
                 filterValue = "";
             }
-       
+
             const prevFilterIndex = filterData[index].indexOf(filterValue);
             filterData[index].splice(prevFilterIndex, 1, filterValue);
 
@@ -553,8 +550,12 @@ class MaterialDatatable extends React.Component {
     };
 
     changeRowsPerPage = rows => {
+        const rowCount = this.options.count || this.state.displayData.length;
+        const lastPage = Math.max(0, Math.ceil(rowCount / rows) - 1);
+
         this.setState(
             () => ({
+                page: Math.min(this.state.page, lastPage),
                 rowsPerPage: rows,
             }),
             () => {

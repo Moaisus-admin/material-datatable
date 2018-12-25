@@ -1,3 +1,8 @@
+<a name="0.2.5"></a>
+## 0.2.5 (2018-12-24)
+
+* Avoid crash when changing rows per page
+
 <a name="0.2.4"></a>
 ## 0.2.4 (2018-12-22)
 

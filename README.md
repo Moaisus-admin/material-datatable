@@ -409,6 +409,11 @@ The files included in this repository are licensed under the MIT license.
 
 ## Changelog
 
+0.2.5 (2018-12-24)
+
+* Avoid crash when changing rows per page
+
+
 0.2.4 (2018-12-22)
 
 * Fixed bug when multiselect filter crash when filter item is null
