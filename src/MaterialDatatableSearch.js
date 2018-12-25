@@ -59,6 +59,7 @@ class MaterialDatatableSearch extends React.Component {
                     <SearchIcon className={classes.searchIcon}/>
                     <TextField
                         className={classes.searchText}
+                        value={this.props.searchText !== null && this.props.searchText !== null ? this.props.searchText : "" }
                         autoFocus={true}
                         InputProps={{
                             "aria-label": options.textLabels.toolbar.search,

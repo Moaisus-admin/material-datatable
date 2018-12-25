@@ -43,6 +43,7 @@ export interface MaterialDatatableOptions {
     sort?: boolean
     filter?: boolean
     search?: boolean
+    searchText?: string
     print?: boolean
     download?: boolean
     downloadOptions?: { filename: string, separator: string }
@@ -57,11 +58,13 @@ export interface MaterialDatatableOptions {
     onFilterChange?: (changedColumn: string, filterList: any[]) => void
     onColumnSortChange?: (changedColumn: string, direction: string) => void
     onColumnViewChange?: (changedColumn: string, action: string) => void
-    onServerRequest?: (action: string, tableState: MuiDatatablesTableState) => void
+    onServerRequest?: (action: string, tableState: MaterialDatatableState) => void,
+    onTableChange?: (action: string, tableState: MaterialDatatableState) => void,
 }
 
-export interface MuiDatatablesTableState {
-    page: number
+export interface MaterialDatatableState {
+    page: number,
+    searchText: string,
     rowsPerPage: number
     filterList: any[]
 }

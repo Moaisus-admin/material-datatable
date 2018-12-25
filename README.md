@@ -409,6 +409,12 @@ The files included in this repository are licensed under the MIT license.
 
 ## Changelog
 
+0.2.6 (2018-12-25)
+
+* Added option searchText?: string
+* Added event onTableChange?: (action: string, tableState: MaterialDatatableState) to TS definition
+* Renamed MuiDatatablesTableState to MaterialDatatableState in TS definition
+
 0.2.5 (2018-12-24)
 
 * Avoid crash when changing rows per page

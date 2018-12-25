@@ -161,6 +161,7 @@ class MaterialDatatableToolbar extends React.Component {
             toggleViewColumn,
             title,
             tableRef,
+            searchText
         } = this.props;
 
         const {search, downloadCsv, print, viewColumns, filterTable} = options.textLabels.toolbar;
@@ -169,9 +170,12 @@ class MaterialDatatableToolbar extends React.Component {
         return (
             <Toolbar className={classes.root} role={"toolbar"} aria-label={"Table Toolbar"}>
                 <div className={classes.left}>
-                    {showSearch === true ? (
-                        <MaterialDatatableSearch onSearch={searchTextUpdate} onHide={this.hideSearch}
-                                                 options={options}/>
+                    {showSearch === true || searchText !== undefined && searchText !== null  ? (
+                        <MaterialDatatableSearch
+                            searchText={searchText}
+                            onSearch={searchTextUpdate}
+                            onHide={this.hideSearch}
+                            options={options}/>
                     ) : (
                         <div className={classes.titleRoot} aria-hidden={"true"}>
                             <Typography variant="h6" className={classes.titleText}>

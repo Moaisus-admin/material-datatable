@@ -93,6 +93,7 @@ class MaterialDatatable extends React.Component {
             filter: PropTypes.bool,
             sort: PropTypes.bool,
             search: PropTypes.bool,
+            searchText: PropTypes.string,
             print: PropTypes.bool,
             viewColumns: PropTypes.bool,
             download: PropTypes.bool,
@@ -134,8 +135,7 @@ class MaterialDatatable extends React.Component {
         super(props);
         this.tableRef = false;
         this.headCellRefs = {};
-        this.setHeadResizeable = () => {
-        };
+        this.setHeadResizeable = () => {};
     }
 
     componentWillMount() {
@@ -153,9 +153,19 @@ class MaterialDatatable extends React.Component {
     }
 
     initializeTable(props) {
+        this.setInitialState(props);
         this.getDefaultOptions(props);
         this.setTableOptions(props);
         this.setTableData(props, TABLE_LOAD.INITIAL);
+    }
+    
+    setInitialState(props){
+        if(props.options.searchText !== null && props.options.searchText !== undefined){
+            this.setState({
+                ...this.state,
+                searchText: props.options.searchText
+            });
+        }
     }
 
     //React currently does not support deep merge for defaultProps. Objects are overwritten
@@ -177,6 +187,7 @@ class MaterialDatatable extends React.Component {
             sortFilterList: true,
             sort: true,
             search: true,
+            searchText: "",
             print: true,
             viewColumns: true,
             download: true,
@@ -822,6 +833,7 @@ class MaterialDatatable extends React.Component {
                 filterList={filterList}
                 filterUpdate={this.filterUpdate}
                 options={this.options}
+                searchText={this.state.searchText}
                 resetFilters={this.resetFilters}
                 searchTextUpdate={this.searchTextUpdate}
                 tableRef={() => this.tableContent}
