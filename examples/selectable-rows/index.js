@@ -176,141 +176,141 @@ class Example extends React.Component {
                 subFieldData: {value: "222222222"}
             },
             {
-                name: "Name 2",
-                title: "Title 12",
-                location: "Location 2",
+                name: "Name 1",
+                title: "Title 1",
+                location: "Location 1",
                 age: 31,
                 salary: 11,
                 subFieldData: {value: "222222222"}
             },
             {
                 name: "Name 2",
-                title: "Title 13",
+                title: "Title 2",
                 location: "Location 2",
                 age: 31,
                 salary: 11,
                 subFieldData: {value: "222222222"}
             },
             {
-                name: "Name 2",
-                title: "Title 14",
-                location: "Location 2",
+                name: "Name 3",
+                title: "Title 3",
+                location: "Location 3",
                 age: 31,
                 salary: 11,
                 subFieldData: {value: "222222222"}
             },
-            {
-                name: "Name 2",
-                title: "Title 15",
-                location: "Location 2",
-                age: 31,
-                salary: 11,
-                subFieldData: {value: "222222222"}
-            },
-            {
-                name: "Name 2",
-                title: "Title 16",
-                location: "Location 2",
-                age: 31,
-                salary: 11,
-                subFieldData: {value: "222222222"}
-            },
-            {
-                name: "Name 2",
-                title: "Title 17",
-                location: "Location 2",
-                age: 31,
-                salary: 11,
-                subFieldData: {value: "222222222"}
-            },
-            {
-                name: "Name 2",
-                title: "Title 18",
-                location: "Location 2",
-                age: 31,
-                salary: 11,
-                subFieldData: {value: "222222222"}
-            },
-            {
-                name: "Name 2",
-                title: "Title 19",
-                location: "Location 2",
-                age: 31,
-                salary: 11,
-                subFieldData: {value: "222222222"}
-            },
-            {
-                name: "Name 2",
-                title: "Title 20",
-                location: "Location 2",
-                age: 31,
-                salary: 11,
-                subFieldData: {value: "222222222"}
-            },
-            {
-                name: "Name 2",
-                title: "Title 21",
-                location: "Location 2",
-                age: 31,
-                salary: 11,
-                subFieldData: {value: "222222222"}
-            },
-            {
-                name: "Name 2",
-                title: "Title 22",
-                location: "Location 2",
-                age: 31,
-                salary: 11,
-                subFieldData: {value: "222222222"}
-            },
-            {
-                name: "Name 2",
-                title: "Title 23",
-                location: "Location 2",
-                age: 31,
-                salary: 11,
-                subFieldData: {value: "222222222"}
-            },
-            {
-                name: "Name 2",
-                title: "Title 24",
-                location: "Location 2",
-                age: 31,
-                salary: 11,
-                subFieldData: {value: "222222222"}
-            },
-            {
-                name: "Name 2",
-                title: "Title 25",
-                location: "Location 2",
-                age: 31,
-                salary: 11,
-                subFieldData: {value: "222222222"}
-            },
-            {
-                name: "Name 2",
-                title: "Title 26",
-                location: "Location 2",
-                age: 31,
-                salary: 11,
-                subFieldData: {value: "222222222"}
-            },
-            {
-                name: "Name 2",
-                title: "Title 27",
-                location: "Location 2",
-                age: 31,
-                salary: 11,
-                subFieldData: {value: "222222222"}
-            },
-            {
-                name: "Name 2",
-                title: "Title 28",
-                location: "Location 2",
-                age: 31,
-                salary: 11,
-                subFieldData: {value: "222222222"}
-            },
+             {
+                 name: "Name 2",
+                 title: "Title 15",
+                 location: "Location 2",
+                 age: 31,
+                 salary: 11,
+                 subFieldData: {value: "222222222"}
+             },
+             {
+                 name: "Name 2",
+                 title: "Title 16",
+                 location: "Location 2",
+                 age: 31,
+                 salary: 11,
+                 subFieldData: {value: "222222222"}
+             },
+             {
+                 name: "Name 2",
+                 title: "Title 17",
+                 location: "Location 2",
+                 age: 31,
+                 salary: 11,
+                 subFieldData: {value: "222222222"}
+             },
+             {
+                 name: "Name 2",
+                 title: "Title 18",
+                 location: "Location 2",
+                 age: 31,
+                 salary: 11,
+                 subFieldData: {value: "222222222"}
+             },
+             {
+                 name: "Name 2",
+                 title: "Title 19",
+                 location: "Location 2",
+                 age: 31,
+                 salary: 11,
+                 subFieldData: {value: "222222222"}
+             },
+             {
+                 name: "Name 2",
+                 title: "Title 20",
+                 location: "Location 2",
+                 age: 31,
+                 salary: 11,
+                 subFieldData: {value: "222222222"}
+             },
+             {
+                 name: "Name 2",
+                 title: "Title 21",
+                 location: "Location 2",
+                 age: 31,
+                 salary: 11,
+                 subFieldData: {value: "222222222"}
+             },
+             {
+                 name: "Name 2",
+                 title: "Title 22",
+                 location: "Location 2",
+                 age: 31,
+                 salary: 11,
+                 subFieldData: {value: "222222222"}
+             },
+             {
+                 name: "Name 2",
+                 title: "Title 23",
+                 location: "Location 2",
+                 age: 31,
+                 salary: 11,
+                 subFieldData: {value: "222222222"}
+             },
+             {
+                 name: "Name 2",
+                 title: "Title 24",
+                 location: "Location 2",
+                 age: 31,
+                 salary: 11,
+                 subFieldData: {value: "222222222"}
+             },
+             {
+                 name: "Name 2",
+                 title: "Title 25",
+                 location: "Location 2",
+                 age: 31,
+                 salary: 11,
+                 subFieldData: {value: "222222222"}
+             },
+             {
+                 name: "Name 2",
+                 title: "Title 26",
+                 location: "Location 2",
+                 age: 31,
+                 salary: 11,
+                 subFieldData: {value: "222222222"}
+             },
+             {
+                 name: "Name 2",
+                 title: "Title 27",
+                 location: "Location 2",
+                 age: 31,
+                 salary: 11,
+                 subFieldData: {value: "222222222"}
+             },
+             {
+                 name: "Name 2",
+                 title: "Title 28",
+                 location: "Location 2",
+                 age: 31,
+                 salary: 11,
+                 subFieldData: {value: "222222222"}
+             },
         ];
 
         let options = {
@@ -320,9 +320,11 @@ class Example extends React.Component {
             filterType: 'multiselect',
             responsive: 'stacked',
             rowsPerPage: 10,
-            searchText: "Title 20",
+            searchText: "22",
             componentWillReceiveProps: false,
             page: 0,
+            sortColumnIndex: 2,
+            sortColumnDirection: "desc",
             filterList: [[], [], ["Location 2"], [], [], [], []],
 
             onRowsSelect: (rowsSelected, allRows) => {

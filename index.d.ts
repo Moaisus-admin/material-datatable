@@ -42,6 +42,8 @@ export interface MaterialDatatableOptions {
     componentWillReceiveProps?: boolean
     sortFilterList?: boolean
     sort?: boolean
+    sortColumnIndex?: number,
+    sortColumnDirection?: string,
     filter?: boolean
     search?: boolean
     searchText?: string

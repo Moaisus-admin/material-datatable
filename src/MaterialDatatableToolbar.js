@@ -136,7 +136,8 @@ class MaterialDatatableToolbar extends React.Component {
     hideSearch = () => {
         const {onSearchClose} = this.props.options;
 
-        if (onSearchClose) onSearchClose();
+        if (onSearchClose) 
+            onSearchClose();
         this.props.searchTextUpdate(null);
 
         this.setState(() => ({

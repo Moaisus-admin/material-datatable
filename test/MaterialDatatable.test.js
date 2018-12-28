@@ -38,18 +38,22 @@ describe("<MaterialDatatable />", function () {
         displayData = JSON.stringify([
             {
                 data: ["James, Joe", "Test Corp", renderCities(data[0], {rowIndex: 0}), "NY"],
+                dataObject: data[0],
                 dataIndex: 0,
             },
             {
                 data: ["Walsh, John", "Test Corp", renderCities(data[1], {rowIndex: 1}), "CT"],
+                dataObject: data[1],
                 dataIndex: 1,
             },
             {
                 data: ["Herm, Bob", "Test Corp", renderCities(data[2], {rowIndex: 2}), "FL"],
+                dataObject: data[2],
                 dataIndex: 2,
             },
             {
                 data: ["Houston, James", "Test Corp", renderCities(data[3], {rowIndex: 3}), "TX"],
+                dataObject: data[3],
                 dataIndex: 3,
             },
         ]);
@@ -369,7 +373,11 @@ describe("<MaterialDatatable />", function () {
         const state = table.state();
 
         const expectedResult = JSON.stringify([
-            {data: ["James, Joe", "Test Corp", renderCities(data[0], {rowIndex: 0}), "NY"], dataIndex: 0},
+            {
+                data: ["James, Joe", "Test Corp", renderCities(data[0], {rowIndex: 0}), "NY"],
+                dataObject: data[0],
+                dataIndex: 0
+            },
         ]);
 
         assert.deepEqual(JSON.stringify(state.displayData), expectedResult);
@@ -384,10 +392,26 @@ describe("<MaterialDatatable />", function () {
         const state = shallowWrapper.state();
 
         const expectedResult = JSON.stringify([
-            {data: ["Herm, Bob", "Test Corp", renderCities(data[2], {rowIndex: 0}), "FL"], dataIndex: 2},
-            {data: ["Houston, James", "Test Corp", renderCities(data[3], {rowIndex: 1}), "TX"], dataIndex: 3},
-            {data: ["James, Joe", "Test Corp", renderCities(data[0], {rowIndex: 2}), "NY"], dataIndex: 0},
-            {data: ["Walsh, John", "Test Corp", renderCities(data[1], {rowIndex: 3}), "CT"], dataIndex: 1},
+            {
+                data: ["Herm, Bob", "Test Corp", renderCities(data[2], {rowIndex: 0}), "FL"],
+                dataObject: data[2],
+                dataIndex: 2
+            },
+            {
+                data: ["Houston, James", "Test Corp", renderCities(data[3], {rowIndex: 1}), "TX"],
+                dataObject: data[3],
+                dataIndex: 3
+            },
+            {
+                data: ["James, Joe", "Test Corp", renderCities(data[0], {rowIndex: 2}), "NY"],
+                dataObject: data[0],
+                dataIndex: 0
+            },
+            {
+                data: ["Walsh, John", "Test Corp", renderCities(data[1], {rowIndex: 3}), "CT"],
+                dataObject: data[1],
+                dataIndex: 1
+            },
         ]);
 
         assert.deepEqual(JSON.stringify(state.displayData), expectedResult);
@@ -454,15 +478,61 @@ describe("<MaterialDatatable />", function () {
     });
 
     it("should get displayable data when calling getDisplayData method", () => {
+
+        const data = [
+            {name: "James, Joe", company: "Test Corp", city: "Yonkers", state: "NY"},
+            {name: "Walsh, John", company: "Test Corp", city: "Hartford", state: "CT"},
+            {name: "Herm, Bob", company: "Test Corp", city: "Tampa", state: "FL"},
+            {name: "Houston, James", company: "Test Corp", city: "Dallas", state: "TX"},
+        ];
+
+        const data2 = [
+            {name: "James, Joe", company: "Test Corp", city: renderCities(data[0], {rowIndex: 0}), state: "NY"},
+            {name: "Walsh, John", company: "Test Corp", city: renderCities(data[1], {rowIndex: 1}), state: "CT"},
+            {name: "Herm, Bob", company: "Test Corp", city: renderCities(data[2], {rowIndex: 2}), state: "FL"},
+            {name: "Houston, James", company: "Test Corp", city: renderCities(data[3], {rowIndex: 3}), state: "TX"},
+        ];
+        
+      /*  data[0].city = renderCities(data[0], {rowIndex: 0});
+        data[1].city = renderCities(data[2], {rowIndex: 1});
+        data[2].city = renderCities(data[2], {rowIndex: 2});
+        data[3].city = renderCities(data[3], {rowIndex: 3});*/
+        
+        const expectedResult =  [
+            {
+                data: ["James, Joe", "Test Corp", renderCities(data[0], {rowIndex: 0}), "NY"],
+                dataObject: data2[0],
+                dataIndex: 0,
+            },
+            {
+                data: ["Walsh, John", "Test Corp", renderCities(data[1], {rowIndex: 1}), "CT"],
+                dataObject: data2[1],
+                dataIndex: 1,
+            },
+            {
+                data: ["Herm, Bob", "Test Corp", renderCities(data[2], {rowIndex: 2}), "FL"],
+                dataObject: data2[2],
+                dataIndex: 2,
+            },
+            {
+                data: ["Houston, James", "Test Corp", renderCities(data[3], {rowIndex: 3}), "TX"],
+                dataObject: data2[3],
+                dataIndex: 3,
+            },
+        ];
+       
+
         const shallowWrapper = shallow(<MaterialDatatable columns={columns} data={data}/>).dive();
         const instance = shallowWrapper.instance();
         const state = shallowWrapper.state();
 
         const actualResult = instance.getDisplayData(columns, tableData, state.filterList, "");
-        assert.deepEqual(JSON.stringify(actualResult), displayData);
+        assert.deepEqual(JSON.stringify(actualResult), JSON.stringify(expectedResult));
     });
 
     it("should update rowsPerPage when calling changeRowsPerPage method", () => {
+
+
         const shallowWrapper = shallow(<MaterialDatatable columns={columns} data={data}/>).dive();
         const instance = shallowWrapper.instance();
 

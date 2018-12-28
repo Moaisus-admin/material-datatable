@@ -77,10 +77,10 @@ class MaterialDatatableBody extends React.Component {
         return startIndex + index;
     }
 
-    isRowSelected(index) {
+    isRowSelected(dataIndex) {
         const {selectedRows} = this.props;
-
-        return selectedRows.lookup && selectedRows.lookup[index] ? true : false;
+        
+        return  selectedRows.lookup && selectedRows.lookup[dataIndex] ? true : false;
     }
 
     handleRowSelect = data => {
@@ -97,7 +97,7 @@ class MaterialDatatableBody extends React.Component {
                     tableRows.map(({data: row, dataIndex}, rowIndex) => (
                         <MaterialDatatableBodyRow
                             options={options}
-                            rowSelected={options.selectableRows ? this.isRowSelected(rowIndex) : false}
+                            rowSelected={options.selectableRows ? dataIndex === 2: false}
                             onClick={
                                 options.onRowClick
                                     ? options.onRowClick.bind(null, row, {
@@ -114,7 +114,7 @@ class MaterialDatatableBody extends React.Component {
                                         index: this.getRowIndex(rowIndex),
                                         dataIndex: dataIndex,
                                     })}
-                                    checked={this.isRowSelected(this.getRowIndex(rowIndex))}
+                                    checked={this.isRowSelected(dataIndex)}
                                 />
                             ) : (
                                 false

@@ -214,6 +214,8 @@ The component accepts the following props:
 |**`rowHover`**|boolean|true|Enable/disable hover style over rows
 |**`sortFilterList`**|boolean|true|Enable/disable alphanumeric sorting of filter lists
 |**`sort`**|boolean|true|Enable/disable sort on all columns
+|**`sortColumnIndex`**|number|null| Set column number for initial sorting (0, n < columns.length). Should be used with sortColumnDirection.
+|**`sortColumnDirection`**|string|null| Set directional for initial sorting ("asc", "desc"). Should be used with sortColumnIndex.
 |**`filter`**|boolean|true|Show/hide filter icon from toolbar
 |**`search`**|boolean|true|Show/hide search icon from toolbar
 |**`searchText`**|string|""|Set search text
@@ -410,6 +412,16 @@ const options = {
 The files included in this repository are licensed under the MIT license.
 
 ## Changelog
+
+0.2.8 (2018-12-28)
+
+* Added options sortColumnIndex: PropTypes.number and sortColumnDirection: PropTypes.string,
+* Fixed errors with sorting, filtering and selections
+
+0.2.7 (2018-12-26)
+
+* Added option componentWillReceiveProps - Enable/disable componentWillReceiveProps function. That option can be used if you subscribed on some event like 'onTableChange' and changing your state. It prevent re-render of table component.
+
 
 0.2.6 (2018-12-25)
 

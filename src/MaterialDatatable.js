@@ -79,6 +79,8 @@ class MaterialDatatable extends React.Component {
             customFooter: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
             onRowClick: PropTypes.func,
             resizableColumns: PropTypes.bool,
+            sortColumnIndex: PropTypes.number,
+            sortColumnDirection: PropTypes.string,
             selectableRows: PropTypes.bool,
             serverSide: PropTypes.bool,
             onTableChange: PropTypes.func,
@@ -118,6 +120,7 @@ class MaterialDatatable extends React.Component {
         activeColumn: null,
         data: [],
         displayData: [],
+        notModifiedDisplayData: [],
         page: 0,
         rowsPerPage: 0,
         columns: [],
@@ -135,7 +138,8 @@ class MaterialDatatable extends React.Component {
         super(props);
         this.tableRef = false;
         this.headCellRefs = {};
-        this.setHeadResizeable = () => {};
+        this.setHeadResizeable = () => {
+        };
     }
 
     componentWillMount() {
@@ -144,29 +148,38 @@ class MaterialDatatable extends React.Component {
 
     componentDidMount() {
         this.setHeadResizeable(this.headCellRefs, this.tableRef);
+        this.setInitialSort(this.props);
     }
 
     componentWillReceiveProps(nextProps) {
         if (this.props.data !== nextProps.data || this.props.columns !== nextProps.columns) {
-            if(this.props.options === undefined || this.props.options.componentWillReceiveProps === undefined || this.props.options.componentWillReceiveProps === true){
+            if (this.props.options === undefined || this.props.options.componentWillReceiveProps === undefined || this.props.options.componentWillReceiveProps === true) {
                 this.initializeTable(nextProps);
             }
         }
     }
 
     initializeTable(props) {
-        this.setInitialState(props);
+        this.setInitialState(this.props);
         this.getDefaultOptions(props);
         this.setTableOptions(props);
         this.setTableData(props, TABLE_LOAD.INITIAL);
     }
-    
-    setInitialState(props){
-        if(props.options.searchText !== null && props.options.searchText !== undefined){
+
+    setInitialState(props) {
+        if (props.options.searchText !== null && props.options.searchText !== undefined) {
             this.setState({
                 ...this.state,
                 searchText: props.options.searchText
             });
+        }
+    }
+
+    setInitialSort(props) {
+        if (props.options.sortColumnIndex !== null && props.options.sortColumnIndex !== undefined && props.options.sortColumnDirection !== null && props.options.sortColumnDirection !== undefined) {
+            if (props.options.sortColumnIndex >= 0 && props.options.sortColumnIndex < props.columns.length && (props.options.sortColumnDirection === "asc" || props.options.sortColumnDirection === "desc")) {
+                this.sortTableData(props.options.sortColumnIndex, props.options.sortColumnDirection);
+            }
         }
     }
 
@@ -188,6 +201,8 @@ class MaterialDatatable extends React.Component {
             filter: true,
             sortFilterList: true,
             sort: true,
+            sortColumnIndex: null,
+            sortColumnDirection: null,
             search: true,
             searchText: "",
             print: true,
@@ -239,6 +254,7 @@ class MaterialDatatable extends React.Component {
         let columnData = [],
             filterData = [],
             filterList = [],
+            emptyFilterList = [],
             tableData = [];
 
         columns.forEach((column, colIndex) => {
@@ -271,6 +287,7 @@ class MaterialDatatable extends React.Component {
 
             filterData[colIndex] = [];
             filterList[colIndex] = [];
+            emptyFilterList[colIndex] = [];
 
             for (let rowIndex = 0; rowIndex < data.length; rowIndex++) {
                 let rowData = status === TABLE_LOAD.INITIAL ? data[rowIndex] : data[rowIndex].data;
@@ -339,6 +356,7 @@ class MaterialDatatable extends React.Component {
                 selectedRows: selectedRowsData,
                 data: tableData,
                 displayData: this.getDisplayData(columnData, tableData, filterList, prevState.searchText),
+                notModifiedDisplayData: this.getDisplayData(columnData, tableData, emptyFilterList, ""),
             }),
             callback,
         );
@@ -473,7 +491,8 @@ class MaterialDatatable extends React.Component {
             if (displayRow) {
                 newRows.push({
                     data: displayRow,
-                    dataIndex: records[index].index,
+                    dataObject: value,
+                    dataIndex: records[index].dataIndex !== undefined ? records[index].dataIndex : index,
                 });
             }
         }
@@ -506,19 +525,19 @@ class MaterialDatatable extends React.Component {
         return column.sortDirection === "asc" ? "ascending" : "descending";
     }
 
-    toggleSortColumn = index => {
+    sortTableData(index, order) {
         this.setState(
             prevState => {
                 let columns = cloneDeep(prevState.columns);
                 let data = prevState.data;
                 let displayData = prevState.displayData;
-                let order = prevState.columns[index].sortDirection;
+                const notModifiedDisplayData = prevState.notModifiedDisplayData;
 
                 for (let pos = 0; pos < columns.length; pos++) {
                     if (index !== pos) {
                         columns[pos].sortDirection = null;
                     } else {
-                        columns[pos].sortDirection = columns[pos].sortDirection === "asc" ? "desc" : "asc";
+                        columns[pos].sortDirection = order;
                     }
                 }
 
@@ -539,7 +558,7 @@ class MaterialDatatable extends React.Component {
                         selectedRows: prevState.selectedRows,
                     };
                 } else {
-                    const sortedData = this.sortTable(data, index, order, displayData, columns[index]);
+                    const sortedData = this.sortTable(data, index, order, notModifiedDisplayData, columns[index]);
 
                     newState = {
                         ...newState,
@@ -561,6 +580,14 @@ class MaterialDatatable extends React.Component {
                 }
             },
         );
+    }
+
+    toggleSortColumn(index) {
+        const order = this.state.columns[index].sortDirection === null || this.state.columns[index].sortDirection === "desc"
+            ? "asc"
+            : "desc";
+
+        this.sortTableData(index, order);
     };
 
     changeRowsPerPage = rows => {
@@ -689,8 +716,8 @@ class MaterialDatatable extends React.Component {
     };
 
     buildSelectedMap = rows => {
-        return rows.reduce((accum, {index}) => {
-            accum[index] = true;
+        return rows.reduce((accum, {dataIndex}) => {
+            accum[dataIndex] = true;
             return accum;
         }, {});
     };
@@ -738,7 +765,7 @@ class MaterialDatatable extends React.Component {
                     let rowPos = -1;
 
                     for (let cIndex = 0; cIndex < selectedRows.length; cIndex++) {
-                        if (selectedRows[cIndex].index === index) {
+                        if (selectedRows[cIndex].dataIndex === dataIndex) {
                             rowPos = cIndex;
                             break;
                         }
@@ -780,19 +807,19 @@ class MaterialDatatable extends React.Component {
             }
 
             if (typeof a.data.localeCompare === "function") {
-                return a.data.localeCompare(b.data) * (order === "asc" ? -1 : 1);
+                return a.data.localeCompare(b.data) * (order === "desc" ? -1 : 1);
             } else {
-                return (a.data - b.data) * (order === "asc" ? -1 : 1);
+                return (a.data - b.data) * (order === "desc" ? -1 : 1);
             }
         };
     }
 
-    sortTable(data, col, order, displayData, column) {
-        let sortedData = displayData.map((row, sIndex) => ({
+    sortTable(data, col, order, notModifiedDisplayData, column) {
+        let sortedData = notModifiedDisplayData.map((row, sIndex) => ({
             data: row.data[col],
-            dataObject: data[sIndex].data,
-            position: sIndex,
-            rowSelected: this.state.selectedRows.lookup[sIndex] ? true : false,
+            dataObject: row.dataObject,
+            position: row.dataIndex,
+            rowSelected: this.state.selectedRows.lookup[row.dataIndex] ? true : false,
         }));
 
         sortedData.sort(this.sortCompare(order, column));
@@ -802,10 +829,15 @@ class MaterialDatatable extends React.Component {
 
         for (let i = 0; i < sortedData.length; i++) {
             const row = sortedData[i];
-            data[row.position].dataIndex = i;
-            tableData.push(data[row.position]);
+            const sortResultObject={
+                data: notModifiedDisplayData[row.position].dataObject,
+                dataIndex: row.position,
+                index: i,
+            };
+          //  data[row.position].dataIndex = i;
+            tableData.push(sortResultObject);
             if (row.rowSelected) {
-                selectedRows.push({index: i, dataIndex: data[row.position].index});
+                selectedRows.push({index: i, dataIndex: row.position});
             }
         }
 
@@ -872,7 +904,7 @@ class MaterialDatatable extends React.Component {
                         handleHeadUpdateRef={fn => (this.updateToolbarSelect = fn)}
                         selectedRows={selectedRows}
                         selectRowUpdate={this.selectRowUpdate}
-                        toggleSort={this.toggleSortColumn}
+                        toggleSort={(index) => this.toggleSortColumn(index)}
                         setCellRef={this.setHeadCellRef}
                         options={this.options}
                     />

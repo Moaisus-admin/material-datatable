@@ -1,5 +1,11 @@
+<a name="0.2.8"></a>
+## 0.2.8 (2018-12-28)
+
+* Added options sortColumnIndex: PropTypes.number and sortColumnDirection: PropTypes.string,
+* Fixed errors with sorting, filtering and selections
+
 <a name="0.2.7"></a>
-## 0.2.7 (2018-12-25)
+## 0.2.7 (2018-12-26)
 
 * Added option componentWillReceiveProps - Enable/disable componentWillReceiveProps function. That option can be used if you subscribed on some event like 'onTableChange' and changing your state. It prevent re-render of table component.
 
