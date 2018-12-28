@@ -4,7 +4,7 @@
 
 # Material-Datatable - Datatable for Material-UI
 
-[![Build Status](https://travis-ci.org/Diaver/material-datatable.svg?branch=master)](https://travis-ci.org/Diaver/material-datatable)
+<!--[![Build Status](https://travis-ci.org/Diaver/material-datatable.svg?branch=master)](https://travis-ci.org/Diaver/material-datatable)-->
 [![Coverage Status](https://coveralls.io/repos/github/Diaver/material-datatable/badge.svg?branch=master)](https://coveralls.io/github/Diaver/material-datatable?branch=master)
 [![dependencies Status](https://david-dm.org/Diaver/material-datatable/status.svg)](https://david-dm.org/diaver/material-datatable)
 [![npm version](https://badge.fury.io/js/material-datatable.svg)](https://badge.fury.io/js/material-datatable)
@@ -412,6 +412,14 @@ const options = {
 The files included in this repository are licensed under the MIT license.
 
 ## Changelog
+
+0.3.0 (2018-12-28)
+
+* Released updated minified js
+
+0.2.9 (2018-12-28)
+
+* Temporary removed link to travic-ci, due strange issue with code coverage
 
 0.2.8 (2018-12-28)
 

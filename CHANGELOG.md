@@ -1,3 +1,13 @@
+<a name="0.3.0"></a>
+## 0.3.0 (2018-12-28)
+
+* Released updated minified js
+
+<a name="0.2.9"></a>
+## 0.2.9 (2018-12-28)
+
+* Temporary removed link to travic-ci, due strange issue with code coverage
+
 <a name="0.2.8"></a>
 ## 0.2.8 (2018-12-28)
 
