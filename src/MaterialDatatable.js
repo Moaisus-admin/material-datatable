@@ -148,7 +148,9 @@ class MaterialDatatable extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         if (this.props.data !== nextProps.data || this.props.columns !== nextProps.columns) {
-            this.initializeTable(nextProps);
+            if(this.props.options === undefined || this.props.options.componentWillReceiveProps === undefined || this.props.options.componentWillReceiveProps === true){
+                this.initializeTable(nextProps);
+            }
         }
     }
 
@@ -191,6 +193,7 @@ class MaterialDatatable extends React.Component {
             print: true,
             viewColumns: true,
             download: true,
+            componentWillReceiveProps: true,
             downloadOptions: {
                 filename: "tableDownload.csv",
                 separator: ",",

@@ -1,3 +1,8 @@
+<a name="0.2.7"></a>
+## 0.2.7 (2018-12-25)
+
+* Added option componentWillReceiveProps - Enable/disable componentWillReceiveProps function. That option can be used if you subscribed on some event like 'onTableChange' and changing your state. It prevent re-render of table component.
+
 <a name="0.2.6"></a>
 ## 0.2.6 (2018-12-25)
 

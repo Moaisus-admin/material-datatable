@@ -5,6 +5,16 @@ import Button from "@material-ui/core/Button/Button";
 
 class Example extends React.Component {
 
+    state = {
+        filterList: undefined
+    };
+
+
+    constructor(props, context, state) {
+        super(props, context);
+        //this.setState({filterList:0});
+    }
+
     render() {
         const columns = [
             {
@@ -303,7 +313,7 @@ class Example extends React.Component {
             },
         ];
 
-        const options = {
+        let options = {
             filter: true,
             selectableRows: true,
             usePaperPlaceholder: false,
@@ -311,9 +321,10 @@ class Example extends React.Component {
             responsive: 'stacked',
             rowsPerPage: 10,
             searchText: "Title 20",
+            componentWillReceiveProps: false,
             page: 0,
-            filterList:[[],[],["Location 2"],[],[],[],[]],
-            
+            filterList: [[], [], ["Location 2"], [], [], [], []],
+
             onRowsSelect: (rowsSelected, allRows) => {
                 console.log(rowsSelected, allRows);
             },
@@ -342,15 +353,28 @@ class Example extends React.Component {
             onRowClick: (rowData, rowState) => {
                 console.log(rowData, rowState);
             },
-            onTableChange: (action, state) => {
-                console.log(action, state);
-            }
+            onTableChange: (action, state) => this.onChange(state)
         };
 
+        if (this.state.filterList !== null && this.state.filterList !== undefined) {
+            options.filterList = this.state.filterList;
+        }
+
         return (
-            <MaterialDatatable title={"ACME Employee list"} data={data} columns={columns} options={options}/>
+            <MaterialDatatable
+                title={"ACME Employee list"}
+                data={data}
+                columns={columns}
+                options={options}
+            />
         );
 
+    }
+
+    onChange(tableState) {
+        this.setState({
+            filterList: tableState.filterList
+        });
     }
 }
 

@@ -201,6 +201,7 @@ The component accepts the following props:
 |**`filterType `**|string|'dropdown'|Choice of filtering view. Options are "checkbox", "dropdown", or "multiselect"
 |**`textLabels `**|object||User provided labels to localize text
 |**`pagination`**|boolean|true|Enable/disable pagination
+|**`componentWillReceiveProps`**|boolean|true|Enable/disable componentWillReceiveProps function. That option can be used if you subscribed on some event like 'onTableChange' and changing your state. It will prevent re-render of table component.  
 |**`selectableRows`**|boolean|true|Enable/disable row selection
 |**`resizableColumns`**|boolean|false|Enable/disable resizable columns
 |**`customToolbar`**|function||Render a custom toolbar
@@ -215,6 +216,7 @@ The component accepts the following props:
 |**`sort`**|boolean|true|Enable/disable sort on all columns
 |**`filter`**|boolean|true|Show/hide filter icon from toolbar
 |**`search`**|boolean|true|Show/hide search icon from toolbar
+|**`searchText`**|string|""|Set search text
 |**`print`**|boolean|true|Show/hide print	 icon from toolbar
 |**`download`**|boolean|true|Show/hide download icon from toolbar
 |**`downloadOptions`**|object||Options to change the output of the CSV file. Default options: `{filename: 'tableDownload.csv', separator: ','}`
@@ -229,7 +231,7 @@ The component accepts the following props:
 |**`onFilterChange`**|function||Callback function that triggers when filters have changed. `function(changedColumn: string, filterList: array) => void`
 |**`onColumnSortChange`**|function||Callback function that triggers when a column has been sorted. `function(changedColumn: string, direction: string) => void`
 |**`onColumnViewChange`**|function||Callback function that triggers when a column view has been changed. `function(changedColumn: string, action: string) => void`
-|**`onTableChange`**|function||Callback function that triggers when table state has changed. `function(action: string, tableState: object) => void`
+|**`onTableChange`**|function||Callback function that triggers when table state has changed. `function(action: string, tableState: object) => void`. If you going to change your component state and force re-render, you probably need turn off componentWillReceiveProps option. 
 
 
 ## Customize Columns

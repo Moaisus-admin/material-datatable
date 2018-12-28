@@ -39,6 +39,7 @@ export interface MaterialDatatableOptions {
     rowsPerPage?: number
     rowsPerPageOptions?: number[]
     rowHover?: boolean
+    componentWillReceiveProps?: boolean
     sortFilterList?: boolean
     sort?: boolean
     filter?: boolean
