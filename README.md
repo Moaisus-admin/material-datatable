@@ -413,6 +413,11 @@ The files included in this repository are licensed under the MIT license.
 
 ## Changelog
 
+0.3.1 (2018-12-28)
+
+* onTableChange and onServerRequest events provide two new fields in tableState argument: sortColumnIndex: number, sortColumnDirection: string 
+* Updated TS definition 
+
 0.3.0 (2018-12-28)
 
 * Released updated minified js

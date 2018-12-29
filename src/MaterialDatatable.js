@@ -130,6 +130,8 @@ class MaterialDatatable extends React.Component {
             data: [],
             lookup: {},
         },
+        sortColumnIndex: null,
+        sortColumnDirection: null,
         showResponsive: false,
         searchText: null,
     };
@@ -248,7 +250,8 @@ class MaterialDatatable extends React.Component {
     };
 
     // Build the source table data
-    setTableData(props, status, callback = () => {}) {
+    setTableData(props, status, callback = () => {
+    }) {
         const {data, columns, options} = props;
 
         let columnData = [],
@@ -530,7 +533,6 @@ class MaterialDatatable extends React.Component {
             prevState => {
                 let columns = cloneDeep(prevState.columns);
                 let data = prevState.data;
-                let displayData = prevState.displayData;
                 const notModifiedDisplayData = prevState.notModifiedDisplayData;
 
                 for (let pos = 0; pos < columns.length; pos++) {
@@ -548,6 +550,8 @@ class MaterialDatatable extends React.Component {
                     columns: columns,
                     announceText: announceText,
                     activeColumn: index,
+                    sortColumnIndex: index,
+                    sortColumnDirection: order
                 };
 
                 if (this.options.serverSide) {
@@ -829,12 +833,12 @@ class MaterialDatatable extends React.Component {
 
         for (let i = 0; i < sortedData.length; i++) {
             const row = sortedData[i];
-            const sortResultObject={
+            const sortResultObject = {
                 data: notModifiedDisplayData[row.position].dataObject,
                 dataIndex: row.position,
                 index: i,
             };
-          //  data[row.position].dataIndex = i;
+            //  data[row.position].dataIndex = i;
             tableData.push(sortResultObject);
             if (row.rowSelected) {
                 selectedRows.push({index: i, dataIndex: row.position});

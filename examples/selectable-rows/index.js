@@ -374,9 +374,7 @@ class Example extends React.Component {
     }
 
     onChange(tableState) {
-        this.setState({
-            filterList: tableState.filterList
-        });
+       console.log(tableState);
     }
 }
 

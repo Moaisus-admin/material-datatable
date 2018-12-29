@@ -1,3 +1,9 @@
+<a name="0.3.1"></a>
+## 0.3.1 (2018-12-28)
+
+* onTableChange and onServerRequest events provide two new fields in tableState argument: sortColumnIndex: number, sortColumnDirection: string 
+* Updated TS definition 
+
 <a name="0.3.0"></a>
 ## 0.3.0 (2018-12-28)
 

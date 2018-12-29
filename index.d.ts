@@ -69,7 +69,9 @@ export interface MaterialDatatableState {
     page: number,
     searchText: string,
     rowsPerPage: number
-    filterList: any[]
+    filterList: any[],
+    sortColumnIndex: number,
+    sortColumnDirection: string
 }
 
 export type MaterialDatatableColumnDef = string | MaterialDatatableColumn;
