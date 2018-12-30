@@ -174,6 +174,45 @@ ReactDOM.hydrate(
 ```
 https://github.com/mui-org/material-ui/issues/12741#issuecomment-428130592
 
+## Keep track and restore table settings (sorting, filtering, paging, search text) 
+[Example](https://github.com/Diaver/material-datatable/blob/master/examples/selectable-rows/index.js)
+```js 
+let options = {
+    filter: true,
+    selectableRows: true,
+    usePaperPlaceholder: false,
+    filterType: 'multiselect',
+    responsive: 'stacked',
+    rowsPerPage: 10,
+    searchText: "22",
+    componentWillReceiveProps: true,
+    page: 0,
+    sortColumnIndex: 2,
+    sortColumnDirection: "desc",
+    filterList: [[], [], ["Location 2"], [], [], [], []],
+
+    onTableChange: (action, state) => this.onChange(state)
+};
+
+if (this.state.tableState !== undefined && this.state.tableState !== null) {
+    options.filterList = this.state.tableState.filterList;
+    options.searchText = this.state.tableState.searchText;
+    options.page = this.state.tableState.page;
+    options.rowsPerPage = this.state.tableState.rowsPerPage;
+    options.sortColumnDirection = this.state.tableState.sortColumnDirection;
+    options.sortColumnIndex = this.state.tableState.sortColumnIndex;
+}
+return (
+    <MaterialDatatable
+        title={"ACME Employee list"}
+        data={data}
+        columns={columns}
+        options={options}
+    />
+);
+        
+```
+
 
 ## API
 
@@ -201,7 +240,7 @@ The component accepts the following props:
 |**`filterType `**|string|'dropdown'|Choice of filtering view. Options are "checkbox", "dropdown", or "multiselect"
 |**`textLabels `**|object||User provided labels to localize text
 |**`pagination`**|boolean|true|Enable/disable pagination
-|**`componentWillReceiveProps`**|boolean|true|Enable/disable componentWillReceiveProps function. That option can be used if you subscribed on some event like 'onTableChange' and changing your state. It will prevent re-render of table component.  
+|**`componentWillReceiveProps`**|boolean|true|NOT RECOMMENDED. Enable/disable componentWillReceiveProps function. That option can be used if you subscribed on some event like 'onTableChange' and changing your state. It will prevent re-render of table component.  
 |**`selectableRows`**|boolean|true|Enable/disable row selection
 |**`resizableColumns`**|boolean|false|Enable/disable resizable columns
 |**`customToolbar`**|function||Render a custom toolbar
@@ -236,7 +275,7 @@ The component accepts the following props:
 |**`onTableChange`**|function||Callback function that triggers when table state has changed. `function(action: string, tableState: object) => void`. If you going to change your component state and force re-render, you probably need turn off componentWillReceiveProps option. 
 
 
-## Customize Columns
+#### Customize Columns
 
 On each column object, you have the ability to customize columns to your liking with the 'options' property. Example:
 
@@ -255,6 +294,7 @@ const columns = [
     ...
 ];
 ```
+
 
 #### Column:
 |Name|Type|Description
@@ -412,6 +452,11 @@ const options = {
 The files included in this repository are licensed under the MIT license.
 
 ## Changelog
+
+0.3.2 (2018-12-30)
+
+* Keep column display setting when componentWillReceiveProps received    
+* Do not need to set componentWillReceiveProps to false anymore to keep onTableChanges working 
 
 0.3.1 (2018-12-28)
 

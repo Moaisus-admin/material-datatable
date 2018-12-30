@@ -1,4 +1,10 @@
 <a name="0.3.1"></a>
+## 0.3.2 (2018-12-30)
+
+* Keep column display setting when componentWillReceiveProps raised    
+* Do not need to set componentWillReceiveProps to false anymore to keep onTableChanges working 
+
+<a name="0.3.1"></a>
 ## 0.3.1 (2018-12-28)
 
 * onTableChange and onServerRequest events provide two new fields in tableState argument: sortColumnIndex: number, sortColumnDirection: string 

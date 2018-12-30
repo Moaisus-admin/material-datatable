@@ -6,13 +6,11 @@ import Button from "@material-ui/core/Button/Button";
 class Example extends React.Component {
 
     state = {
-        filterList: undefined
+        tableState: undefined
     };
-
 
     constructor(props, context, state) {
         super(props, context);
-        //this.setState({filterList:0});
     }
 
     render() {
@@ -223,94 +221,6 @@ class Example extends React.Component {
                  salary: 11,
                  subFieldData: {value: "222222222"}
              },
-             {
-                 name: "Name 2",
-                 title: "Title 18",
-                 location: "Location 2",
-                 age: 31,
-                 salary: 11,
-                 subFieldData: {value: "222222222"}
-             },
-             {
-                 name: "Name 2",
-                 title: "Title 19",
-                 location: "Location 2",
-                 age: 31,
-                 salary: 11,
-                 subFieldData: {value: "222222222"}
-             },
-             {
-                 name: "Name 2",
-                 title: "Title 20",
-                 location: "Location 2",
-                 age: 31,
-                 salary: 11,
-                 subFieldData: {value: "222222222"}
-             },
-             {
-                 name: "Name 2",
-                 title: "Title 21",
-                 location: "Location 2",
-                 age: 31,
-                 salary: 11,
-                 subFieldData: {value: "222222222"}
-             },
-             {
-                 name: "Name 2",
-                 title: "Title 22",
-                 location: "Location 2",
-                 age: 31,
-                 salary: 11,
-                 subFieldData: {value: "222222222"}
-             },
-             {
-                 name: "Name 2",
-                 title: "Title 23",
-                 location: "Location 2",
-                 age: 31,
-                 salary: 11,
-                 subFieldData: {value: "222222222"}
-             },
-             {
-                 name: "Name 2",
-                 title: "Title 24",
-                 location: "Location 2",
-                 age: 31,
-                 salary: 11,
-                 subFieldData: {value: "222222222"}
-             },
-             {
-                 name: "Name 2",
-                 title: "Title 25",
-                 location: "Location 2",
-                 age: 31,
-                 salary: 11,
-                 subFieldData: {value: "222222222"}
-             },
-             {
-                 name: "Name 2",
-                 title: "Title 26",
-                 location: "Location 2",
-                 age: 31,
-                 salary: 11,
-                 subFieldData: {value: "222222222"}
-             },
-             {
-                 name: "Name 2",
-                 title: "Title 27",
-                 location: "Location 2",
-                 age: 31,
-                 salary: 11,
-                 subFieldData: {value: "222222222"}
-             },
-             {
-                 name: "Name 2",
-                 title: "Title 28",
-                 location: "Location 2",
-                 age: 31,
-                 salary: 11,
-                 subFieldData: {value: "222222222"}
-             },
         ];
 
         let options = {
@@ -321,47 +231,24 @@ class Example extends React.Component {
             responsive: 'stacked',
             rowsPerPage: 10,
             searchText: "22",
-            componentWillReceiveProps: false,
+            componentWillReceiveProps: true,
             page: 0,
             sortColumnIndex: 2,
             sortColumnDirection: "desc",
             filterList: [[], [], ["Location 2"], [], [], [], []],
 
-            onRowsSelect: (rowsSelected, allRows) => {
-                console.log(rowsSelected, allRows);
-            },
-            onRowsDelete: (rowsDeleted) => {
-                console.log(rowsDeleted, "were deleted!");
-            },
-
-            onChangePage: (numberRows) => {
-                console.log(numberRows);
-            },
-            onSearchChange: (searchText) => {
-                console.log(searchText);
-            },
-            onColumnSortChange: (column, direction) => {
-                console.log(column, direction);
-            },
-            onColumnViewChange: (column, action) => {
-                console.log(column, action);
-            },
-            onFilterChange: (column, filters) => {
-                console.log(column, filters);
-            },
-            onCellClick: (cellIndex, rowIndex) => {
-                console.log(cellIndex, rowIndex);
-            },
-            onRowClick: (rowData, rowState) => {
-                console.log(rowData, rowState);
-            },
             onTableChange: (action, state) => this.onChange(state)
         };
-
-        if (this.state.filterList !== null && this.state.filterList !== undefined) {
-            options.filterList = this.state.filterList;
+        
+        if (this.state.tableState !== undefined && this.state.tableState !== null) {
+            options.filterList = this.state.tableState.filterList;
+            options.searchText = this.state.tableState.searchText;
+            options.page = this.state.tableState.page;
+            options.rowsPerPage = this.state.tableState.rowsPerPage;
+            options.sortColumnDirection = this.state.tableState.sortColumnDirection;
+            options.sortColumnIndex = this.state.tableState.sortColumnIndex;
+            
         }
-
         return (
             <MaterialDatatable
                 title={"ACME Employee list"}
@@ -374,7 +261,9 @@ class Example extends React.Component {
     }
 
     onChange(tableState) {
-       console.log(tableState);
+       this.setState({
+           tableState: tableState
+       });
     }
 }
 
