@@ -453,6 +453,10 @@ The files included in this repository are licensed under the MIT license.
 
 ## Changelog
 
+## 0.3.3 (2018-12-30)
+
+* Fixed bug with search enabled by default     
+
 0.3.2 (2018-12-30)
 
 * Keep column display setting when componentWillReceiveProps received    

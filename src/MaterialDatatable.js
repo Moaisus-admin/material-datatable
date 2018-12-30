@@ -197,7 +197,7 @@ class MaterialDatatable extends React.Component {
             sortColumnIndex: null,
             sortColumnDirection: null,
             search: true,
-            searchText: "",
+            searchText: null,
             print: true,
             viewColumns: true,
             download: true,
