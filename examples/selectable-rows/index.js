@@ -250,7 +250,7 @@ class Example extends React.Component {
             options.rowsPerPage = this.state.tableState.rowsPerPage;
             options.sortColumnDirection = this.state.tableState.sortColumnDirection;
             options.sortColumnIndex = this.state.tableState.sortColumnIndex;
-
+            options.rowsSelected = this.state.tableState.rowsSelected;
         }
         return (
             <MaterialDatatable

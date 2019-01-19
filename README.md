@@ -201,6 +201,7 @@ if (this.state.tableState !== undefined && this.state.tableState !== null) {
     options.rowsPerPage = this.state.tableState.rowsPerPage;
     options.sortColumnDirection = this.state.tableState.sortColumnDirection;
     options.sortColumnIndex = this.state.tableState.sortColumnIndex;
+    options.rowsSelected = this.state.tableState.rowsSelected;
 }
 return (
     <MaterialDatatable
@@ -455,6 +456,11 @@ const options = {
 The files included in this repository are licensed under the MIT license.
 
 ## Changelog
+
+
+0.3.6 (2019-01-19)
+
+* Updated TS definition. Added rowsSelected to MaterialDatatableState
 
 0.3.5 (2019-01-19)
 

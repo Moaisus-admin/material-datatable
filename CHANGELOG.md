@@ -1,3 +1,8 @@
+<a name="0.3.6"></a>
+## 0.3.6 (2019-01-19)
+
+* Updated TS definition. Added rowsSelected to MaterialDatatableState
+
 <a name="0.3.5"></a>
 ## 0.3.5 (2019-01-19)
 
