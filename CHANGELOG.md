@@ -1,3 +1,8 @@
+<a name="0.3.5"></a>
+## 0.3.5 (2019-01-19)
+
+* Set rowsPerPage to 10 by default
+
 <a name="0.3.4"></a>
 ## 0.3.4 (2019-01-19)
 

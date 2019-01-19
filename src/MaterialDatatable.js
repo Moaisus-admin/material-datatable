@@ -125,7 +125,7 @@ class MaterialDatatable extends React.Component {
         displayData: [],
         notModifiedDisplayData: [],
         page: 0,
-        rowsPerPage: 0,
+        rowsPerPage: 10,
         columns: [],
         filterData: [],
         filterList: [],

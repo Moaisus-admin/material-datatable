@@ -229,7 +229,6 @@ class Example extends React.Component {
             usePaperPlaceholder: false,
             filterType: 'multiselect',
             responsive: 'stacked',
-            rowsPerPage: 10,
             rowCursorHand: true,
             rowsSelected: [6,7],
             showSelectedRowsToolbar: false,

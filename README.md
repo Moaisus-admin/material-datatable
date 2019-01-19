@@ -456,6 +456,10 @@ The files included in this repository are licensed under the MIT license.
 
 ## Changelog
 
+0.3.5 (2019-01-19)
+
+* Set rowsPerPage to 10 by default
+
 0.3.4 (2019-01-19)
 
 * BREAKING CHANGE: onRowClick event provides object in the first param, not an array of strings as before
