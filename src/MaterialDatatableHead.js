@@ -6,6 +6,7 @@ import MaterialDatatableHeadRow from "./MaterialDatatableHeadRow";
 import MaterialDatatableHeadCell from "./MaterialDatatableHeadCell";
 import MaterialDatatableSelectCell from "./MaterialDatatableSelectCell";
 import {withStyles} from "@material-ui/core/styles";
+import TableCell from "@material-ui/core/TableCell";
 
 const defaultHeadStyles = {
     main: {},
@@ -17,9 +18,6 @@ const defaultHeadStyles = {
 };
 
 class MaterialDatatableHead extends React.Component {
-    componentDidMount() {
-        this.props.handleHeadUpdateRef(this.handleUpdateCheck);
-    }
 
     handleToggleColumn = index => {
         this.props.toggleSort(index);
@@ -34,7 +32,7 @@ class MaterialDatatableHead extends React.Component {
 
         const numSelected = (selectedRows && selectedRows.data.length) || 0;
         const isDeterminate = numSelected > 0 && numSelected < count;
-        const isChecked = numSelected === count ? true : false;
+        const isChecked = numSelected === count;
 
         return (
             <TableHead
@@ -43,14 +41,19 @@ class MaterialDatatableHead extends React.Component {
                     [classes.main]: true
                 })}>
                 <MaterialDatatableHeadRow>
-                    {options.selectableRows && (
+                    {
+                        options.selectableRows && options.onlyOneRowCanBeSelected === false && 
                         <MaterialDatatableSelectCell
                             ref={el => setCellRef(0, findDOMNode(el))}
-                            onChange={this.handleRowSelect.bind(null)}
+                            onChange={() => this.handleRowSelect(null)}
                             indeterminate={isDeterminate}
                             checked={isChecked}
                         />
-                    )}
+                    }
+                    {
+                        options.selectableRows && options.onlyOneRowCanBeSelected === true && 
+                        <TableCell style={{width: 70}} padding="checkbox"/>
+                    }
                     {columns.map(
                         (column, index) =>
                             column.display === "true" &&

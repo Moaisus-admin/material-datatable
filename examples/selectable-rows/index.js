@@ -197,30 +197,30 @@ class Example extends React.Component {
                 salary: 11,
                 subFieldData: {value: "222222222"}
             },
-             {
-                 name: "Name 2",
-                 title: "Title 15",
-                 location: "Location 2",
-                 age: 31,
-                 salary: 11,
-                 subFieldData: {value: "222222222"}
-             },
-             {
-                 name: "Name 2",
-                 title: "Title 16",
-                 location: "Location 2",
-                 age: 31,
-                 salary: 11,
-                 subFieldData: {value: "222222222"}
-             },
-             {
-                 name: "Name 2",
-                 title: "Title 17",
-                 location: "Location 2",
-                 age: 31,
-                 salary: 11,
-                 subFieldData: {value: "222222222"}
-             },
+            {
+                name: "Name 2",
+                title: "Title 15",
+                location: "Location 2",
+                age: 31,
+                salary: 11,
+                subFieldData: {value: "222222222"}
+            },
+            {
+                name: "Name 2",
+                title: "Title 16",
+                location: "Location 2",
+                age: 31,
+                salary: 11,
+                subFieldData: {value: "222222222"}
+            },
+            {
+                name: "Name 2",
+                title: "Title 17",
+                location: "Location 2",
+                age: 31,
+                salary: 11,
+                subFieldData: {value: "222222222"}
+            },
         ];
 
         let options = {
@@ -230,16 +230,20 @@ class Example extends React.Component {
             filterType: 'multiselect',
             responsive: 'stacked',
             rowsPerPage: 10,
-            searchText: "22",
+            rowCursorHand: true,
+            rowsSelected: [6,7],
+            showSelectedRowsToolbar: false,
+            onlyOneRowCanBeSelected: true,
             componentWillReceiveProps: true,
             page: 0,
             sortColumnIndex: 2,
             sortColumnDirection: "desc",
             filterList: [[], [], ["Location 2"], [], [], [], []],
 
-            onTableChange: (action, state) => this.onChange(state)
+            onTableChange: (action, state) => this.onChange(state),
+            onRowClick: (row) => console.log(row)
         };
-        
+
         if (this.state.tableState !== undefined && this.state.tableState !== null) {
             options.filterList = this.state.tableState.filterList;
             options.searchText = this.state.tableState.searchText;
@@ -247,7 +251,7 @@ class Example extends React.Component {
             options.rowsPerPage = this.state.tableState.rowsPerPage;
             options.sortColumnDirection = this.state.tableState.sortColumnDirection;
             options.sortColumnIndex = this.state.tableState.sortColumnIndex;
-            
+
         }
         return (
             <MaterialDatatable
@@ -261,9 +265,9 @@ class Example extends React.Component {
     }
 
     onChange(tableState) {
-       this.setState({
-           tableState: tableState
-       });
+        this.setState({
+            tableState: tableState
+        });
     }
 }
 

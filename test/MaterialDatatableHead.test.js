@@ -4,7 +4,7 @@ import {mount, shallow} from "enzyme";
 import {assert, expect, should} from "chai";
 import MaterialDatatableHead from "../src/MaterialDatatableHead";
 import MaterialDatatableHeadCell from "../src/MaterialDatatableHeadCell";
-import Tooltip from "@material-ui/core/Tooltip";
+import MaterialDatatableSelectCell from "../src/MaterialDatatableSelectCell";
 
 describe("<MaterialDatatableHead />", function () {
     let columns;
@@ -59,6 +59,47 @@ describe("<MaterialDatatableHead />", function () {
         );
         const actualResult = mountWrapper.find(MaterialDatatableHeadCell);
         assert.strictEqual(actualResult.length, 0);
+    });
+
+
+    it("should not render a table MaterialDatatableSelectCell when selectableRows true and onlyOneRowCanBeSelected true ", () => {
+        const options = {selectableRows: true, onlyOneRowCanBeSelected: true};
+        const toggleSort = () => {
+        };
+
+        const mountWrapper = mount(
+            <MaterialDatatableHead
+                columns={columns}
+                options={options}
+                setCellRef={() => {
+                }}
+                handleHeadUpdateRef={handleHeadUpdateRef}
+                toggleSort={toggleSort}
+            />,
+        );
+
+        const actualResult = mountWrapper.find(MaterialDatatableSelectCell);
+        assert.strictEqual(actualResult.length, 0);
+    });
+
+    it("should render a table MaterialDatatableSelectCell when selectableRows true and onlyOneRowCanBeSelected false ", () => {
+        const options = {selectableRows: true, onlyOneRowCanBeSelected: false};
+        const toggleSort = () => {
+        };
+
+        const mountWrapper = mount(
+            <MaterialDatatableHead
+                columns={columns}
+                options={options}
+                setCellRef={() => {
+                }}
+                handleHeadUpdateRef={handleHeadUpdateRef}
+                toggleSort={toggleSort}
+            />,
+        );
+
+        const actualResult = mountWrapper.find(MaterialDatatableSelectCell);
+        assert.strictEqual(actualResult.length, 1);
     });
 
     it("should trigger toggleSort prop callback when calling method handleToggleColumn", () => {

@@ -492,13 +492,8 @@ describe("<MaterialDatatable />", function () {
             {name: "Herm, Bob", company: "Test Corp", city: renderCities(data[2], {rowIndex: 2}), state: "FL"},
             {name: "Houston, James", company: "Test Corp", city: renderCities(data[3], {rowIndex: 3}), state: "TX"},
         ];
-        
-      /*  data[0].city = renderCities(data[0], {rowIndex: 0});
-        data[1].city = renderCities(data[2], {rowIndex: 1});
-        data[2].city = renderCities(data[2], {rowIndex: 2});
-        data[3].city = renderCities(data[3], {rowIndex: 3});*/
-        
-        const expectedResult =  [
+
+        const expectedResult = [
             {
                 data: ["James, Joe", "Test Corp", renderCities(data[0], {rowIndex: 0}), "NY"],
                 dataObject: data2[0],
@@ -520,7 +515,7 @@ describe("<MaterialDatatable />", function () {
                 dataIndex: 3,
             },
         ];
-       
+
 
         const shallowWrapper = shallow(<MaterialDatatable columns={columns} data={data}/>).dive();
         const instance = shallowWrapper.instance();
@@ -531,8 +526,6 @@ describe("<MaterialDatatable />", function () {
     });
 
     it("should update rowsPerPage when calling changeRowsPerPage method", () => {
-
-
         const shallowWrapper = shallow(<MaterialDatatable columns={columns} data={data}/>).dive();
         const instance = shallowWrapper.instance();
 
@@ -581,6 +574,37 @@ describe("<MaterialDatatable />", function () {
         const state = shallowWrapper.state();
         assert.deepEqual(state.selectedRows.data, [0]);
     });
+
+    it("should insert into selectedRows twice when calling selectRowUpdate method with type=cell and constance just one when onlyOneRowCanBeSelected is false ", () => {
+        const shallowWrapper = shallow(<MaterialDatatable
+            columns={columns} data={data}
+            options={{onlyOneRowCanBeSelected: false}}/>).dive();
+        
+        const instance = shallowWrapper.instance();
+
+        instance.selectRowUpdate("cell", {dataIndex: 0});
+        instance.selectRowUpdate("cell", {dataIndex: 1});
+        shallowWrapper.update();
+
+        const state = shallowWrapper.state();
+        assert.deepEqual(state.selectedRows.data.length, 2);
+    });
+
+    it("should insert into selectedRows twice when calling selectRowUpdate method with type=cell and constance just one when onlyOneRowCanBeSelected is true ", () => {
+        const shallowWrapper = shallow(<MaterialDatatable
+            columns={columns} data={data}
+            options={{onlyOneRowCanBeSelected: true}}/>).dive();
+
+        const instance = shallowWrapper.instance();
+
+        instance.selectRowUpdate("cell", {dataIndex: 0});
+        instance.selectRowUpdate("cell", {dataIndex: 1});
+        shallowWrapper.update();
+
+        const state = shallowWrapper.state();
+        assert.deepEqual(state.selectedRows.data.length, 1);
+    });
+    
 
     it("should update value when calling updateValue method in customBodyRender", () => {
         const shallowWrapper = shallow(<MaterialDatatable columns={columns} data={data}/>).dive();

@@ -11,6 +11,11 @@ const defaultBodyRowStyles = {
             border: "solid 2px rgba(0, 0, 0, 0.15)",
         },
     },
+    cursorHover: {
+        '&:hover': {
+            cursor: 'pointer'
+        }
+    }
 };
 
 class MaterialDatatableBodyRow extends React.Component {
@@ -30,10 +35,11 @@ class MaterialDatatableBodyRow extends React.Component {
 
         return (
             <TableRow
-                hover={options.rowHover ? true : false}
+                hover={options.rowHover}
                 onClick={onClick}
                 className={classNames({
                     [classes.root]: true,
+                    [classes.cursorHover]: options.rowCursorHand,
                     [classes.responsiveStacked]: options.responsive === "stacked",
                 })}
                 selected={rowSelected}>

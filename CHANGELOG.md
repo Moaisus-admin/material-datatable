@@ -1,3 +1,12 @@
+<a name="0.3.4"></a>
+## 0.3.4 (2019-01-19)
+
+* BREAKING CHANGE: onRowClick event provides object in the first param, not an array of strings as before 
+* If selectableRows option turned on, user can select record by click on any row cell, not just checkbox as before
+* Added option showSelectedRowsToolbar: PropTypes.bool. Default False. When false hide extra toolbar for selected records
+* Added option rowCursorHand: PropTypes.bool. Default False.. When true show cursor pointer (hand) on table rows hover
+* Added option onlyOneRowCanBeSelected: PropTypes.bool. Default False. When true only one row can be selected
+   
 <a name="0.3.3"></a>
 ## 0.3.3 (2018-12-30)
 

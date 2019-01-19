@@ -14,26 +14,30 @@ describe("<MaterialDatatableBody />", function () {
     before(() => {
         columns = ["First Name", "Company", "City", "State"];
         data = [
-            ["Joe James", "Test Corp", "Yonkers", "NY"],
-            ["John Walsh", "Test Corp", "Hartford", "CT"],
-            ["Bob Herm", "Test Corp", "Tampa", "FL"],
-            ["James Houston", "Test Corp", "Dallas", "TX"],
+            {name: "Joe James", company: "Test Corp", city: "Yonkers", state: "NY"},
+            {name: "John Walsh", company: "Test Corp", city: "Hartford", state: "CT"},
+            {name: "Bob Herm", company: "Test Corp", city: "Tampa", state: "FL"},
+            {name: "James Houston", company: "Test Corp", city: "Dallas", state: "TX"},
         ];
         displayData = [
             {
                 data: ["Joe James", "Test Corp", "Yonkers", "NY"],
+                dataObject: data[0],
                 dataIndex: 0,
             },
             {
                 data: ["John Walsh", "Test Corp", "Hartford", "CT"],
+                dataObject: data[1],
                 dataIndex: 1,
             },
             {
                 data: ["Bob Herm", "Test Corp", "Tampa", "FL"],
+                dataObject: data[2],
                 dataIndex: 2,
             },
             {
                 data: ["James Houston", "Test Corp", "Dallas", "TX"],
+                dataObject: data[3],
                 dataIndex: 3,
             },
         ];
@@ -212,6 +216,91 @@ describe("<MaterialDatatableBody />", function () {
             .simulate("click");
 
         assert.strictEqual(options.onRowClick.callCount, 1);
+        assert(options.onRowClick.calledWith(data[2], {rowIndex: 2, dataIndex: 2}));
+    });
+
+    it("should call selectRowUpdate when Row is clicked and onlyOneRowCanBeSelected false", () => {
+        const options = {selectableRows: true, onlyOneRowCanBeSelected: false,  onRowClick: spy()};
+        const selectRowUpdate = spy();
+
+        const t = mount(
+            <MaterialDatatableBody
+                data={displayData}
+                count={displayData.length}
+                columns={columns}
+                page={0}
+                rowsPerPage={10}
+                selectedRows={[]}
+                selectRowUpdate={selectRowUpdate}
+                options={options}
+                searchText={""}
+                filterList={[]}
+            />,
+        );
+
+        t.find("#MaterialDatatableBodyRow-2")
+            .first()
+            .simulate("click");
+
+        assert.strictEqual(options.onRowClick.callCount, 1);
+        assert.strictEqual(selectRowUpdate.callCount, 1);
+        assert(options.onRowClick.calledWith(data[2], {rowIndex: 2, dataIndex: 2}));
+    });
+
+    it("should not call selectRowUpdate when Row is clicked and selectableRows false and onlyOneRowCanBeSelected false", () => {
+        const options = {selectableRows: false, onlyOneRowCanBeSelected: false, onRowClick: spy()};
+        const selectRowUpdate = spy();
+
+        const t = mount(
+            <MaterialDatatableBody
+                data={displayData}
+                count={displayData.length}
+                columns={columns}
+                page={0}
+                rowsPerPage={10}
+                selectedRows={[]}
+                selectRowUpdate={selectRowUpdate}
+                options={options}
+                searchText={""}
+                filterList={[]}
+            />,
+        );
+
+        t.find("#MaterialDatatableBodyRow-2")
+            .first()
+            .simulate("click");
+
+        assert.strictEqual(options.onRowClick.callCount, 1);
+        assert.strictEqual(selectRowUpdate.callCount, 0);
+        assert(options.onRowClick.calledWith(data[2], {rowIndex: 2, dataIndex: 2}));
+    });
+
+
+    it("should call selectRowUpdate when Row is clicked and selectableRows false and onlyOneRowCanBeSelected true", () => {
+        const options = {selectableRows: false, onlyOneRowCanBeSelected: true, onRowClick: spy()};
+        const selectRowUpdate = spy();
+
+        const t = mount(
+            <MaterialDatatableBody
+                data={displayData}
+                count={displayData.length}
+                columns={columns}
+                page={0}
+                rowsPerPage={10}
+                selectedRows={[]}
+                selectRowUpdate={selectRowUpdate}
+                options={options}
+                searchText={""}
+                filterList={[]}
+            />
+        );
+
+        t.find("#MaterialDatatableBodyRow-2")
+            .first()
+            .simulate("click");
+
+        assert.strictEqual(options.onRowClick.callCount, 1);
+        assert.strictEqual(selectRowUpdate.callCount, 1);
         assert(options.onRowClick.calledWith(data[2], {rowIndex: 2, dataIndex: 2}));
     });
 });

@@ -82,6 +82,10 @@ class MaterialDatatable extends React.Component {
             sortColumnIndex: PropTypes.number,
             sortColumnDirection: PropTypes.string,
             selectableRows: PropTypes.bool,
+            rowCursorHand: PropTypes.bool,
+            onlyOneRowCanBeSelected: PropTypes.bool,
+            showSelectedRowsToolbar: PropTypes.bool,
+            rowsSelected: PropTypes.array,
             serverSide: PropTypes.bool,
             onTableChange: PropTypes.func,
             caseSensitive: PropTypes.bool,
@@ -89,7 +93,6 @@ class MaterialDatatable extends React.Component {
             page: PropTypes.number,
             count: PropTypes.number,
             filterList: PropTypes.array,
-            rowsSelected: PropTypes.array,
             rowsPerPage: PropTypes.number,
             rowsPerPageOptions: PropTypes.array,
             filter: PropTypes.bool,
@@ -186,6 +189,9 @@ class MaterialDatatable extends React.Component {
             textLabels,
             resizableColumns: false,
             selectableRows: true,
+            rowCursorHand: false,
+            onlyOneRowCanBeSelected: false,
+            showSelectedRowsToolbar: true,
             caseSensitive: false,
             serverSide: false,
             rowHover: true,
@@ -224,16 +230,12 @@ class MaterialDatatable extends React.Component {
     };
 
     setTableOptions(props) {
-        const optionNames = ["rowsPerPage", "page", "rowsSelected", "filterList", "rowsPerPageOptions", "searchText"];
-        const optState = optionNames.reduce((acc, cur) => {
-            if (this.options[cur] !== undefined) {
-                acc[cur] = this.options[cur];
-            }
-            return acc;
-        }, {});
+        const newState = {
+            ...this.state,
+            ...props.options
+        };
 
-        this.validateOptions(optState);
-        this.setState(optState);
+        this.setState(newState);
     }
 
     setHeadCellRef = (index, el) => {
@@ -265,11 +267,19 @@ class MaterialDatatable extends React.Component {
             if (typeof column === "object") {
                 if (column.options && column.options.display !== undefined) {
                     column.options.display = column.options.display.toString();
-                }
-                else if(stateColumns !== undefined 
-                    && stateColumns.length === columns.length 
-                    && stateColumns[colIndex].name === column.name){
+                } else if (stateColumns !== undefined
+                    && stateColumns.length === columns.length
+                    && stateColumns[colIndex].name === column.name) {
                     columnOptions.display = stateColumns[colIndex].display.toString();
+                }
+
+                if (column.options && column.options.sortDirection !== undefined) {
+                    column.options.sortDirection = column.options.sortDirection.toString();
+                } else if (stateColumns !== undefined
+                    && stateColumns.length === columns.length
+                    && stateColumns[colIndex].name === column.name
+                    && stateColumns[colIndex].sortDirection !== null) {
+                    columnOptions.sortDirection = stateColumns[colIndex].sortDirection;
                 }
 
                 columnOptions = {
@@ -571,7 +581,7 @@ class MaterialDatatable extends React.Component {
                 return newState;
             },
             () => {
-                if(throwNotification){
+                if (throwNotification) {
                     this.setTableAction("sort");
                     if (this.options.onColumnSortChange) {
                         this.options.onColumnSortChange(
@@ -762,7 +772,7 @@ class MaterialDatatable extends React.Component {
         } else if (type === "cell") {
             this.setState(
                 prevState => {
-                    const {index, dataIndex} = value;
+                    const {dataIndex} = value;
                     let selectedRows = [...prevState.selectedRows.data];
                     let rowPos = -1;
 
@@ -771,6 +781,10 @@ class MaterialDatatable extends React.Component {
                             rowPos = cIndex;
                             break;
                         }
+                    }
+
+                    if (this.options.onlyOneRowCanBeSelected) {
+                        selectedRows = [];
                     }
 
                     if (rowPos >= 0) {
@@ -856,7 +870,7 @@ class MaterialDatatable extends React.Component {
         const {title} = this.props;
         const {columns, filterData, filterList, selectedRows} = this.state;
 
-        return selectedRows.data.length ? (
+        return this.options.showSelectedRowsToolbar && selectedRows.data.length ? (
             <MaterialDatatableToolbarSelect
                 options={this.options}
                 selectedRows={selectedRows}

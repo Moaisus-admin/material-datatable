@@ -9,6 +9,7 @@ const defaultSelectCellStyles = {
         "@media screen and (max-width: 960px)": {
             display: "none",
         },
+        width: 70
     },
     checkboxRoot: {
         "&$checked": {

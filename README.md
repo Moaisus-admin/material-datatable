@@ -242,6 +242,9 @@ The component accepts the following props:
 |**`pagination`**|boolean|true|Enable/disable pagination
 |**`componentWillReceiveProps`**|boolean|true|NOT RECOMMENDED. Enable/disable componentWillReceiveProps function. That option can be used if you subscribed on some event like 'onTableChange' and changing your state. It will prevent re-render of table component.  
 |**`selectableRows`**|boolean|true|Enable/disable row selection
+|**`showSelectedRowsToolbar`**|boolean|true|When false hide extra toolbar for selected records
+|**`rowCursorHand`**|boolean|false|When true show cursor pointer (hand) on table rows hover
+|**`onlyOneRowCanBeSelected`**|boolean|false|When true only one row can be selected
 |**`resizableColumns`**|boolean|false|Enable/disable resizable columns
 |**`customToolbar`**|function||Render a custom toolbar
 |**`customToolbarSelect`**|function||Render a custom selected rows toolbar
@@ -264,7 +267,7 @@ The component accepts the following props:
 |**`viewColumns`**|boolean|true|Show/hide viewColumns icon from toolbar
 |**`onRowsSelect`**|function||Callback function that triggers when row(s) are selected. `function(currentRowsSelected: array, allRowsSelected: array) => void`
 |**`onRowsDelete`**|function||Callback function that triggers when row(s) are deleted. `function(rowsDeleted: array) => void`
-|**`onRowClick`**|function||Callback function that triggers when a row is clicked. `function(rowData: string[], rowMeta: { dataIndex: number, rowIndex: number }) => void`
+|**`onRowClick`**|function||Callback function that triggers when a row is clicked. `function(rowObject: any, rowMeta: { dataIndex: number, rowIndex: number }) => void`
 |**`onCellClick`**|function||Callback function that triggers when a cell is clicked. `function(colData: any, cellMeta: { colIndex: number, rowIndex: number }) => void`
 |**`onChangePage`**|function||Callback function that triggers when a page has changed. `function(currentPage: number) => void`
 |**`onChangeRowsPerPage`**|function||Callback function that triggers when the number of rows per page has changed. `function(numberOfRows: number) => void`
@@ -453,7 +456,15 @@ The files included in this repository are licensed under the MIT license.
 
 ## Changelog
 
-## 0.3.3 (2018-12-30)
+0.3.4 (2019-01-19)
+
+* BREAKING CHANGE: onRowClick event provides object in the first param, not an array of strings as before
+* If selectableRows option turned on, user can select record by click on any row cell, not just checkbox as before 
+* Added option showSelectedRowsToolbar: PropTypes.bool. Default True. When false hide extra toolbar for selected records
+* Added option rowCursorHand: PropTypes.bool. Default False. When true show cursor pointer (hand) on table rows hover
+* Added option onlyOneRowCanBeSelected: PropTypes.bool. Default False. When true only one row can be selected
+
+0.3.3 (2018-12-30)
 
 * Fixed bug with search enabled by default     
 

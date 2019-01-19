@@ -79,13 +79,26 @@ class MaterialDatatableBody extends React.Component {
 
     isRowSelected(dataIndex) {
         const {selectedRows} = this.props;
-        
-        return  selectedRows.lookup && selectedRows.lookup[dataIndex] ? true : false;
+
+        if (selectedRows === undefined || selectedRows === null)
+            return false;
+
+        return selectedRows.lookup && selectedRows.lookup[dataIndex] ? true : false;
     }
 
     handleRowSelect = data => {
         this.props.selectRowUpdate("cell", data);
     };
+
+    onRowClick(dataObject, dataIndexObject) {
+        const {options} = this.props;
+        if (options.onRowClick) {
+            options.onRowClick(dataObject, dataIndexObject);
+        }
+        if (options.selectableRows || options.onlyOneRowCanBeSelected) {
+            this.props.selectRowUpdate("cell", dataIndexObject);
+        }
+    }
 
     render() {
         const {classes, columns, options} = this.props;
@@ -94,46 +107,29 @@ class MaterialDatatableBody extends React.Component {
         return (
             <TableBody>
                 {tableRows ? (
-                    tableRows.map(({data: row, dataIndex}, rowIndex) => (
+                    tableRows.map(({data: row, dataIndex, dataObject}, rowIndex) => (
                         <MaterialDatatableBodyRow
                             options={options}
-                            rowSelected={options.selectableRows ? dataIndex === 2: false}
-                            onClick={
-                                options.onRowClick
-                                    ? options.onRowClick.bind(null, row, {
-                                        rowIndex,
-                                        dataIndex,
-                                    })
-                                    : null
-                            }
+                            rowSelected={this.isRowSelected(dataIndex)}
+                            onClick={() => this.onRowClick(dataObject, {rowIndex, dataIndex})}
                             id={"MaterialDatatableBodyRow-" + dataIndex}
                             key={rowIndex}>
-                            {options.selectableRows ? (
-                                <MaterialDatatableSelectCell
-                                    onChange={this.handleRowSelect.bind(null, {
-                                        index: this.getRowIndex(rowIndex),
-                                        dataIndex: dataIndex,
-                                    })}
-                                    checked={this.isRowSelected(dataIndex)}
-                                />
-                            ) : (
-                                false
-                            )}
+                            {
+                                (options.selectableRows || options.onlyOneRowCanBeSelected) &&
+                                <MaterialDatatableSelectCell checked={this.isRowSelected(dataIndex)}/>
+                            }
                             {row.map(
                                 (column, index) =>
-                                    columns[index].display === "true" ? (
-                                        <MaterialDatatableBodyCell
-                                            dataIndex={dataIndex}
-                                            rowIndex={rowIndex}
-                                            colIndex={index}
-                                            columnHeader={columns[index].name}
-                                            options={options}
-                                            key={index}>
-                                            {column}
-                                        </MaterialDatatableBodyCell>
-                                    ) : (
-                                        false
-                                    ),
+                                    columns[index].display === "true" &&
+                                    <MaterialDatatableBodyCell
+                                        dataIndex={dataIndex}
+                                        rowIndex={rowIndex}
+                                        colIndex={index}
+                                        columnHeader={columns[index].name}
+                                        options={options}
+                                        key={index}>
+                                        {column}
+                                    </MaterialDatatableBodyCell>
                             )}
                         </MaterialDatatableBodyRow>
                     ))

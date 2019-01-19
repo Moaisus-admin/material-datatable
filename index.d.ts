@@ -30,6 +30,9 @@ export interface MaterialDatatableOptions {
     pagination?: boolean
     usePaperPlaceholder?: boolean,
     selectableRows?: boolean
+    rowCursorHand?: boolean
+    onlyOneRowCanBeSelected?: boolean
+    showSelectedRowsToolbar?: boolean
     resizableColumns?: boolean
     customToolbar?: () => ReactNode
     customToolbarSelect?: () => ReactNode
@@ -53,7 +56,7 @@ export interface MaterialDatatableOptions {
     viewColumns?: boolean
     onRowsSelect?: (currentRowsSelected: any[], rowsSelected: any[]) => void
     onRowsDelete?: (rowsDeleted: any[]) => void
-    onRowClick?: (rowData: string[], rowMeta: { dataIndex: number, rowIndex: number }) => void
+    onRowClick?: (rowObject: any, rowMeta: { dataIndex: number, rowIndex: number }) => void
     onCellClick?: (colIndex: number, rowIndex: number) => void
     onChangePage?: (currentPage: number) => void
     onChangeRowsPerPage?: (numberOfRows: number) => void
