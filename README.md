@@ -457,6 +457,9 @@ The files included in this repository are licensed under the MIT license.
 
 ## Changelog
 
+0.3.7 (2019-01-19)
+
+* Re-worked mechanism working with row selections
 
 0.3.6 (2019-01-19)
 

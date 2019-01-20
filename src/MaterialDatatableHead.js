@@ -24,7 +24,7 @@ class MaterialDatatableHead extends React.Component {
     };
 
     handleRowSelect = () => {
-        this.props.selectRowUpdate("head", null);
+        this.props.selectRowUpdate("head", null, null);
     };
 
     render() {

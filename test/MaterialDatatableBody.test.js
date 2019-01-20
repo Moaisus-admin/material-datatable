@@ -193,8 +193,8 @@ describe("<MaterialDatatableBody />", function () {
     });
 
     it("should call onRowClick when Row is clicked", () => {
-        const options = {selectableRows: true, onRowClick: spy()};
-        const selectRowUpdate = stub();
+        const options = {selectableRows: true, onRowClick: stub()};
+        const selectRowUpdate = spy();
 
         const t = mount(
             <MaterialDatatableBody
@@ -215,8 +215,8 @@ describe("<MaterialDatatableBody />", function () {
             .first()
             .simulate("click");
 
-        assert.strictEqual(options.onRowClick.callCount, 1);
-        assert(options.onRowClick.calledWith(data[2], {rowIndex: 2, dataIndex: 2}));
+        assert.strictEqual(selectRowUpdate.callCount, 1);
+        assert(selectRowUpdate.calledWith("cell",{rowIndex: 2, dataIndex: 2}, data[2]));
     });
 
     it("should call selectRowUpdate when Row is clicked and onlyOneRowCanBeSelected false", () => {
@@ -242,12 +242,11 @@ describe("<MaterialDatatableBody />", function () {
             .first()
             .simulate("click");
 
-        assert.strictEqual(options.onRowClick.callCount, 1);
         assert.strictEqual(selectRowUpdate.callCount, 1);
-        assert(options.onRowClick.calledWith(data[2], {rowIndex: 2, dataIndex: 2}));
+        assert(selectRowUpdate.calledWith("cell",{rowIndex: 2, dataIndex: 2}, data[2]));
     });
 
-    it("should not call selectRowUpdate when Row is clicked and selectableRows false and onlyOneRowCanBeSelected false", () => {
+    it("should call selectRowUpdate when Row is clicked and selectableRows false and onlyOneRowCanBeSelected false", () => {
         const options = {selectableRows: false, onlyOneRowCanBeSelected: false, onRowClick: spy()};
         const selectRowUpdate = spy();
 
@@ -270,9 +269,8 @@ describe("<MaterialDatatableBody />", function () {
             .first()
             .simulate("click");
 
-        assert.strictEqual(options.onRowClick.callCount, 1);
-        assert.strictEqual(selectRowUpdate.callCount, 0);
-        assert(options.onRowClick.calledWith(data[2], {rowIndex: 2, dataIndex: 2}));
+        assert.strictEqual(selectRowUpdate.callCount, 1);
+        assert(selectRowUpdate.calledWith("cell",{rowIndex: 2, dataIndex: 2}, data[2]));
     });
 
 
@@ -299,8 +297,8 @@ describe("<MaterialDatatableBody />", function () {
             .first()
             .simulate("click");
 
-        assert.strictEqual(options.onRowClick.callCount, 1);
+
         assert.strictEqual(selectRowUpdate.callCount, 1);
-        assert(options.onRowClick.calledWith(data[2], {rowIndex: 2, dataIndex: 2}));
+        assert(selectRowUpdate.calledWith("cell",{rowIndex: 2, dataIndex: 2}, data[2]));
     });
 });

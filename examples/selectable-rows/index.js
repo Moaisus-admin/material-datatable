@@ -230,7 +230,7 @@ class Example extends React.Component {
             filterType: 'multiselect',
             responsive: 'stacked',
             rowCursorHand: true,
-            rowsSelected: [6,7],
+            rowsSelected: [1],
             showSelectedRowsToolbar: false,
             onlyOneRowCanBeSelected: true,
             componentWillReceiveProps: true,
@@ -240,7 +240,7 @@ class Example extends React.Component {
             filterList: [[], [], ["Location 2"], [], [], [], []],
 
             onTableChange: (action, state) => this.onChange(state),
-            onRowClick: (row) => console.log(row)
+            onRowClick: (rowObject) => this.handleOnClick(rowObject)
         };
 
         if (this.state.tableState !== undefined && this.state.tableState !== null) {
@@ -261,6 +261,14 @@ class Example extends React.Component {
             />
         );
 
+    }
+    
+    handleOnClick(rowObject){
+        console.log(rowObject);
+        
+        this.setState({
+            ...this.state
+        });
     }
 
     onChange(tableState) {

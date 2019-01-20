@@ -78,26 +78,20 @@ class MaterialDatatableBody extends React.Component {
     }
 
     isRowSelected(dataIndex) {
-        const {selectedRows} = this.props;
+        const {selectedRows, options} = this.props;
 
-        if (selectedRows === undefined || selectedRows === null)
+        if (selectedRows === undefined || selectedRows === null || !options.selectableRows)
             return false;
 
         return selectedRows.lookup && selectedRows.lookup[dataIndex] ? true : false;
     }
 
-    handleRowSelect = data => {
-        this.props.selectRowUpdate("cell", data);
+    handleRowSelect = dataIndexObject => {
+        this.props.selectRowUpdate("cell", dataIndexObject, null);
     };
 
     onRowClick(dataObject, dataIndexObject) {
-        const {options} = this.props;
-        if (options.onRowClick) {
-            options.onRowClick(dataObject, dataIndexObject);
-        }
-        if (options.selectableRows || options.onlyOneRowCanBeSelected) {
-            this.props.selectRowUpdate("cell", dataIndexObject);
-        }
+        this.props.selectRowUpdate("cell", dataIndexObject, dataObject);
     }
 
     render() {

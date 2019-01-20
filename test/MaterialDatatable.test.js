@@ -551,7 +551,7 @@ describe("<MaterialDatatable />", function () {
         const shallowWrapper = shallow(<MaterialDatatable columns={columns} data={data}/>).dive();
         const instance = shallowWrapper.instance();
 
-        instance.selectRowUpdate("head", 0);
+        instance.selectRowUpdate("head", 0, null);
         shallowWrapper.update();
 
         const state = shallowWrapper.state();
@@ -568,12 +568,82 @@ describe("<MaterialDatatable />", function () {
         const shallowWrapper = shallow(<MaterialDatatable columns={columns} data={data}/>).dive();
         const instance = shallowWrapper.instance();
 
-        instance.selectRowUpdate("cell", 0);
+        instance.selectRowUpdate("cell", 0, null);
         shallowWrapper.update();
 
         const state = shallowWrapper.state();
         assert.deepEqual(state.selectedRows.data, [0]);
     });
+
+    it("should update selectedRows calling onRowsSelect", () => {
+        const onRowsSelect = spy();
+        
+        const shallowWrapper = shallow(<MaterialDatatable 
+            columns={columns} 
+            data={data}
+            options={{onRowsSelect : onRowsSelect}}
+            
+        />).dive();
+        const instance = shallowWrapper.instance();
+
+        instance.selectRowUpdate("cell", 0, null);
+        shallowWrapper.update();
+
+        assert.strictEqual(onRowsSelect.callCount, 1);
+    });
+
+    it("should update selectedRows not calling onRowsSelect when selectableRows false", () => {
+        const onRowsSelect = spy();
+
+        const shallowWrapper = shallow(<MaterialDatatable
+            columns={columns}
+            data={data}
+            options={{onRowsSelect : onRowsSelect, selectableRows: false}}
+
+        />).dive();
+        const instance = shallowWrapper.instance();
+
+        instance.selectRowUpdate("cell", 0, null);
+        shallowWrapper.update();
+
+        assert.strictEqual(onRowsSelect.callCount, 0);
+    });
+
+    it("should update selectedRows calling onRowsSelect when selectableRows true", () => {
+        const onRowsSelect = spy();
+
+        const shallowWrapper = shallow(<MaterialDatatable
+            columns={columns}
+            data={data}
+            options={{onRowsSelect : onRowsSelect, selectableRows: true}}
+
+        />).dive();
+        const instance = shallowWrapper.instance();
+
+        instance.selectRowUpdate("cell", 0, null);
+        shallowWrapper.update();
+
+        assert.strictEqual(onRowsSelect.callCount, 1);
+    });
+
+    it("should update selectedRows calling onRowClick", () => {
+        const onRowClick = spy();
+
+        const shallowWrapper = shallow(<MaterialDatatable
+            columns={columns}
+            data={data}
+            options={{onRowClick : onRowClick}}
+
+        />).dive();
+        const instance = shallowWrapper.instance();
+
+        instance.selectRowUpdate("cell", {rowIndex: 1, dataIndex: 1}, data[1]);
+        shallowWrapper.update();
+
+        assert.strictEqual(onRowClick.callCount, 1);
+        assert(onRowClick.calledWith(data[1], {rowIndex: 1, dataIndex: 1}));
+    });
+    
 
     it("should insert into selectedRows twice when calling selectRowUpdate method with type=cell and constance just one when onlyOneRowCanBeSelected is false ", () => {
         const shallowWrapper = shallow(<MaterialDatatable
@@ -588,6 +658,51 @@ describe("<MaterialDatatable />", function () {
 
         const state = shallowWrapper.state();
         assert.deepEqual(state.selectedRows.data.length, 2);
+    });
+
+
+    it("should insert into selectedRows type cell twice when calling selectableRows false not modify selectedRows", () => {
+        const shallowWrapper = shallow(<MaterialDatatable
+            columns={columns} data={data}
+            options={{selectableRows: false}}/>).dive();
+
+        const instance = shallowWrapper.instance();
+
+        instance.selectRowUpdate("cell", {dataIndex: 0}, null);
+        instance.selectRowUpdate("cell", {dataIndex: 1}, null);
+        shallowWrapper.update();
+
+        const state = shallowWrapper.state();
+        assert.deepEqual(state.selectedRows.data.length, 0);
+    });
+
+    it("should insert into selectedRows type head twice when calling selectableRows false not modify selectedRows", () => {
+        const shallowWrapper = shallow(<MaterialDatatable
+            columns={columns} data={data}
+            options={{selectableRows: false}}/>).dive();
+
+        const instance = shallowWrapper.instance();
+
+        instance.selectRowUpdate("head", {dataIndex: 0}, null);
+        shallowWrapper.update();
+
+        const state = shallowWrapper.state();
+        assert.deepEqual(state.selectedRows.data.length, 0);
+    });
+
+
+    it("should selectRowUpdate when calling selectableRows true modify selectedRows", () => {
+        const shallowWrapper = shallow(<MaterialDatatable
+            columns={columns} data={data}
+            options={{selectableRows: true}}/>).dive();
+
+        const instance = shallowWrapper.instance();
+
+        instance.selectRowUpdate("head", {dataIndex: 0}, null);
+        shallowWrapper.update();
+
+        const state = shallowWrapper.state();
+        assert.deepEqual(state.selectedRows.data.length, data.length);
     });
 
     it("should insert into selectedRows twice when calling selectRowUpdate method with type=cell and constance just one when onlyOneRowCanBeSelected is true ", () => {

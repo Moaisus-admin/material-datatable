@@ -133,6 +133,7 @@ class MaterialDatatable extends React.Component {
             data: [],
             lookup: {},
         },
+        rowsSelected:[],
         sortColumnIndex: null,
         sortColumnDirection: null,
         showResponsive: false,
@@ -237,6 +238,19 @@ class MaterialDatatable extends React.Component {
 
         this.setState(newState);
     }
+
+   /* setTableOptions(props) {
+        const optionNames = ["rowsPerPage", "page", "rowsSelected", "filterList", "rowsPerPageOptions", "searchText"];
+        const optState = optionNames.reduce((acc, cur) => {
+            if (this.options[cur] !== undefined) {
+                acc[cur] = this.options[cur];
+            }
+            return acc;
+        }, {});
+
+        this.validateOptions(optState);
+        this.setState(optState);
+    }*/
 
     setHeadCellRef = (index, el) => {
         this.headCellRefs[index] = el;
@@ -734,10 +748,15 @@ class MaterialDatatable extends React.Component {
         }, {});
     };
 
-    selectRowUpdate = (type, value) => {
+    selectRowUpdate = (type, value, dataObject) => {
         if (type === "head") {
             this.setState(
                 prevState => {
+
+                    if(this.options.selectableRows === false){
+                        return prevState;
+                    }
+                    
                     const {data} = prevState;
                     const selectedRowsLen = prevState.selectedRows.data.length;
                     const isDeselect = selectedRowsLen === data.length || (selectedRowsLen < data.length && selectedRowsLen > 0);
@@ -754,12 +773,15 @@ class MaterialDatatable extends React.Component {
                         selectedMap = this.buildSelectedMap(newRows);
                     }
 
+                    const selectedDataIndexes = newRows.map(row=> row.dataIndex);
+                    
                     return {
                         curSelectedRows: newRows,
                         selectedRows: {
                             data: newRows,
                             lookup: selectedMap,
                         },
+                        rowsSelected: selectedDataIndexes
                     };
                 },
                 () => {
@@ -772,6 +794,11 @@ class MaterialDatatable extends React.Component {
         } else if (type === "cell") {
             this.setState(
                 prevState => {
+                    
+                    if(this.options.selectableRows === false){
+                        return prevState;
+                    }
+                    
                     const {dataIndex} = value;
                     let selectedRows = [...prevState.selectedRows.data];
                     let rowPos = -1;
@@ -792,18 +819,25 @@ class MaterialDatatable extends React.Component {
                     } else {
                         selectedRows.push(value);
                     }
-
+                    
+                    const selectedDataIndexes = selectedRows.map(row=> row.dataIndex);
+                    
                     return {
                         selectedRows: {
                             lookup: this.buildSelectedMap(selectedRows),
                             data: selectedRows,
                         },
+                        rowsSelected: selectedDataIndexes
                     };
                 },
                 () => {
                     this.setTableAction("rowsSelect");
-                    if (this.options.onRowsSelect) {
+                    if (this.options.onRowsSelect && this.options.selectableRows) {
                         this.options.onRowsSelect([value], this.state.selectedRows.data);
+                    }
+
+                    if (this.options.onRowClick) {
+                        this.options.onRowClick(dataObject, value);
                     }
                 },
             );

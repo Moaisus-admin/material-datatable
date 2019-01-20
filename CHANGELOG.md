@@ -1,3 +1,8 @@
+<a name="0.3.7"></a>
+## 0.3.7 (2019-01-19)
+
+* Re-worked mechanism working with selections 
+
 <a name="0.3.6"></a>
 ## 0.3.6 (2019-01-19)
 
