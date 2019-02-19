@@ -1,3 +1,8 @@
+<a name="0.3.8"></a>
+## 0.3.8 (2019-02-18)
+
+* Set min-Width for multiSelect filter 70
+
 <a name="0.3.7"></a>
 ## 0.3.7 (2019-01-19)
 

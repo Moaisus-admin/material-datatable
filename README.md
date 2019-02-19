@@ -457,6 +457,10 @@ The files included in this repository are licensed under the MIT license.
 
 ## Changelog
 
+0.3.8 (2019-02-18)
+
+* Set min-Width for multiSelect filter 70
+
 0.3.7 (2019-01-19)
 
 * Re-worked mechanism working with row selections
