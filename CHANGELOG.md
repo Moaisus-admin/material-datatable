@@ -1,3 +1,8 @@
+<a name="0.3.9"></a>
+## 0.3.9 (2019-06-29)
+
+* Fixed issue with colors in dark mode
+
 <a name="0.3.8"></a>
 ## 0.3.8 (2019-02-18)
 

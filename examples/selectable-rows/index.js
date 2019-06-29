@@ -230,9 +230,9 @@ class Example extends React.Component {
             filterType: 'multiselect',
             responsive: 'stacked',
             rowCursorHand: true,
-            rowsSelected: [1],
-            showSelectedRowsToolbar: false,
-            onlyOneRowCanBeSelected: true,
+           /* rowsSelected: [1],*/
+            showSelectedRowsToolbar: true,
+            onlyOneRowCanBeSelected: false,
             componentWillReceiveProps: true,
             page: 0,
             sortColumnIndex: 2,

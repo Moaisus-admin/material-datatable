@@ -15,7 +15,6 @@ export const defaultViewColStyles = {
     title: {
         marginLeft: "-7px",
         fontSize: "14px",
-        color: "#424242",
         textAlign: "left",
         fontWeight: 500,
     },
@@ -36,7 +35,6 @@ export const defaultViewColStyles = {
     label: {
         fontSize: "15px",
         marginLeft: "8px",
-        color: "#4a4a4a",
     },
 };
 

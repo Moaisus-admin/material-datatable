@@ -93,6 +93,7 @@ class MaterialDatatable extends React.Component {
             page: PropTypes.number,
             count: PropTypes.number,
             filterList: PropTypes.array,
+            displayColumnsList: PropTypes.array,
             rowsPerPage: PropTypes.number,
             rowsPerPageOptions: PropTypes.array,
             filter: PropTypes.bool,
@@ -281,9 +282,7 @@ class MaterialDatatable extends React.Component {
             if (typeof column === "object") {
                 if (column.options && column.options.display !== undefined) {
                     column.options.display = column.options.display.toString();
-                } else if (stateColumns !== undefined
-                    && stateColumns.length === columns.length
-                    && stateColumns[colIndex].name === column.name) {
+                } else if (stateColumns !== undefined && stateColumns.length === columns.length && stateColumns[colIndex].name === column.name) {
                     columnOptions.display = stateColumns[colIndex].display.toString();
                 }
 

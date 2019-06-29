@@ -63,7 +63,6 @@ export const defaultFilterStyles = {
         marginLeft: "7px",
         marginBottom: "8px",
         fontSize: "14px",
-        color: "#424242",
         textAlign: "left",
         fontWeight: 500,
     },
@@ -76,10 +75,8 @@ export const defaultFilterStyles = {
     checkboxFormControlLabel: {
         fontSize: "15px",
         marginLeft: "8px",
-        color: "#4a4a4a",
     },
     checkboxIcon: {
-        //color: "#027cb5",
         width: "32px",
         height: "32px",
     },

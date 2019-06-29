@@ -9,7 +9,6 @@ import {withStyles} from "@material-ui/core/styles";
 
 const defaultToolbarSelectStyles = {
     root: {
-        backgroundColor: "#f7f7f7",
         flex: "1 1 100%",
         display: "flex",
         height: "64px",
