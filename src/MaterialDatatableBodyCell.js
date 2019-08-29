@@ -5,7 +5,6 @@ import {withStyles} from "@material-ui/core/styles";
 
 const defaultBodyCellStyles = {
     root: {
-        padding: "4px 8px 4px 8px",
     },
     cellHide: {
         display: "none",

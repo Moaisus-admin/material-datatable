@@ -457,6 +457,10 @@ The files included in this repository are licensed under the MIT license.
 
 ## Changelog
 
+0.4.0 (2019-08-29)
+
+* Removed table cell header and body padding to make it work for Material UI 4
+
 0.3.9 (2019-06-29)
 
 * Fixed issue with colors in dark mode
@@ -515,7 +519,6 @@ The files included in this repository are licensed under the MIT license.
 0.2.7 (2018-12-26)
 
 * Added option componentWillReceiveProps - Enable/disable componentWillReceiveProps function. That option can be used if you subscribed on some event like 'onTableChange' and changing your state. It prevent re-render of table component.
-
 
 0.2.6 (2018-12-25)
 

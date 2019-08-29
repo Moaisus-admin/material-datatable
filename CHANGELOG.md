@@ -1,3 +1,8 @@
+<a name="0.4.0"></a>
+## 0.4.0 (2019-08-29)
+
+* Removed table cell header and body padding to make it work for Material UI 4
+
 <a name="0.3.9"></a>
 ## 0.3.9 (2019-06-29)
 

@@ -8,7 +8,6 @@ import {withStyles} from "@material-ui/core/styles";
 
 const defaultHeadCellStyles = {
     root: {
-        padding: "4px 8px 4px 8px",
     },
     tooltip: {
         cursor: "pointer",
@@ -23,7 +22,6 @@ const defaultHeadCellStyles = {
     },
     sortAction: {
         display: "inline-block",
-        verticalAlign: "top",
         cursor: "pointer",
         paddingLeft: "4px",
         height: "10px",

@@ -19,7 +19,7 @@ class Example extends React.Component {
                 name: 'Name',
                 field: 'name',
                 options: {
-                    width: 70,
+                    width: 100,
 
                 },
             },
