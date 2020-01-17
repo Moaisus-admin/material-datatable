@@ -1,3 +1,8 @@
+<a name="0.4.1"></a>
+## 0.4.1 (2020-01-16)
+
+* Page should be set to 0, when a filter by text is applied.
+
 <a name="0.4.0"></a>
 ## 0.4.0 (2019-08-29)
 

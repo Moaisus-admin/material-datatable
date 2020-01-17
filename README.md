@@ -457,6 +457,10 @@ The files included in this repository are licensed under the MIT license.
 
 ## Changelog
 
+0.4.1 (2020-01-16)
+
+* Page should be set to 0, when a filter by text is applied.
+
 0.4.0 (2019-08-29)
 
 * Removed table cell header and body padding to make it work for Material UI 4
